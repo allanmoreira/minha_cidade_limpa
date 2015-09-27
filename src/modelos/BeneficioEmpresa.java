@@ -1,5 +1,5 @@
 package modelos;
-
+//ESCREVI AQUI 
 public class BeneficioEmpresa extends PessoaJuridica{
 	private int idMarcacaoDepredacao;
 	private String descricaoBeneficio;
