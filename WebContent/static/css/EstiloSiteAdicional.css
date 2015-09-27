@@ -32,3 +32,11 @@ height:100%;
 border: 2px solid #b8ed7c;	
     border-radius: 5px;
 }
+
+.img_Comentarios{
+    max-width: 300px;
+    width: auto;
+    max-height: 150px;
+    height: auto;
+    margin: 0px auto;
+}
