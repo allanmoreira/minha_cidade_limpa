@@ -99,4 +99,57 @@ public class ServletDeControle {
 		    response.getWriter().write(new Gson().toJson(map));
 	    }
 	}
+	
+	@RequestMapping("salvar_marcacao")
+	public void salvarMarcacao(HttpServletRequest request, HttpServletResponse response) {
+		BancoDados bancoDados = new BancoDados();
+		Map <String, Object> map = new HashMap<String, Object>();
+    	MarcacaoDepredacao md = new MarcacaoDepredacao();
+    	Data data = new Data();
+		boolean isValid = false;
+		boolean pfOuPj = true;
+		
+		md.setDescricao(request.getParameter("cat"));
+		md.setStatus(request.getParameter("1"));
+		md.setTipoDepredacao(request.getParameter("tit"));
+		md.setPosLat(request.getParameter("lat"));
+		md.setPosLon(request.getParameter("lon"));
+		md.setHtml(request.getParameter("html"));
+		
+		
+    		
+    		try {
+    			bancoDados.conectarAoBco();
+    			int idLogin = bancoDados.geraLoginUsuario(pfOuPj);
+    			
+    			//pessoaFisica.setIdLogin(idLogin);
+    			//bancoDados.cadastrarPessoaFisica(pessoaFisica);
+    			bancoDados.encerrarConexao();
+
+    			isValid = true;
+    		} catch (ClassNotFoundException e) {
+    			// Erro ao concetar ao banco de dados
+    			// Levanta página Erro 500 (não existe)
+    			
+    		} catch (SQLException e) {
+    			// Erro ao executar a instrução
+    			// Levanta página Erro 500 (não existe)
+    		}
+//    	}
+    	
+    	if(isValid) {
+	       // map.put("isValid", isValid);
+	       // map.put("pessoaFisica", pessoaFisica);
+	        
+	        //response.setContentType("application/json");
+    	   // response.setCharacterEncoding("UTF-8");
+    	    //response.getWriter().write(new Gson().toJson(map));
+		}
+		else {
+	 	    //map.put("isValid", isValid);
+	        //response.setContentType("application/json");
+		    //response.setCharacterEncoding("UTF-8");
+		    //response.getWriter().write(new Gson().toJson(map));
+	    }
+	}
 }

@@ -312,46 +312,49 @@
 	<div id="divFundo"
 		style="min-width: 100%; height: 100%; position: fixed; background-color: black; opacity: 0.75; z-index: 9999; display: none;"
 		class="navbar navbar-fixed-top" role="navigation"></div>
-
-	<div id="divCadastro"
-		class="abseed_conteudo_sub abseed_Div_Casastro navbar navbar-fixed-top"
-		style="max-width: 350px; width: 100%; min-height: 350px; position: fixed; top: 25%; margin-left: 10px; margin-top: 0px; margin: 0px auto; z-index: 9999; padding: 0px; border-radius: 5px; display: none;"
-		role="navigation">
-		<div class="abseed_conteudo_borda"
-			style="text-align: center; line-height: 8px; font-size =14px; color: #ffffff; padding: 10px;">
-			Cadastro de Voluntários</div>
-		<div style="padding: 10px;">
-			<!-- INCLUIR CAMPOS  -->
-			<div class="col-sm-5 col-sm-offset-1">
-				<div class="form-group">
-					<label><b>Endereço:</b></label><br /> <label type="text"
-						id="txtEndereco"></label>
-				</div>
-				<div class="form-group">
-					<label><b>Motivo da Denúncia:</b></label><br />
-					<div>
-						<select class="cad_drop cad_borda " id="dpMotivo">
-							<option value="Estátua">Estátua</option>
-							<option value="Parede">Parede</option>
-							<option value="Lago">Lago</option>
-							<option value="Banco">Banco</option>
-						</select>
+	<form class="contact-form"
+			name="form_cadastrar_pessoa_fisica"
+			id="form_cadastrar_pessoa_fisica" 
+			method="post">
+		<div id="divCadastro"
+			class="abseed_conteudo_sub abseed_Div_Casastro navbar navbar-fixed-top"
+			style="max-width: 350px; width: 100%; min-height: 350px; position: fixed; top: 25%; margin-left: 10px; margin-top: 0px; margin: 0px auto; z-index: 9999; padding: 0px; border-radius: 5px; display: none;"
+			role="navigation">
+			<div class="abseed_conteudo_borda"
+				style="text-align: center; line-height: 8px; font-size =14px; color: #ffffff; padding: 10px;">
+				Cadastro de Voluntários</div>
+			<div style="padding: 10px;">
+				<!-- INCLUIR CAMPOS  -->
+				<div class="col-sm-5 col-sm-offset-1">
+					<div class="form-group">
+						<label><b>Endereço:</b></label><br /> <label type="text"
+							id="txtEndereco"></label>
 					</div>
+					<div class="form-group">
+						<label><b>Motivo da Denúncia:</b></label><br />
+						<div>
+							<select class="cad_drop cad_borda " id="dpMotivo">
+								<option value="Estátua">Estátua</option>
+								<option value="Parede">Parede</option>
+								<option value="Lago">Lago</option>
+								<option value="Banco">Banco</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<textarea name="comentário" id="txtComentario"
+							class="cad_comentario cad_borda" rows="5" cols="40"></textarea>
+					</div>
+	
 				</div>
-				<div class="form-group">
-					<textarea name="comentário" id="txtComentario"
-						class="cad_comentario cad_borda" rows="5" cols="40"></textarea>
-				</div>
-
+			</div>
+			<div style="float: right; padding: 0px 10px 10px;">
+				<!-- INCLUIR BOTOES  -->
+				<button class="btn" id="btnFechar">Fechar</button>
+				<button class="btn" id="btnSalvar">Salvar</button>
 			</div>
 		</div>
-		<div style="float: right; padding: 0px 10px 10px;">
-			<!-- INCLUIR BOTOES  -->
-			<button class="btn" id="btnFechar">Fechar</button>
-			<button class="btn" id="btnSalvar">Salvar</button>
-		</div>
-	</div>
-
+	</form>
 
 	<script src="<c:url value="static/js/montagemMap.js"/>"></script>
 	

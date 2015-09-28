@@ -9,6 +9,31 @@ public class MarcacaoDepredacao {
 	private Date dataMarcacao;
 	private boolean cadidatoResolverProblema;
 	private int idPessoaFisicaFezMarcacao;
+	private String posLon, posLat, html;
+	
+	
+	
+	public String getHtml() {
+		return html;
+	}
+	public void setHtml(String html) {
+		this.html = html;
+	}
+	public String getPosLon() {
+		return posLon;
+	}
+	public void setPosLon(String posLon) {
+		this.posLon = posLon;
+	}
+	public String getPosLat() {
+		return posLat;
+	}
+	public void setPosLat(String posLat) {
+		this.posLat = posLat;
+	}
+	public void setDataMarcacaoString(String dataMarcacaoString) {
+		this.dataMarcacaoString = dataMarcacaoString;
+	}
 	public String getTipoDepredacao() {
 		return tipoDepredacao;
 	}
