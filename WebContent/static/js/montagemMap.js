@@ -3,6 +3,8 @@
 	var street; 
 	var latitude = {lat:"",lng:""};
 	var markerClick;
+	var dadosDigitados;
+	var titulo;
 
 	initMap();
 	//Inicialização do map
@@ -92,13 +94,9 @@
 	  controlUI.appendChild(controlText);
 
 	}
-
-
 	//################# FIM LEGENDA STATUS
 
-
-
-	 function geocodeLatLng(geocoder, map, infowindow, latitude) { 
+	function geocodeLatLng(geocoder, map, infowindow, latitude) { 
 	  var latlng = {lat: parseFloat(latitude.lat), lng: parseFloat(latitude.lng)};
 	  geocoder.geocode({'location': latlng}, function(results, status) {
 	    if (status === google.maps.GeocoderStatus.OK) {
@@ -148,27 +146,63 @@
 		HabilitaDivCadastro(false);
 	});
 
+	//Função que as informações da denúncia
 	function SalvaDados(){
-		var sDadosDigitados = $('textarea[id*="txtComentario"]').val();
-		var titulo = $('select[id*="dpMotivo"]').val();
+		dadosDigitados = "";
+		titulo = "";
+		dadosDigitados = $('textarea[id*="txtComentario"]').val();
+		titulo = $('select[id*="dpMotivo"]').val();
 		var contentString = '<div id="content">'+
 	      '<div id="siteNotice">'+
 	      '</div>'+
 	      '<h1 id="firstHeading" class="firstHeading">'+ titulo +'</h1>'+
 	      '<div id="bodyContent">'+
-	      '<p>'+ sDadosDigitados +'</p>'+
+	      '<p>'+ dadosDigitados +'</p>'+
 	      '</div>'+
 	      '</div>';
 
-	 var infoSalvandoDados = new google.maps.InfoWindow({
-	    content: contentString
-	  }); 
 
-	  	google.maps.event.addListener(markerClick, 'click', function () {
-			infoSalvandoDados.setContent(contentString);
-			infoSalvandoDados.open(map, markerClick);
-	    });
+	    //Cria o objeto e adiciona no JSON
+		var objDenuncia = {}
+		objDenuncia["categoria"] = 'Denuncia';
+		objDenuncia["icon"] = 'img/icones/vermelho.png';
+		objDenuncia["lat"] = "'"+ latitude.lat + "'";
+		objDenuncia["lon"] = "'"+ latitude.lng + "'";
+		objDenuncia["title"] = "'" + titulo + "'";
+		objDenuncia["html"] = "'" + contentString + "'";
+		objDenuncia["id"] = DadosPoa.DadosPoa.length + 1;
 		
+		//Chama a função que salva a denuncia no banco
+		salvarMarkBD(objDenuncia);
+
+	}
+
+	//Função que salva a marcação no banco de dados
+	function salvarMarkBD(objDenuncia){
+		$.ajax({
+			url: 'salvar_marcacao?cat='+ objDenuncia.categoria +'&lat='+objDenuncia.lat+'&lon='+objDenuncia.lon+'&tit='+objDenuncia.title+'&html='+objDenuncia.html+'&id='+objDenuncia.id,
+			type: 'POST',
+			dataType: 'json',
+			data: {'submit':true},
+			success: function(data){
+				if(data.isValid) {
+					//Se salvar correto no banco de dados, 
+					//retorna nesta condição e salva a marcação no map 
+					var obj = data.pessoaFisica;
+										
+					DadosPoa.DadosPoa.push(objDenuncia); 
+					marker.setMap(map);
+			    	AdicionaInfoMarker(markerClick, map, infowindow, contentString);					
+				
+					return true;
+				
+				}
+				else {
+					return false;
+				}
+			}
+	
+		});
 	}
 
 	 //Função que mostra e esconde a div fundo e cadastro

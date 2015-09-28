@@ -6,13 +6,19 @@ import controle.conversaoDados.Data;
 
 public class MarcacaoDepredacao {
 	private String tipoDepredacao, descricao, status, dataMarcacaoString;
-	private Date dataMarcacao;
+	private String dataMarcacao;
 	private boolean cadidatoResolverProblema;
 	private int idPessoaFisicaFezMarcacao;
-	private String posLon, posLat, html;
+	private String posLon, posLat, html, id;
 	
 	
 	
+	public String getid() {
+		return id;
+	}
+	public void setid(String id) {
+		this.id = id;
+	}
 	public String getHtml() {
 		return html;
 	}
@@ -52,10 +58,10 @@ public class MarcacaoDepredacao {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public Date getDataMarcacao() {
+	public String getDataMarcacao() {
 		return dataMarcacao;
 	}
-	public void setDataMarcacao(Date dataMarcacao) {
+	public void setDataMarcacao(String dataMarcacao) {
 		this.dataMarcacao = dataMarcacao;
 	}
 	public boolean isCadidatoResolverProblema() {
@@ -71,13 +77,9 @@ public class MarcacaoDepredacao {
 		this.idPessoaFisicaFezMarcacao = idPessoaFisicaFezMarcacao;
 	}
 	public String getDataMarcacaoString() {
-		setDataMarcacaoString();
 		return dataMarcacaoString;
 	}
-	public void setDataMarcacaoString() {
-		Data data = new Data();
-		dataMarcacaoString = data.converteDataParaString(dataMarcacao);
-	}
+
 	
 	
 }

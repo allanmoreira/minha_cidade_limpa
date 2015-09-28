@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
 
+import modelos.MarcacaoDepredacao;
 import modelos.PessoaFisica;
 
 public class BancoDados {
@@ -54,6 +55,42 @@ public class BancoDados {
 
         preparedStatement.executeUpdate();
 	}
+	
+	/***
+	 * Cadastro de den�ncias feitas por pessoas
+	 * @param oMarcacao
+	 * @throws SQLException
+	 */
+	public void cadastrarMarcacao(MarcacaoDepredacao oMarcacao) throws SQLException {
+		String sql = "insert into marcacao_depredacao "
+				+ "(id_marcacao_depredacao, "
+				+ "tipo_depredacao, "
+				+ "descricao, "
+				+ "data_marcacao, "
+				+ "cadidato_resolver_problema, "
+				+ "id_pessoa_fisica_fez_narcacao, "
+				+ "html_depredacao, "
+				+ "lat, "
+				+ "lon,"
+				+ "status) "				
+				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, oMarcacao.getid());
+        preparedStatement.setString(2, oMarcacao.getTipoDepredacao());
+        preparedStatement.setString(3, oMarcacao.getDescricao());
+        preparedStatement.setString(4, oMarcacao.getDataMarcacao());
+        preparedStatement.setBoolean(5, oMarcacao.isCadidatoResolverProblema());
+        preparedStatement.setInt(6, 0);
+        preparedStatement.setString(7, oMarcacao.getHtml());
+        preparedStatement.setString(8,oMarcacao.getPosLat());
+        preparedStatement.setString(9,oMarcacao.getPosLon());
+        preparedStatement.setString(10,oMarcacao.getStatus());
+
+        preparedStatement.executeUpdate();
+	}
+	
+	
 	
 	/**
 	 * Cadastra os dados de login do usuário. Está vazio porque não consegui terminar, e porque não possui os campos de cadastro na interface.

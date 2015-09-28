@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.joda.time.DateTime;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -104,17 +105,31 @@ public class ServletDeControle {
 	public void salvarMarcacao(HttpServletRequest request, HttpServletResponse response) {
 		BancoDados bancoDados = new BancoDados();
 		Map <String, Object> map = new HashMap<String, Object>();
-    	MarcacaoDepredacao md = new MarcacaoDepredacao();
+    	MarcacaoDepredacao oMarcacao = new MarcacaoDepredacao();
     	Data data = new Data();
 		boolean isValid = false;
 		boolean pfOuPj = true;
 		
-		md.setDescricao(request.getParameter("cat"));
-		md.setStatus(request.getParameter("1"));
-		md.setTipoDepredacao(request.getParameter("tit"));
-		md.setPosLat(request.getParameter("lat"));
-		md.setPosLon(request.getParameter("lon"));
-		md.setHtml(request.getParameter("html"));
+		
+		String sCat= request.getParameter("cat");
+		String sTipo = request.getParameter("tit");
+		String sLat = request.getParameter("lat");
+		String sLong = request.getParameter("lon");
+		String sHtml = request.getParameter("html");
+		String sData = DateTime.now().toString("yyyyMMdd");
+			
+		oMarcacao.setDescricao(sCat);
+		oMarcacao.setStatus("1");
+		oMarcacao.setTipoDepredacao(sTipo);
+		oMarcacao.setPosLat(sLat);
+		oMarcacao.setPosLon(sLong);
+		oMarcacao.setHtml(sHtml);
+		oMarcacao.setCadidatoResolverProblema(false);
+		oMarcacao.setDataMarcacao(sData);
+		
+		
+
+		
 		
 		
     		
@@ -122,16 +137,24 @@ public class ServletDeControle {
     			bancoDados.conectarAoBco();
     			int idLogin = bancoDados.geraLoginUsuario(pfOuPj);
     			
-    			//pessoaFisica.setIdLogin(idLogin);
-    			//bancoDados.cadastrarPessoaFisica(pessoaFisica);
+    			bancoDados.cadastrarMarcacao(oMarcacao);
     			bancoDados.encerrarConexao();
 
     			isValid = true;
     		} catch (ClassNotFoundException e) {
     			// Erro ao concetar ao banco de dados
     			// Levanta página Erro 500 (não existe)
+    			String erro = "CLASSE = ";
+    			erro += e.getMessage();
+    			erro+=" \n ";
+    			erro += e.getStackTrace();
     			
     		} catch (SQLException e) {
+   
+     			String erro = "SQL = ";
+     			erro += e.getMessage();
+    			erro+=" \n ";
+    			erro += e.getStackTrace();
     			// Erro ao executar a instrução
     			// Levanta página Erro 500 (não existe)
     		}
