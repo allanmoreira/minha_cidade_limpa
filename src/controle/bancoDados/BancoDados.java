@@ -11,6 +11,7 @@ import java.sql.Time;
 
 import modelos.MarcacaoDepredacao;
 import modelos.PessoaFisica;
+import modelos.PessoaJuridica;
 
 public class BancoDados {
 	private Connection connection;
@@ -93,13 +94,14 @@ public class BancoDados {
 	
 	
 	/**
-	 * Cadastra os dados de login do usu√°rio. Est√° vazio porque n√£o consegui terminar, e porque n√£o possui os campos de cadastro na interface.
+	 * Cadastra os dados de login do usu·rio. Est· vazio porque n„o consegui terminar, 
+	 * e porque n„o possui os campos de cadastro na interface.
 	 * 
 	 * @param idPessoaFisica
 	 * @return idLogin
 	 * @throws SQLException
 	 */
-	public int geraLoginUsuario(boolean pfOuPj) throws SQLException {
+	public int geraLoginUsuario(String username, String senha, boolean pfOuPj) throws SQLException {
 		String sql = "insert into login "
 				+ "(username, "
 				+ "senha, "
@@ -107,9 +109,10 @@ public class BancoDados {
 				
 				+ "values (?, ?, ?)";
 		
+		
 		preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-		preparedStatement.setString(1, "");
-		preparedStatement.setString(2, "");
+		preparedStatement.setString(1, username);
+		preparedStatement.setString(2, senha);
 		preparedStatement.setBoolean(3, pfOuPj);
 		
 		preparedStatement.executeUpdate();
@@ -118,5 +121,51 @@ public class BancoDados {
         int idLogin = resultSet.getInt(1);
         
         return idLogin;
+	}
+	
+	/**
+	 * Valida se o usu·rio n„o existe no banco de dados
+	 * 
+	 * @param ussername do novo usu·rio
+	 * @return TRUE se usu·rio n„o cadastrado, e FALSE se usu·rio cadastrado
+	 * @throws SQLException
+	 */
+	public boolean usernameNaoCadastrado(String username) throws SQLException {
+		
+        String sql = "select username "
+        		+ "from login "
+                + "where username = ?";
+
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, username);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if(resultSet.next()){
+        	return false;
+        }
+        
+		return true;
+	}
+
+	public void cadastrarPessoaJuridica(PessoaJuridica pessoaJuridica) throws SQLException {
+		String sql = "insert into pessoa_juridica "
+				+ "(nome, "
+				+ "cnpj, "
+				+ "email, "
+				+ "endereco, "
+				+ "telefone, "
+				+ "id_login) "
+				
+				+ "values (?, ?, ?, ?, ?, ?)";
+
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, pessoaJuridica.getNome());
+        preparedStatement.setString(2, pessoaJuridica.getCnpj());
+        preparedStatement.setString(3, pessoaJuridica.getEmail());
+        preparedStatement.setString(4, pessoaJuridica.getEndereco());
+        preparedStatement.setString(5, pessoaJuridica.getTelefone());
+        preparedStatement.setInt(6, pessoaJuridica.getIdLogin());
+
+        preparedStatement.executeUpdate();
 	}
 }
