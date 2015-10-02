@@ -166,10 +166,10 @@
 		var objDenuncia = {}
 		objDenuncia["categoria"] = 'Denuncia';
 		objDenuncia["icon"] = 'img/icones/vermelho.png';
-		objDenuncia["lat"] = "'"+ latitude.lat + "'";
-		objDenuncia["lon"] = "'"+ latitude.lng + "'";
-		objDenuncia["title"] = "'" + titulo + "'";
-		objDenuncia["html"] = "'" + contentString + "'";
+		objDenuncia["lat"] = ""+ latitude.lat + "";
+		objDenuncia["lon"] = ""+ latitude.lng + "";
+		objDenuncia["title"] = "" + titulo + "";
+		objDenuncia["html"] = "" + contentString + "";
 		objDenuncia["id"] = DadosPoa.DadosPoa.length + 1;
 		
 		//Chama a função que salva a denuncia no banco
