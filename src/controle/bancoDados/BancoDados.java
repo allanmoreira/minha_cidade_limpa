@@ -57,6 +57,31 @@ public class BancoDados {
         preparedStatement.executeUpdate();
 	}
 	
+	public PessoaFisica buscarPessoaFisica(int idLogin) throws SQLException {
+		PessoaFisica pf = new PessoaFisica();
+		
+		String sql = "select * from pessoa_fisica pf, login l "
+				+ "where "
+				+ "l.id_login = pf.id_login and "
+				+ "l.id_login = ?";
+		
+		preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, idLogin);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            pf.setNome(resultSet.getString("nome"));
+            pf.setCpf(resultSet.getString("cpf"));
+            pf.setEmail(resultSet.getString("email"));
+            pf.setDataNascimento(resultSet.getDate("data_nascimento"));
+            pf.setTelefone(resultSet.getString("telefone"));
+            pf.setIdLogin(resultSet.getInt("id_login"));
+        }
+        resultSet.close();
+        
+        return pf;
+	}
+	
 	/***
 	 * Cadastro de denúncias feitas por pessoas
 	 * @param oMarcacao

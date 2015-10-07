@@ -183,7 +183,8 @@
 			url: 'salvar_marcacao?cat='+ objDenuncia.categoria +'&lat='+objDenuncia.lat+'&lon='+objDenuncia.lon+'&tit='+objDenuncia.title+'&html='+objDenuncia.html+'&id='+objDenuncia.id,
 			type: 'POST',
 			dataType: 'json',
-			data: {'submit':true},
+//			data: {'submit':true},
+			data: objDenuncia,
 			success: function(data){
 				if(data.isValid) {
 					//Se salvar correto no banco de dados, 
@@ -198,6 +199,8 @@
 				
 				}
 				else {
+					alert("Usuário não está logado! Faça login ou cadastre-se!");
+					
 					return false;
 				}
 			}
