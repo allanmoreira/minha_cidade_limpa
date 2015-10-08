@@ -13,6 +13,7 @@ import modelos.MarcacaoDepredacao;
 import modelos.PessoaFisica;
 import modelos.PessoaJuridica;
 
+
 public class BancoDados {
 	private Connection connection;
     private PreparedStatement preparedStatement;

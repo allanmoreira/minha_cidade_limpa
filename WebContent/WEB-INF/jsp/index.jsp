@@ -357,6 +357,7 @@
 	</form>
 
 	<script src="<c:url value="static/js/montagemMap.js"/>"></script>
+	<script src="<c:url value="static/js/teste.js"/>"></script>
 	
 
 </body>
