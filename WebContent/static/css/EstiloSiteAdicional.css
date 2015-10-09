@@ -40,3 +40,11 @@ border: 2px solid #b8ed7c;
     height: auto;
     margin: 0px auto;
 }
+.espacamento{
+	margin-top: 5px;
+    margin-bottom: 5px;
+}
+.refTexto{
+	text-align: justify;
+    font-size: 16px;
+}
