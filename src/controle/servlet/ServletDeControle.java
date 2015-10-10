@@ -27,10 +27,10 @@ import com.google.gson.Gson;
 public class ServletDeControle {
 	
 	/**
-	 * Monta a página home. Sua url é vazia para que somente o endereço do site apareça
-	 * @param request - Requisição do usuário
-	 * @param response - A resposta do servidor para o usuário 
-	 * @param session - verifica se o usuário está logado (ainda não implementado)
+	 * Monta a pï¿½gina home. Sua url ï¿½ vazia para que somente o endereï¿½o do site apareï¿½a
+	 * @param request - Requisiï¿½ï¿½o do usuï¿½rio
+	 * @param response - A resposta do servidor para o usuï¿½rio 
+	 * @param session - verifica se o usuï¿½rio estï¿½ logado (ainda nï¿½o implementado)
 	 * @return
 	 */
 	@RequestMapping("")
@@ -40,16 +40,24 @@ public class ServletDeControle {
 		mv.setViewName("index");
 		return mv;
 	}
+
+	@RequestMapping("novo_template")
+	public ModelAndView homeNovoTemplate(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		
+		mv.setViewName("index_novo_modelo");
+		return mv;
+	}
 	
 	/**
-	 * O método utiliza um hash para adicionar os objetos que irão retornar para a página. 
-	 * Os parâmetros do hash são uma string com o nome que o json reconhecerá o objeto = o objeto. 
+	 * O mï¿½todo utiliza um hash para adicionar os objetos que irï¿½o retornar para a pï¿½gina. 
+	 * Os parï¿½metros do hash sï¿½o uma string com o nome que o json reconhecerï¿½ o objeto = o objeto. 
 	 * A biblioteca Gson, do google, converte o Hash em json.
 	 * 
 	 * O boolean pf_ou_pj recebe TRUE se PF ou FALSE se PJ
 	 * 
-	 * @param request - Requisição do usuário
-	 * @param response - A resposta do servidor para o usuário 
+	 * @param request - Requisiï¿½ï¿½o do usuï¿½rio
+	 * @param response - A resposta do servidor para o usuï¿½rio 
 	 * @throws Exception 
 	 */
 	@RequestMapping("cadastrar_pessoa_fisica")
@@ -71,7 +79,7 @@ public class ServletDeControle {
     	String dataNascimento = request.getParameter("data_nascim");
     	String telefone = request.getParameter("telefone");
     	
-    	// valida se os campos não estão vazios	
+    	// valida se os campos nï¿½o estï¿½o vazios	
     	if(!nome.equals("") && !cpf.equals("") && !email.equals("") && !username.equals("") && 
     			!senha.equals("") && !dataNascimento.equals("")){
     		pessoaFisica.setNome(nome);
@@ -82,7 +90,7 @@ public class ServletDeControle {
     		pessoaFisica.setSenha(senha);
     		pessoaFisica.setPfOuPj(pfOuPj);
     		
-    		// campo não obrigatório
+    		// campo nï¿½o obrigatï¿½rio
     		if(telefone.equals("")){
     			pessoaFisica.setTelefone(null);
     		} else {
@@ -107,11 +115,11 @@ public class ServletDeControle {
 				
     		} catch (ClassNotFoundException e) {
     			// Erro ao concetar ao banco de dados
-    			// Levanta página Erro 500 (não existe)
+    			// Levanta pï¿½gina Erro 500 (nï¿½o existe)
     			
     		} catch (SQLException e) {
-    			// Erro ao executar a instrução
-    			// Levanta página Erro 500 (não existe)
+    			// Erro ao executar a instruï¿½ï¿½o
+    			// Levanta pï¿½gina Erro 500 (nï¿½o existe)
     		}
     	} else {
     		dadosCadastroInvalidos = true;
