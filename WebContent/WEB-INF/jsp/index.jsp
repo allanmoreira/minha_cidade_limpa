@@ -113,7 +113,22 @@
 					<div class="section-heading text-center">
 						<h2 class="h-bold">Sobre nós</h2>
 						<div class="divider-header"></div>
-						<p>Somos .......blablablbla...</p>
+						<p class="refTexto">Este projeto está direcionado aos moradores, turistas e órgãos públicos que 
+estão diretamente envolvidos, situações de depredações do patrimônio público, além de te local com 
+ informações e contribuições sobre os problemas que as pessoas enfrentam
+na cidade, este sistema disponibilizará aos usuários consultar e informar estes problemas que 
+denigrem e afeta a imagem da cidade.</p>
+
+<p class="refTexto">Através do sistemas os moradores da cidade poderá organizar-se em grupos, para concertar 
+limpar o patrimônio público, também ajudará os cidadãos a terem um contato direto com o 
+os órgãos públicos, que por sua vez terão maior agilidade com a visualização de mapa dos 
+problemas de depredações da cidade.</p>
+
+<p class="refTexto">Contrário do que atualmente acontece, em que as prefeituras não conseguem atender a demanda 
+de limpezas. As pessoas poderão "adotar" por tempo determinado a manutenção do patrimônio, 
+a fim de usufrui de seus benefício. Logo contamos com a sua colaboração para melhor desenvolvimento  
+e manutenção de nossa cidade.</p>
+						</p>
 					</div>
 				</div>
 			</div>
@@ -245,7 +260,28 @@
 			</div>
 		</div>
 
+			<div class="espacamento text-center">
+						<p>
+						<label>Bombeiros:<b>193</b></label>
+						<br />
+						<label>Polícia Civil:<b>197</b></label>	
+						<br />
+						<label>Disque Pichação:<b>153</b></label>
+						<br /> 
+						<label>Disque-denúncia:<b>181</b></label>	
+						<br />
+						<label>Brigada Militar:<b>190</b></label>
+						<br />
+						<label>Secretaria dos Direitos Humanos:<b>100</b></label>	
+						<br />			
+						</p>
+			</div>		
+	
+		
 
+
+
+<!--/ AQUI ESTA A DIV QUE O ALLAN CRIOU, UTILIZAR COMO REFERÊNCIA	
 		<div class="container">
 			<div class="row contact-wrap">
 				<div class="status alert alert-success" style="display: none"></div>
@@ -282,32 +318,11 @@
 						</div>
 				</form>
 			</div>
-			<!--/.row-->
 		</div>
 	</div>
+-->
 
-	<footer>
-	<div class="container">
-		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
-				<div class="text-center">
-					<a href="#home" class="scrollup"><i
-						class="fa fa-angle-up fa-3x"></i></a>
-					<p>
-						SOLO, Inc. 456 Folsom Ave, Suite 600 California, CA 94107<br />
-						&copy;Copyright 2015 - Knight. Designed by <a
-							href="http://bootstraptaste.com">Bootstraptaste</a>
-					</p>
-				</div>
-				<!-- 
-				                        All links in the footer should remain intact. 
-				                        Licenseing information is available at: http://bootstraptaste.com/license/
-				                        You can buy this theme without footer links online at: http://bootstraptaste.com/buy/?theme=Knight
-				                    -->
-			</div>
-		</div>
-	</div>
-	</footer>
+
 
 	<div id="divFundo"
 		style="min-width: 100%; height: 100%; position: fixed; background-color: black; opacity: 0.75; z-index: 9999; display: none;"
@@ -357,7 +372,7 @@
 	</form>
 
 	<script src="<c:url value="static/js/montagemMap.js"/>"></script>
+	<script src="<c:url value="static/js/teste.js"/>"></script>
 	
 
 </body>
-</html>
