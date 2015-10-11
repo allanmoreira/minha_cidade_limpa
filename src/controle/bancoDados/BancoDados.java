@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
 
+import modelos.Login;
 import modelos.MarcacaoDepredacao;
 import modelos.PessoaFisica;
 import modelos.PessoaJuridica;
@@ -84,7 +85,7 @@ public class BancoDados {
 	}
 	
 	/***
-	 * Cadastro de denúncias feitas por pessoas
+	 * Cadastro de denï¿½ncias feitas por pessoas
 	 * @param oMarcacao
 	 * @throws SQLException
 	 */
@@ -120,8 +121,8 @@ public class BancoDados {
 	
 	
 	/**
-	 * Cadastra os dados de login do usuário. Está vazio porque não consegui terminar, 
-	 * e porque não possui os campos de cadastro na interface.
+	 * Cadastra os dados de login do usuï¿½rio. Estï¿½ vazio porque nï¿½o consegui terminar, 
+	 * e porque nï¿½o possui os campos de cadastro na interface.
 	 * 
 	 * @param idPessoaFisica
 	 * @return idLogin
@@ -150,10 +151,10 @@ public class BancoDados {
 	}
 	
 	/**
-	 * Valida se o usuário não existe no banco de dados
+	 * Valida se o usuï¿½rio nï¿½o existe no banco de dados
 	 * 
-	 * @param ussername do novo usuário
-	 * @return TRUE se usuário não cadastrado, e FALSE se usuário cadastrado
+	 * @param ussername do novo usuï¿½rio
+	 * @return TRUE se usuï¿½rio nï¿½o cadastrado, e FALSE se usuï¿½rio cadastrado
 	 * @throws SQLException
 	 */
 	public boolean usernameNaoCadastrado(String username) throws SQLException {
@@ -193,5 +194,40 @@ public class BancoDados {
         preparedStatement.setInt(6, pessoaJuridica.getIdLogin());
 
         preparedStatement.executeUpdate();
+	}
+
+	public boolean login(Login login) throws SQLException {
+		String sql = "select * from login "
+				+ "where username = ? and "
+				+ "senha = ?";
+		
+		preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, login.getUsername());
+        preparedStatement.setString(2, login.getSenha());
+        
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if(resultSet.next()){
+        	return true;
+        }
+        
+		return false;
+	}
+
+	public Login dadosUsuarioLogado(Login login) throws SQLException {
+		String sql = "select * from login "
+				+ "where username = ? and "
+				+ "senha = ?";
+		
+		preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, login.getUsername());
+        preparedStatement.setString(2, login.getSenha());
+        
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        login.setIdLogin(resultSet.getInt("id_login"));
+        login.setPfOuPj(resultSet.getBoolean("pf_ou_pj"));
+        
+        
+		return login;
 	}
 }

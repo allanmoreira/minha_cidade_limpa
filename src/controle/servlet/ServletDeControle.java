@@ -36,7 +36,6 @@ public class ServletDeControle {
 	@RequestMapping("")
 	public ModelAndView home(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-		teste de commit
 		mv.setViewName("index");
 		return mv;
 	}
@@ -47,6 +46,57 @@ public class ServletDeControle {
 		
 		mv.setViewName("index_novo_modelo");
 		return mv;
+	}
+	
+	@RequestMapping("login")
+	public void login(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+		BancoDados bancoDados = new BancoDados();
+		Map <String, Object> map = new HashMap<String, Object>();
+    	Data data = new Data();
+		boolean isValid = false;
+		boolean pfOuPj = true;
+		boolean dadosCadastroInvalidos = false;
+		boolean usernameInvalido = false;
+		Login login = new Login();
+		
+    	String username = request.getParameter("username");
+    	String senha = request.getParameter("senha");
+    	login.setUsername(username);
+    	login.setSenha(senha);
+    	
+    	try {
+	    	// valida se os campos n�o est�o vazios	
+	    	if(username != null && senha != null){
+	    		bancoDados.conectarAoBco();
+	    		boolean autorizaLogar = bancoDados.login(login);
+	    		bancoDados.encerrarConexao();
+	    		
+	    		if(autorizaLogar){
+	    			bancoDados.conectarAoBco();
+					login = bancoDados.dadosUsuarioLogado(login);
+					bancoDados.encerrarConexao();
+					session.setAttribute("usuarioLogado", login);
+	    			isValid = true;
+	    		}
+	    	}	
+	    		
+    	} catch (ClassNotFoundException e) {
+			// Erro ao concetar ao banco de dados
+			// Levanta p�gina Erro 500 (n�o existe)
+			
+		} catch (SQLException e) {
+			// Erro ao executar a instru��o
+			// Levanta p�gina Erro 500 (n�o existe)
+		}
+	
+        map.put("isValid", isValid);
+        map.put("login", login);
+        map.put("dadosInvalidos", dadosCadastroInvalidos);
+        map.put("usernameInvalido", usernameInvalido);
+        
+        response.setContentType("application/json");
+	    response.setCharacterEncoding("UTF-8");
+	    response.getWriter().write(new Gson().toJson(map));
 	}
 	
 	/**
@@ -172,6 +222,8 @@ public class ServletDeControle {
 			boolean usernameNaoCadastrado = bancoDados.usernameNaoCadastrado(username);
 			
 			if (usernameNaoCadastrado) {
+				pessoaJuridica.setUsername(username);
+				pessoaJuridica.setSenha(senha);
 				int idLogin = bancoDados.geraLoginUsuario(pessoaJuridica.getUsername(), pessoaJuridica.getSenha(), pessoaJuridica.isPfOuPj());
 				pessoaJuridica.setIdLogin(idLogin);
 				bancoDados.cadastrarPessoaJuridica(pessoaJuridica);

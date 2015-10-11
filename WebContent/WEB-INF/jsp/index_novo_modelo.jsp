@@ -18,6 +18,7 @@
     
     <!-- //////////// -->
     <link rel="stylesheet" href="<c:url value="static/css/EstiloSiteAdicional.css"/>">
+    <link rel="stylesheet" href="<c:url value="static_startbootstrap-freelancer-1.0.3/css/modal_bootstrap.css"/>">
     <!-- //////////// -->
 
     <title>Freelancer - Start Bootstrap Theme</title>
@@ -64,26 +65,222 @@
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
-                    <li class="page-scroll">
+                    <li >
                         <a href="#about">Sobre nós</a>
                     </li>
-                    <li class="page-scroll">
+                    <li >
                         <a href="#depredacoes">Depredações</a>
                     </li>
-                    <li class="page-scroll">
+                    <li >
                         <a href="#depoimentos">Depoimentos</a>
                     </li>
-                    
-                    <li class="page-scroll">
-                        <a href="#contact">Cadastro ou Login</a>
-                    </li>
+                    <li >
+                        <a id="link_login_cadastro" href="#modal_login_cadastro" data-toggle="modal">Login ou Cadastro</a>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container-fluid -->
     </nav>
+        
+    <!-- modal login -->
+    <div class="portfolio-modal modal fade" id="modal_login_cadastro" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+			<div class="col-lg-8 col-lg-offset-2">
+				<div class="col-xs-12 ">
+					<ul class="nav nav-tabs" data-toggle="tabs">
+						<li id="li_login" class="active"><a href="javascript:abre_tab_login()"><i class="fa fa-check"></i> Login</a></li>
+						<li id="li_PF"><a href="javascript:abre_tab_PF()" title="" data-original-title="Cadastro de Pessoa Física"><i class="fa fa-user"></i> Cadastro de Pessoa Física</a></li>
+						<li id="li_PJ" ><a href="javascript:abre_tab_PJ()" data-toggle="tooltip" title="" data-original-title="Cadastro de Pessoa Jurídica"><i class="fa fa-bank"></i> Cadastro de Pessoa Jurídica</a></li>
+					</ul>
+				</div>
+			</div>
 
+			<div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                             <div class="tab-content">
+                             	<div class="tab-pane active" id="modal_tab_login">
+                             		<div class="row">
+						                <div class="col-lg-8 col-lg-offset-2">
+						                
+						                    <form name="form_login" id="form_login" accept-charset="iso-8859-1,utf-8">
+						                        
+						                        <div class="row control-group">
+						                            <div class="form-group col-xs-12 floating-label-form-group controls">
+						                                <label>Usuário</label>
+						                                <input type="text" class="form-control" placeholder="Usuário" id="username" name="username" >
+						                                
+						                            </div>
+						                        </div>
+						                        <div class="row control-group">
+						                            <div class="form-group col-xs-12 floating-label-form-group controls">
+						                                <label>Senha</label>
+						                                <input type="text" class="form-control" placeholder="Senha" id="senha" name="senha" >
+						                                
+						                            </div>
+						                        </div>
+						                        
+						                        <br>
+						                        <div id="success"></div>
+						                        <div class="row">
+						                            <div class="form-group col-xs-12">
+						                                <button type="button" onclick="submeter_form_login()" class="btn btn-success btn-lg">Enviar</button>
+						                            </div>
+						                        </div>
+						                    </form>
+						                </div>
+						            </div>
+                             	</div>
+                             	<div class="tab-pane" id="modal_tab_cadastro_pf">
+                             		<div class="row">
+						                <div class="col-lg-8 col-lg-offset-2">
+						                
+						                    <form name="form_cadastrar_pessoa_fisica" id="form_cadastrar_pessoa_fisica" accept-charset="iso-8859-1,utf-8">
+						                        <div class="row control-group">
+						                            <div class="form-group col-xs-12 floating-label-form-group controls">
+						                                <label>Nome</label>
+						                                <input type="text" class="form-control" placeholder="Nome" id="nome" name="nome" >
+						                                
+						                            </div>
+						                        </div>
+						                        <div class="row control-group">
+						                            <div class="form-group col-xs-12 floating-label-form-group controls">
+						                                <label>Data de Nascimento</label>
+						                                <input type="text" class="form-control" placeholder="Data de Nascimento" id="data_nascim" name="data_nascim" >
+						                                
+						                            </div>
+						                        </div>
+						                        <div class="row control-group">
+						                            <div class="form-group col-xs-12 floating-label-form-group controls">
+						                                <label>CPF</label>
+						                                <input type="text" class="form-control" placeholder="CPF" id="cpf" name="cpf" >
+						                                
+						                            </div>
+						                        </div>
+						                        <div class="row control-group">
+						                            <div class="form-group col-xs-12 floating-label-form-group controls">
+						                                <label>Telefone</label>
+						                                <input type="text" class="form-control" placeholder="Telefone" id="telefone" name="telefone" >
+						                                
+						                            </div>
+						                        </div>
+						                        <div class="row control-group">
+						                            <div class="form-group col-xs-12 floating-label-form-group controls">
+						                                <label>Email</label>
+						                                <input type="text" class="form-control" placeholder="Email" id="email" name="email" >
+						                                
+						                            </div>
+						                        </div>
+						                        <div class="row control-group">
+						                            <div class="form-group col-xs-12 floating-label-form-group controls">
+						                                <label>Usuário</label>
+						                                <input type="text" class="form-control" placeholder="Usuário" id="username" name="username" >
+						                                
+						                            </div>
+						                        </div>
+						                        <div class="row control-group">
+						                            <div class="form-group col-xs-12 floating-label-form-group controls">
+						                                <label>Senha</label>
+						                                <input type="text" class="form-control" placeholder="Senha" id="senha" name="senha" >
+						                                
+						                            </div>
+						                        </div>
+						                        
+						                        <br>
+						                        <div id="success"></div>
+						                        <div class="row">
+						                            <div class="form-group col-xs-12">
+						                                <button type="button" onclick="javascript:submeter_form_cadastro_pessoa_fisica()" class="btn btn-success btn-lg">Enviar</button>
+						                            </div>
+						                        </div>
+						                    </form>
+						                </div>
+						            </div>
+                             	</div>
+                             	
+                             	<div class="tab-pane" id="modal_tab_cadastro_pj">
+                             		<div class="row">
+						                <div class="col-lg-8 col-lg-offset-2">
+						                
+						                    <form name="form_cadastrar_pessoa_juridica" id="form_cadastrar_pessoa_juridica" accept-charset="iso-8859-1,utf-8">
+						                        <div class="row control-group">
+						                            <div class="form-group col-xs-12 floating-label-form-group controls">
+						                                <label>Nome</label>
+						                                <input type="text" class="form-control" placeholder="Nome" id="nome" name="nome" >
+						                                
+						                            </div>
+						                        </div>
+						                        <div class="row control-group">
+						                            <div class="form-group col-xs-12 floating-label-form-group controls">
+						                                <label>CNPJ</label>
+						                                <input type="text" class="form-control" placeholder="CNPJ" id="cnpj" name="cnpj" >
+						                                
+						                            </div>
+						                        </div>
+						                        <div class="row control-group">
+						                            <div class="form-group col-xs-12 floating-label-form-group controls">
+						                                <label>Telefone</label>
+						                                <input type="text" class="form-control" placeholder="Telefone" id="telefone" name="telefone" >
+						                                
+						                            </div>
+						                        </div>
+						                        <div class="row control-group">
+						                            <div class="form-group col-xs-12 floating-label-form-group controls">
+						                                <label>Email</label>
+						                                <input type="text" class="form-control" placeholder="Email" id="email" name="email" >
+						                                
+						                            </div>
+						                        </div>
+						                        <div class="row control-group">
+						                            <div class="form-group col-xs-12 floating-label-form-group controls">
+						                                <label>Endereço</label>
+						                                <input type="text" class="form-control" placeholder="Endereco" id="endereco" name="endereco" >
+						                                
+						                            </div>
+						                        </div>
+						                        <div class="row control-group">
+						                            <div class="form-group col-xs-12 floating-label-form-group controls">
+						                                <label>Usuário</label>
+						                                <input type="text" class="form-control" placeholder="Usuário" id="username" name="username" >
+						                                
+						                            </div>
+						                        </div>
+						                        <div class="row control-group">
+						                            <div class="form-group col-xs-12 floating-label-form-group controls">
+						                                <label>Senha</label>
+						                                <input type="text" class="form-control" placeholder="Senha" id="senha" name="senha" >
+						                                
+						                            </div>
+						                        </div>
+						                        
+						                        <br>
+						                        <div id="success"></div>
+						                        <div class="row">
+						                            <div class="form-group col-xs-12">
+						                                <button type="button" onclick="submeter_form_cadastro_pessoa_juridica()" class="btn btn-success btn-lg">Enviar</button>
+						                            </div>
+						                        </div>
+						                    </form>
+						                </div>
+						            </div>
+                             	</div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- fim modal login -->
+    
     <!-- Header -->
     <header>
         <div class="container">
@@ -241,60 +438,7 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section class="success" id="contact">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2>Cadastro ou Login</h2>
-                    <hr class="star-light">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2">
-                    <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
-                    <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
-                    <form name="sentMessage" id="contactForm" novalidate>
-                        <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label>Nome</label>
-                                <input type="text" class="form-control" placeholder="Nome" id="name" required data-validation-required-message="Please enter your name.">
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label>Email</label>
-                                <input type="email" class="form-control" placeholder="Email" id="email" required data-validation-required-message="Please enter your email address.">
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label>Telefone</label>
-                                <input type="tel" class="form-control" placeholder="Telefone" id="phone" required data-validation-required-message="Please enter your phone number.">
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label>Mensagem</label>
-                                <textarea rows="5" class="form-control" placeholder="Mensagem" id="message" required data-validation-required-message="Please enter a message."></textarea>
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <br>
-                        <div id="success"></div>
-                        <div class="row">
-                            <div class="form-group col-xs-12">
-                                <button type="submit" class="btn btn-primary btn-lg">Enviar</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
+    
 
     <!-- Footer -->
     <footer class="text-center">
@@ -573,7 +717,7 @@
             </div>
         </div>
     </div>
-
+    
     <!-- jQuery -->
     <script src="<c:url value="static_startbootstrap-freelancer-1.0.3/js/jquery.js"/>"></script>
 
@@ -612,6 +756,7 @@
 	<script src="<c:url value="static/js/submit_sem_form.js"/>"></script>
 	<script src="<c:url value="static/js/submit_com_form.js"/>"></script>
 	<script src="<c:url value="static/js/montagemMap.js"/>"></script>
+	<script src="<c:url value="static/js/bootstrap_growl.js"/>"></script>
 	
 
 </body>
