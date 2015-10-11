@@ -36,7 +36,7 @@ public class ServletDeControle {
 	@RequestMapping("")
 	public ModelAndView home(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-		
+		teste de commit
 		mv.setViewName("index");
 		return mv;
 	}
@@ -207,7 +207,7 @@ public class ServletDeControle {
 		boolean isValid = false;
 		boolean pfOuPj = true;
 		boolean usuarioLogado = false;
-		boolean denunciaAnonima = false; // precisa criar campo no html dando opção de denúncia anônima!!!!
+		boolean denunciaAnonima = false; // precisa criar campo no html dando opï¿½ï¿½o de denï¿½ncia anï¿½nima!!!!
 		
 		PessoaFisica pf = new PessoaFisica();
 		
