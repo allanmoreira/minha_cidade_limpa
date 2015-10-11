@@ -18,7 +18,6 @@
     
     <!-- //////////// -->
     <link rel="stylesheet" href="<c:url value="static/css/EstiloSiteAdicional.css"/>">
-    <link rel="stylesheet" href="<c:url value="static_startbootstrap-freelancer-1.0.3/css/modal_bootstrap.css"/>">
     <!-- //////////// -->
 
     <title>Freelancer - Start Bootstrap Theme</title>
