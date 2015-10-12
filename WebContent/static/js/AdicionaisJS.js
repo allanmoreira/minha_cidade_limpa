@@ -1,4 +1,39 @@
 
+function verificarData(vdata) {
+    var inicio = vdata;
+    var fim = DataHoje();
+    if (inicio.length != 10 || fim.length != 10) return;
+
+    if (gerarData(fim) <= gerarData(inicio)) {
+    	return false;
+    }
+    return true;
+}
+
+
+function gerarData(str) {
+    var partes = str.split("/");
+    return new Date(partes[2], partes[1] - 1, partes[0]);
+}
+
+function DataHoje(){
+	var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+
+    var yyyy = today.getFullYear();
+    if(dd<10){
+        dd='0'+dd
+    } 
+    if(mm<10){
+        mm='0'+mm
+    } 
+    var today = dd+'/'+mm+'/'+yyyy;
+    return today;
+}
+
+
+
 function formatar(mascara, documento){
 	var ehNumero = verificaNumero(documento.value.replace("-","").replace("/","").replace(".","").replace("-","").replace("/","").replace(".","").replace(".","").replace(".",""));
 	if(ehNumero){
@@ -21,27 +56,6 @@ return !isNaN(parseFloat(v)) && isFinite(v)
 }
 
 
-function mascaraTelefone(v){
-	v = v.value;
-    v=v.replace(/D/g,"");             //Remove tudo o que não é dígito
-    v=v.replace(/^(d{2})(d)/g,"($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
-    v=v.replace(/(d)(d{4})$/,"$1-$2");    //Coloca hífen entre o quarto e o quinto dígitos
-    document.forms[1].telefone.value = v;
-}
-
- function mascaraData(campoData){
-              var data = campoData.value;
-              if (data.length == 2){
-                  data = data + '/';
-                  document.forms[1].data_nascim.value = data;
-      return true;              
-              }
-              if (data.length == 5){
-                  data = data + '/';
-                  document.forms[1].data_nascim.value = data;
-                  return true;
-              }
-         }
 
 function ValidaCPF(strCPF){
 	strCPF = strCPF.replace(".","").replace("-","").replace(".","");
@@ -149,6 +163,6 @@ function LimpaDadosPessoaJuridica(){
 }
 
 function LimpaDadosLogin(){
-	$('input[id*="username"]:eq(0)').val();
-	$('input[id*="senha"]:eq(0)').val();
+	$('input[id*="username"]:eq(0)').val("");
+	$('input[id*="senha"]:eq(0)').val("");
 }

@@ -67,6 +67,7 @@ public class ServletDeControle {
 		boolean dadosCadastroInvalidos = false;
 		boolean usernameInvalido = false;
 		String nomeUsuarioLogado = "";
+		
 		Login login = new Login();
 
 		String username = request.getParameter("username");
@@ -81,13 +82,17 @@ public class ServletDeControle {
 				boolean autorizaLogar = bancoDados.login(login);
 				bancoDados.encerrarConexao();
 				
-				System.out.println("Entrou");
+				System.out.println("Entrou?");
 				if (autorizaLogar) {
 					bancoDados.conectarAoBco();
 					login = bancoDados.dadosUsuarioLogado(login);
+					
+					System.out.println(login.toString());
 					PessoaFisica pessoaFisica = bancoDados.buscarPessoaFisica(login.getIdLogin());	
 					nomeUsuarioLogado = pessoaFisica.getNome();
+					
 					System.out.println(nomeUsuarioLogado);
+					
 					session.setAttribute("usuarioLogado", login);
 					isValid = true;
 				}
@@ -103,8 +108,8 @@ public class ServletDeControle {
 			// Levanta p�gina Erro 500 (n�o existe)
 		}
 
-		map.put("nomeUsuario", nomeUsuarioLogado);
 		map.put("isValid", isValid);
+		map.put("nomeUsuario", nomeUsuarioLogado);
 		map.put("login", login);
 		map.put("dadosInvalidos", dadosCadastroInvalidos);
 		map.put("usernameInvalido", usernameInvalido);
@@ -171,8 +176,7 @@ public class ServletDeControle {
 			try {
 				bancoDados.conectarAoBco();
 
-				boolean usernameNaoCadastrado = bancoDados
-						.usernameNaoCadastrado(username);
+				boolean usernameNaoCadastrado = bancoDados.usernameNaoCadastrado(username);
 
 				if (usernameNaoCadastrado) {
 					int idLogin = bancoDados.geraLoginUsuario(
