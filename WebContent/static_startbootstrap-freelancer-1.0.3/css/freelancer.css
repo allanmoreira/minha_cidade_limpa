@@ -22,7 +22,8 @@ a:focus,
 a:active,
 a.active {
     outline: 0;
-    color: #18bc9c;
+   color: #18bc9c;
+
 }
 
 h1,
@@ -63,7 +64,8 @@ hr.star-light {
 
 hr.star-light:after {
     color: #fff;
-    background-color: #18bc9c;
+   /* background-color: #18bc9c;*/
+    background-color: rgb(9, 210, 8);
 }
 
 hr.star-primary {
@@ -82,7 +84,8 @@ hr.star-primary:after {
 header {
     text-align: center;
     color: #fff;
-    background: #18bc9c;
+   /* background: #18bc9c;*/
+    background: rgb(9, 210, 8);
 }
 
 header .container {
@@ -176,12 +179,13 @@ section {
 
 section h2 {
     margin: 0;
-    font-size: 3em;
+    font-size: 2em;
 }
 
 section.success {
     color: #fff;
-    background: #18bc9c;
+   /* background-color: #18bc9c;*/
+    background-color:rgb(9, 210, 8);
 }
 
 section.success a,

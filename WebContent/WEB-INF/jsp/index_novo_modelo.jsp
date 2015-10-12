@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="<c:url value="static/css/EstiloSiteAdicional.css"/>">
     <!-- //////////// -->
 
-    <title>Freelancer - Start Bootstrap Theme</title>
+    <title>Nossa Cidade Limpa</title>
 
     <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
 	<link rel="stylesheet" href="<c:url value="static_startbootstrap-freelancer-1.0.3/css/bootstrap.min.css"/>">
@@ -55,7 +55,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#page-top">Minha Cidade Limpa</a>
+                <a class="navbar-brand" href="#page-top">Nossa Cidade Limpa</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -71,7 +71,7 @@
                         <a href="#depredacoes">Depredações</a>
                     </li>
                     <li >
-                        <a href="#depoimentos">Depoimentos</a>
+                        <a href="#depoimentos">Ações</a>
                     </li>
                     <li >
                         <a id="link_login_cadastro" href="#modal_login_cadastro" data-toggle="modal">Login ou Cadastro</a>
@@ -81,6 +81,13 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
+        
+        
+        
+         <div id="divFundo"
+		style="min-width: 100%; height: 100%; position: fixed; background-color: black; opacity: 0.75; z-index: 9999; display: none;"
+		class="navbar navbar-fixed-top" role="navigation"></div>
+	        
         
     <!-- modal login -->
     <div class="portfolio-modal modal fade" id="modal_login_cadastro" tabindex="-1" role="dialog" aria-hidden="true">
@@ -101,7 +108,12 @@
                     </div>
                 </div>
             </div>
-            <div class="container">
+            
+            
+               
+            
+            
+             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="modal-body">
@@ -122,7 +134,7 @@
 						                        <div class="row control-group">
 						                            <div class="form-group col-xs-12 floating-label-form-group controls">
 						                                <label>Senha</label>
-						                                <input type="text" class="form-control" placeholder="Senha" id="senha" name="senha" >
+						                                <input type="password" class="form-control" placeholder="Senha" id="senha" name="senha" >
 						                                
 						                            </div>
 						                        </div>
@@ -153,21 +165,21 @@
 						                        <div class="row control-group">
 						                            <div class="form-group col-xs-12 floating-label-form-group controls">
 						                                <label>Data de Nascimento</label>
-						                                <input type="text" class="form-control" placeholder="Data de Nascimento" id="data_nascim" name="data_nascim" >
+						                                <input type="text" class="form-control" placeholder="Data de Nascimento" id="data_nascim" name="data_nascim" OnKeyUp="formatar('##/##/####', this);" maxlength="10">
 						                                
 						                            </div>
 						                        </div>
 						                        <div class="row control-group">
 						                            <div class="form-group col-xs-12 floating-label-form-group controls">
 						                                <label>CPF</label>
-						                                <input type="text" class="form-control" placeholder="CPF" id="cpf" name="cpf" >
+						                                <input type="text" class="form-control" placeholder="CPF" id="cpf" name="cpf" OnKeyUp="formatar('###.###.###-##', this);" maxlength="14" >
 						                                
 						                            </div>
 						                        </div>
 						                        <div class="row control-group">
 						                            <div class="form-group col-xs-12 floating-label-form-group controls">
 						                                <label>Telefone</label>
-						                                <input type="text" class="form-control" placeholder="Telefone" id="telefone" name="telefone" >
+						                                <input type="text" class="form-control" placeholder="xx-xxxx-xxxx" id="telefone" name="telefone"  OnKeyUp="formatar('##-####-#####', this);" maxlength="13" >
 						                                
 						                            </div>
 						                        </div>
@@ -188,7 +200,7 @@
 						                        <div class="row control-group">
 						                            <div class="form-group col-xs-12 floating-label-form-group controls">
 						                                <label>Senha</label>
-						                                <input type="text" class="form-control" placeholder="Senha" id="senha" name="senha" >
+						                                <input type="password" class="form-control" placeholder="Senha" id="senha" name="senha" >
 						                                
 						                            </div>
 						                        </div>
@@ -220,14 +232,14 @@
 						                        <div class="row control-group">
 						                            <div class="form-group col-xs-12 floating-label-form-group controls">
 						                                <label>CNPJ</label>
-						                                <input type="text" class="form-control" placeholder="CNPJ" id="cnpj" name="cnpj" >
+						                                <input type="text" class="form-control" placeholder="CNPJ" id="cnpj" name="cnpj" OnKeyUp="formatar('##.###.###/####-##', this);" maxlength="18" >
 						                                
 						                            </div>
 						                        </div>
 						                        <div class="row control-group">
 						                            <div class="form-group col-xs-12 floating-label-form-group controls">
 						                                <label>Telefone</label>
-						                                <input type="text" class="form-control" placeholder="Telefone" id="telefone" name="telefone" >
+						                                <input type="text" class="form-control" placeholder="Telefone" id="telefone" name="telefone" OnKeyUp="formatar('##-####-#####', this);" maxlength="13">
 						                                
 						                            </div>
 						                        </div>
@@ -255,7 +267,7 @@
 						                        <div class="row control-group">
 						                            <div class="form-group col-xs-12 floating-label-form-group controls">
 						                                <label>Senha</label>
-						                                <input type="text" class="form-control" placeholder="Senha" id="senha" name="senha" >
+						                                <input type="password" class="form-control" placeholder="Senha" id="senha" name="senha" >
 						                                
 						                            </div>
 						                        </div>
@@ -278,6 +290,7 @@
             </div>
         </div>
     </div>
+     
     <!-- fim modal login -->
     
     <!-- Header -->
@@ -287,9 +300,9 @@
                 <div class="col-lg-12">
                     <img class="img-responsive" src="static_startbootstrap-freelancer-1.0.3/img/usina_gasometro_novo.png" alt="">
                     <div class="intro-text">
-                        <span class="name">Minha Cidade Limpa</span>
+                        <span class="name">Nossa Cidade Limpa</span>
                         <hr class="star-light">
-                        <span class="skills">Algum Resumo Sobre o que é o projeto...</span>
+                        <span class="skills">Escolha e preserve um patrimônio público.</span>
                     </div>
                 </div>
             </div>
@@ -307,10 +320,25 @@
             </div>
             <div class="row">
                 <div class="col-lg-4 col-lg-offset-2">
-                    <p>Freelancer is a free bootstrap theme created by Start Bootstrap. The download includes the complete source files including HTML, CSS, and JavaScript as well as optional LESS stylesheets for easy customization.</p>
+               <p class="refTexto">Este projeto está direcionado aos moradores, turistas e órgãos públicos que 
+estão diretamente envolvidos, situações de depredações do patrimônio público, além de te local com 
+ informações e contribuições sobre os problemas que as pessoas enfrentam
+na cidade, este sistema disponibilizará aos usuários consultar e informar estes problemas que 
+denigrem e afeta a imagem da cidade.</p>
+
+<p class="refTexto">Através do sistemas os moradores da cidade poderá organizar-se em grupos, para concertar 
+limpar o patrimônio público, também ajudará os cidadãos a terem um contato direto com o 
+os órgãos públicos, que por sua vez terão maior agilidade com a visualização de mapa dos 
+problemas de depredações da cidade.</p>
+
+<p class="refTexto">Contrário do que atualmente acontece, em que as prefeituras não conseguem atender a demanda 
+de limpezas. As pessoas poderão "adotar" por tempo determinado a manutenção do patrimônio, 
+a fim de usufrui de seus benefício. Logo contamos com a sua colaboração para melhor desenvolvimento  
+e manutenção de nossa cidade.</p>
+					
+               
                 </div>
                 <div class="col-lg-4">
-                    <p>Whether you're a student looking to showcase your work, a professional looking to attract clients, or a graphic artist looking to share your projects, this template is the perfect starting point!</p>
                 </div>
                 
             </div>
@@ -334,7 +362,7 @@
 				
 							<div id="gmap"
 								style="max-width: 972px; height: 300px; border: 5px solid orange; margin: 0px auto;"></div>
-							<div id="legend">
+							<div id="legend" style="background-color: rgba(128, 128, 128, 0.89)!important;" >
 								Status:
 								<div style="text-align: left;">
 									<div>
@@ -368,7 +396,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>Depoimentos</h2>
+                    <h2>Ações</h2>
                     <hr class="star-primary">
                 </div>
             </div>
@@ -390,7 +418,7 @@
                                 <i class="fa fa-search-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img src="static/img/acoes/giuseppe_e_anita.jpg" class="img-responsive" alt="">
+                     <img src="static/img/acoes/monumento_restaurado.jpg" class="img-responsive" alt="">
                     </a>
                 </div>
                 <div class="col-sm-4 portfolio-item">
@@ -400,37 +428,7 @@
                                 <i class="fa fa-search-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img src="static/img/acoes/giuseppe_e_anita.jpg" class="img-responsive" alt="">
-                    </a>
-                </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal4" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="static/img/acoes/giuseppe_e_anita.jpg" class="img-responsive" alt="">
-                    </a>
-                </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal5" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="static/img/acoes/giuseppe_e_anita.jpg" class="img-responsive" alt="">
-                    </a>
-                </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal6" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="static/img/acoes/giuseppe_e_anita.jpg" class="img-responsive" alt="">
+                        <img src="static/img/acoes/poa_limpa.jpg" class="img-responsive" alt="">
                     </a>
                 </div>
             </div>
@@ -445,8 +443,17 @@
             <div class="container">
                 <div class="row">
                     <div class="footer-col col-md-4">
-                        <h3>Nome da Empresa</h3>
-                        <p>Endereço/Contato<br>Endereço/Contato</p>
+                        <h3>Desenvolvedores</h3>
+                        <p>Allan Moreira 
+                        <br />
+                        Giovanni Caprio
+                        <br />
+                        Renan Souza
+                        <br />
+                        Vinicius Azevedo
+                        <br />
+                        Willen Ávila
+                        </p>
                     </div>
                     <div class="footer-col col-md-4">
                         <h3>Encontre-nos na Web</h3>
@@ -469,8 +476,9 @@
                         </ul>
                     </div>
                     <div class="footer-col col-md-4">
-                        <h3>Sobre [Nome da Empresa]</h3>
-                        <p>Nossa empresa é blá, blá, blá. Saiba mais em <a href="http://nossosite.com">[Nome da Empresa]</a>.</p>
+                        <h3>Origem Nossa Cidade Limpa</h3>
+                        <p>Nosso projeto, surgiu da disciplina de Gerência de Projetos, lecionada na PUCRS.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -479,7 +487,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        Copyright &copy; Your Website 2014
+                       Gerência de Projetos 2015/2  PUCRS - Porto Alegre - RS.
                     </div>
                 </div>
             </div>
@@ -494,43 +502,6 @@
     </div>
 
     <!-- Portfolio Modals -->
-    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <h2>Homenagem aos Mortos em Combate ao Comunismo</h2>
-                            <hr class="star-primary">
-                            <img src="static/img/acoes/giuseppe_e_anita.jpg" class="img-responsive img-centered" alt="">
-                            <p>Conjunto de obras, recentemente foi depredado, graças a iniciativa da SINDUSCON, as obras foram restauradas. <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-content">
             <div class="close-modal" data-dismiss="modal">
@@ -545,22 +516,32 @@
                         <div class="modal-body">
                             <h2>Homenagem aos Mortos em Combate ao Comunismo</h2>
                             <hr class="star-primary">
+                            <img src="static/img/acoes/monumento_restaurado.jpg" class="img-responsive img-centered" alt="">
+                            <p>Conjunto de obras, recentemente foi depredado, graças a iniciativa da SINDUSCON, as obras foram restauradas.
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <h2>Líderes da Revolução Farroupilha</h2>
+                            <hr class="star-primary">
                             <img src="static/img/acoes/giuseppe_e_anita.jpg" class="img-responsive img-centered" alt="">
-                            <p>Conjunto de obras, recentemente foi depredado, graças a iniciativa da SINDUSCON, as obras foram restauradas. <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
+                           	<p>Imponente monumento histórico de Porto Alegre, inaururado em 1936, atualmente, apresenta-se em situações vergonhosas.</p>
+								
                             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
                         </div>
                     </div>
@@ -580,24 +561,11 @@
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="modal-body">
-                            <h2>Homenagem aos Mortos em Combate ao Comunismo</h2>
+                            <h2>Por uma POA limpa</h2>
                             <hr class="star-primary">
-                            <img src="static/img/acoes/giuseppe_e_anita.jpg" class="img-responsive img-centered" alt="">
-                            <p>Conjunto de obras, recentemente foi depredado, graças a iniciativa da SINDUSCON, as obras foram restauradas. <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
+                            <img src="static/img/acoes/poa_limpa.jpg" class="img-responsive img-centered" alt="">
+                          		<p>Policias ajudam no combate contra as depredações patrimoniais.</p>
+								
                             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
                         </div>
                     </div>
@@ -619,22 +587,8 @@
                         <div class="modal-body">
                             <h2>Homenagem aos Mortos em Combate ao Comunismo</h2>
                             <hr class="star-primary">
-                            <img src="static/img/acoes/giuseppe_e_anita.jpg" class="img-responsive img-centered" alt="">
+                            <img src="static/img/acoes/monumento_restaurado.jpg" class="img-responsive img-centered" alt="">
                             <p>Conjunto de obras, recentemente foi depredado, graças a iniciativa da SINDUSCON, as obras foram restauradas. <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
                             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
                         </div>
                     </div>
@@ -658,21 +612,7 @@
                             <hr class="star-primary">
                             <img src="static/img/acoes/giuseppe_e_anita.jpg" class="img-responsive img-centered" alt="">
                             <p>Conjunto de obras, recentemente foi depredado, graças a iniciativa da SINDUSCON, as obras foram restauradas. <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                                 <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
                         </div>
                     </div>
                 </div>
@@ -695,20 +635,6 @@
                             <hr class="star-primary">
                             <img src="static/img/acoes/giuseppe_e_anita.jpg" class="img-responsive img-centered" alt="">
                             <p>Conjunto de obras, recentemente foi depredado, graças a iniciativa da SINDUSCON, as obras foram restauradas. <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
                             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
                         </div>
                     </div>

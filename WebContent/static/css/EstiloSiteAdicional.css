@@ -1,7 +1,12 @@
-.abseed_conteudo_sub { background-color:#EEEEEE; line-height:20px; vertical-align: top; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; -moz-border-radius-bottomright: 5px; -moz-border-radius-bottomleft: 5px; border: 1px solid #b3b3b4; padding: 10px 10px 10px 10px; margin-bottom: 10px; behavior: url(../js/PIE.htc); -pie-poll: false; position: relative \0/; }
+.abseed_conteudo_sub { background-color:#EEEEEE; line-height:20px; 
+vertical-align: top; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;
+ -moz-border-radius-bottomright: 5px; -moz-border-radius-bottomleft: 5px;
+  border: 1px solid #b3b3b4; padding: 10px 10px 10px 10px; margin-bottom: 10px; 
+  behavior: url(../js/PIE.htc); -pie-poll: false; position: relative \0/;
+   }
 .abseed_conteudo_borda  
 {   
-    line-height:8px;font-size:14px;
+    line-height:8px;font-size:17px;
     background: #3b6891; /* for non-css3 browsers */
 	/*-webkit-linear-gradient(top, rgb(184, 237, 124) b8ed7c, rgb(107, 158, 49) 6b9e31)*/
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#b8ed7c', endColorstr='#6b9e31'); /* for IE */

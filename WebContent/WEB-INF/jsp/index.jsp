@@ -162,22 +162,24 @@ e manutenção de nossa cidade.</p>
 								<div class="col-md-4">
 									<div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.8s">
 										<div>
-											<img src="static/img/acoes/monumento_restaurado.jpg" 
-											class="img_Comentarios" />
+										<img src="static/img/acoes/giuseppe_e_anita.jpg" 	class="img_Comentarios" />
+										
 										</div>
-										<h2>Homenagem aos Mortos em Combate ao Comunismo</h2>
-										<p>Conjunto de obras, recentemente foi depredado, graças a iniciativa da SINDUSCON, as obras foram restauradas.</p>
+									<h2>Líderes da Revolução Farroupilha</h2>
+										<p>Imponente monumento histórico de Porto Alegre, inaururado em 1936, atualmente, apresenta-se em situações vergonhosas.</p>
+									
+									
 									</div>
 								</div>
 								<div class="col-md-4">
 									<div class="wow flipInY" data-wow-offset="0" data-wow-delay="1.2s">
 										<div >
-										<img src="static/img/acoes/giuseppe_e_anita.jpg" 
+											<img src="static/img/acoes/monumento_restaurado.jpg" 
 											class="img_Comentarios" />
-									
+										
 												</div>
-										<h2>Líderes da Revolução Farroupilha</h2>
-										<p>Imponente monumento histórico de Porto Alegre, inaururado em 1936, atualmente, apresenta-se em situações vergonhosas.</p>
+										<h2>Homenagem aos Mortos em Combate ao Comunismo</h2>
+										<p>Conjunto de obras, recentemente foi depredado, graças a iniciativa da SINDUSCON, as obras foram restauradas.</p>
 									</div>
 								</div>
 								<div class="col-md-4">
