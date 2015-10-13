@@ -71,14 +71,14 @@ public class BancoDados {
         preparedStatement.setInt(1, idLogin);
 
         ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            pf.setNome(resultSet.getString("nome"));
-            pf.setCpf(resultSet.getString("cpf"));
-            pf.setEmail(resultSet.getString("email"));
-            pf.setDataNascimento(resultSet.getDate("data_nascimento"));
-            pf.setTelefone(resultSet.getString("telefone"));
-            pf.setIdLogin(resultSet.getInt("id_login"));
-        }
+        resultSet.next();
+        pf.setNome(resultSet.getString("nome"));
+        pf.setCpf(resultSet.getString("cpf"));
+        pf.setEmail(resultSet.getString("email"));
+        pf.setDataNascimento(resultSet.getDate("data_nascimento"));
+        pf.setTelefone(resultSet.getString("telefone"));
+        pf.setIdLogin(resultSet.getInt("id_login"));
+        
         resultSet.close();
         
         return pf;
@@ -225,9 +225,33 @@ public class BancoDados {
         ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();
         login.setIdLogin(resultSet.getInt("id_login"));
-        login.setPfOuPj(resultSet.getBoolean("pf_ou_pj"));
+        login.setPF(resultSet.getBoolean("pf_ou_pj"));
         
         
 		return login;
+	}
+
+	public PessoaJuridica buscarPessoaJuridica(int idLogin) throws SQLException {
+		PessoaJuridica pj = new PessoaJuridica();
+		
+		String sql = "select * from pessoa_juridica pj, login l "
+				+ "where "
+				+ "l.id_login = pj.id_login and "
+				+ "l.id_login = ?";
+		
+		preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, idLogin);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        pj.setNome(resultSet.getString("nome"));
+        pj.setCnpj(resultSet.getString("cnpj"));
+        pj.setEmail(resultSet.getString("email"));
+        pj.setEndereco(resultSet.getString("endereco"));
+        pj.setTelefone(resultSet.getString("telefone"));
+        pj.setIdLogin(resultSet.getInt("id_login"));
+        resultSet.close();
+        
+        return pj;
 	}
 }

@@ -39,20 +39,13 @@ public class ServletDeControle {
 	 *            implementado)
 	 * @return
 	 */
-	@RequestMapping("")
-	public ModelAndView home(HttpServletRequest request,
-			HttpServletResponse response, HttpSession session) {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("index");
-		return mv;
-	}
-
-	@RequestMapping("novo_template")
+	
+	@RequestMapping("index")
 	public ModelAndView homeNovoTemplate(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 
-		mv.setViewName("index_novo_modelo");
+		mv.setViewName("index");
 		return mv;
 	}
 
@@ -61,20 +54,12 @@ public class ServletDeControle {
 			HttpSession session) throws IOException {
 		BancoDados bancoDados = new BancoDados();
 		Map<String, Object> map = new HashMap<String, Object>();
-		Data data = new Data();
 		boolean isValid = false;
-		boolean pfOuPj = true;
 		boolean dadosCadastroInvalidos = false;
 		boolean usernameInvalido = false;
-		
-		String nomeUsuarioLogado = "";
-		String scpf = "";
-		String sdataNascimento ="";
-		String susername = "";
-		String stelefone = "";
-		String semail = "";
-		String ssenha = "";
-		boolean  beh_PF = false;
+		PessoaFisica pessoaFisica = null;
+		PessoaJuridica pessoaJuridica = new PessoaJuridica();
+		String nomeUsuarioLogado = null;
 		
 		Login login = new Login();
 
@@ -88,33 +73,27 @@ public class ServletDeControle {
 			if (username != null && senha != null) {
 				bancoDados.conectarAoBco();
 				boolean autorizaLogar = bancoDados.login(login);
+				login = bancoDados.dadosUsuarioLogado(login);
 				bancoDados.encerrarConexao();
 				
-				System.out.println("Entrou?");
 				if (autorizaLogar) {
-					bancoDados.conectarAoBco();
-					login = bancoDados.dadosUsuarioLogado(login);
 					
-					if(login.isPfOuPj()){
-						System.out.println(login.toString());
-						PessoaFisica pessoaFisica = bancoDados.buscarPessoaFisica(login.getIdLogin());	
+					if(login.isPF()){
+						bancoDados.conectarAoBco();
+						pessoaFisica = bancoDados.buscarPessoaFisica(login.getIdLogin());
 						nomeUsuarioLogado = pessoaFisica.getNome();
-						scpf = pessoaFisica.getCpf();
-						sdataNascimento = pessoaFisica.getDataNascimentoString();
-						semail = pessoaFisica.getEmail();
-						stelefone = pessoaFisica.getTelefone();
-						ssenha = pessoaFisica.getSenha();
-						susername = pessoaFisica.getUsername();					
+						bancoDados.encerrarConexao();
 					}
 					else{
-						
-						////?????
+						bancoDados.conectarAoBco();
+						pessoaJuridica = bancoDados.buscarPessoaJuridica(login.getIdLogin());
+						nomeUsuarioLogado = pessoaJuridica.getNome();
+						bancoDados.encerrarConexao();
 					}
-					beh_PF = login.isPfOuPj();
-					
-					System.out.println(nomeUsuarioLogado);
 					
 					session.setAttribute("usuarioLogado", login);
+					// utilizado para peencher o campo caso a pagina seja atualizada
+					session.setAttribute("nomeUsuarioLogado", nomeUsuarioLogado);
 					isValid = true;
 				}
 				
@@ -128,18 +107,9 @@ public class ServletDeControle {
 			// Erro ao executar a instru��o
 			// Levanta p�gina Erro 500 (n�o existe)
 		}
-
 		
-		map.put("TipoUsuario", beh_PF);		
-		map.put("snomeUsuario", nomeUsuarioLogado);
-		map.put("scpf", scpf);
-		map.put("semail", semail);
-		map.put("stelefone", stelefone);
-		map.put("sdatanascimento", sdataNascimento);
-		map.put("susername", susername);
-		map.put("ssenha", ssenha);
-		
-		
+		map.put("pessoaJuridica", pessoaJuridica);
+		map.put("pessoaFisica", pessoaFisica);
 		map.put("isValid", isValid);
 		map.put("login", login);
 		map.put("dadosInvalidos", dadosCadastroInvalidos);
@@ -148,6 +118,12 @@ public class ServletDeControle {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(new Gson().toJson(map));
+	}
+	
+	@RequestMapping("logout")
+	public String logout(HttpSession session) {
+	  session.invalidate();
+	  return "redirect:index";
 	}
 
 	/**
@@ -172,7 +148,7 @@ public class ServletDeControle {
 		PessoaFisica pessoaFisica = new PessoaFisica();
 		Data data = new Data();
 		boolean isValid = false;
-		boolean pfOuPj = true;
+		boolean PF = true;
 		boolean dadosCadastroInvalidos = false;
 		boolean usernameInvalido = false;
 
@@ -191,11 +167,10 @@ public class ServletDeControle {
 			pessoaFisica.setNome(nome);
 			pessoaFisica.setCpf(cpf);
 			pessoaFisica.setEmail(email);
-			pessoaFisica.setDataNascimento(data
-					.converteStringParaData(dataNascimento));
+			pessoaFisica.setDataNascimento(data.converteStringParaData(dataNascimento));
 			pessoaFisica.setUsername(username);
 			pessoaFisica.setSenha(senha);
-			pessoaFisica.setPfOuPj(pfOuPj);
+			pessoaFisica.setPF(PF);
 
 			// campo n�o obrigat�rio
 			if (telefone.equals("")) {
@@ -211,8 +186,8 @@ public class ServletDeControle {
 
 				if (usernameNaoCadastrado) {
 					int idLogin = bancoDados.geraLoginUsuario(
-							pessoaFisica.getUsername(),
-							pessoaFisica.getSenha(), pessoaFisica.isPfOuPj());
+					pessoaFisica.getUsername(),
+					pessoaFisica.getSenha(), pessoaFisica.isPF());
 					pessoaFisica.setIdLogin(idLogin);
 					bancoDados.cadastrarPessoaFisica(pessoaFisica);
 
@@ -252,7 +227,7 @@ public class ServletDeControle {
 		boolean isValid = false;
 		boolean dadosCadastroInvalidos = false;
 		boolean usernameInvalido = false;
-		boolean pfOuPj = false;
+		boolean isPF = false;
 
 		PessoaJuridica pessoaJuridica = new PessoaJuridica();
 
@@ -271,7 +246,7 @@ public class ServletDeControle {
 			pessoaJuridica.setCnpj(cnpj);
 			pessoaJuridica.setTelefone(telefone);
 			pessoaJuridica.setEmail(email);
-			pessoaJuridica.setPfOuPj(pfOuPj);
+			pessoaJuridica.setPF(isPF);
 
 			if (endereco.equals("")) {
 				pessoaJuridica.setEndereco(null);
@@ -288,7 +263,7 @@ public class ServletDeControle {
 				pessoaJuridica.setSenha(senha);
 				int idLogin = bancoDados.geraLoginUsuario(
 						pessoaJuridica.getUsername(),
-						pessoaJuridica.getSenha(), pessoaJuridica.isPfOuPj());
+						pessoaJuridica.getSenha(), pessoaJuridica.isPF());
 				pessoaJuridica.setIdLogin(idLogin);
 				bancoDados.cadastrarPessoaJuridica(pessoaJuridica);
 

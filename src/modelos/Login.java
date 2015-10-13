@@ -2,7 +2,7 @@ package modelos;
 
 public class Login {
 	private String username, senha;
-	private boolean pfOuPj;
+	private boolean PF;
 	private int idLogin;
 
 	public int getIdLogin() {
@@ -31,15 +31,14 @@ public class Login {
 	
 	/**
 	 * 
-	 * @return true se usuario for PF, false se usuário for PJ
+	 * @return true se usuario for PF, false se usuï¿½rio for PJ
 	 */
-	public boolean isPfOuPj() {
-		return pfOuPj;
+	public boolean isPF() {
+		return PF;
 	}
 
-	public void setPfOuPj(boolean pfOuPj) {
-		this.pfOuPj = pfOuPj;
+	public void setPF(boolean pF) {
+		PF = pF;
 	}
-	
 	
 }

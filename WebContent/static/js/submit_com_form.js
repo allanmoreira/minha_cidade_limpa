@@ -33,7 +33,6 @@ function submeter_form_cadastro_pessoa_fisica(){
 		dadosemBranco +="senha";
 	}
 	
-	
 	if(dadosemBranco !=""){
 		$.bootstrapGrowl(dadosemBranco + " em branco!", {
             type:'danger',
@@ -43,7 +42,6 @@ function submeter_form_cadastro_pessoa_fisica(){
         });
 		return false;
 	}
-	
 	
 	if(!ValidaCPF(cpf)){
 		$.bootstrapGrowl("CPF inválido!", {
@@ -286,10 +284,10 @@ function DeslogarUsuario(){
 }
 
 function LogarUsuario(){
-	var usuario = $('#username').val();
-	var senha = $('#senha').val();
+	var usuario = $('div[id*="modal_tab_login"] [id$="name"] ').val();
+	var senha = $('div[id*="modal_tab_login"] [id$="senha"] ').val();
 	
-	if(usuario == null ) {
+	if(usuario == "" || usuario == undefined ) {
 		$.bootstrapGrowl("Informe o seu usuário!", {
 			type:'danger',
 			align:'center',
@@ -298,7 +296,7 @@ function LogarUsuario(){
 		});
 		return false;
 	}
-	else if(senha == null){
+	else if(senha == "" || senha == undefined){
 		$.bootstrapGrowl("Informe a sua senha!", {
 			type:'danger',
 			align:'center',
@@ -324,20 +322,29 @@ function LogarUsuario(){
 			data: $('#form_login').serialize(),
 			success: function(data){
 				if(data.isValid) {
+					var pessoaFisica = data.pessoaFisica;
 					
-					$.bootstrapGrowl("Bem vindo " + data.nomeUsuario + "!", {
+					$.bootstrapGrowl("Bem vindo " + pessoaFisica.nome + "!", {
 						type:'success',
 						align:'center',
 						width: 'auto',
 						allow_dismiss: false
 					});
 					
+					// adiciona o link para logout apos o link de login
+					$('#link_login_cadastro').after('<a id="link_logout" href="/logout">Sair :(</a>');
+					//Alterar a Li com o nome da pessoa e opção de editar dados
+					$('#link_login_cadastro').text(pessoaFisica.nome);
+					$('#link_login_cadastro').attr("href", "javascript:abre_modal_editar_cadastro();");
+					
+					
+					
+					
 					//Limpar as variaveis
 					LimpaDadosLogin();
 					//Aterar o titulo do texto do botao
 					$('form[id*="form_login"] button').text("Sair");
-					//Alterar a Li com o nome da pessoa e indicativo de Exit				
-					$('a[id$="link_login_cadastro"]').text(data.nomeUsuario + " (Exit) :(");
+					
 					//Simula click na div modal para fecha-la
 					$('div[class="close-modal"]:eq(0)').click();
 					//Após se deslogar aparecerá as li para cadastro pf e pj
@@ -416,3 +423,13 @@ function abre_tab_login() {
 	  $('#modal_tab_cadastro_pf').removeClass('active');
 	  $('#modal_tab_login').addClass('active');
 }
+
+function abre_modal_login_cadastro() {
+	$('#modal_login_cadastro').modal('show');
+}
+
+function abre_modal_editar_cadastro() {
+	$('#modal_editar_cadastro()').modal('show');
+}
+
+
