@@ -77,6 +77,7 @@ public class BancoDados {
         pf.setDataNascimento(resultSet.getDate("data_nascimento"));
         pf.setTelefone(resultSet.getString("telefone"));
         pf.setIdLogin(resultSet.getInt("id_login"));
+        pf.setUsername(resultSet.getString("username"));
         
         resultSet.close();
         
@@ -249,6 +250,7 @@ public class BancoDados {
         pj.setEndereco(resultSet.getString("endereco"));
         pj.setTelefone(resultSet.getString("telefone"));
         pj.setIdLogin(resultSet.getInt("id_login"));
+        pj.setUsername(resultSet.getString("username"));
         resultSet.close();
         
         return pj;

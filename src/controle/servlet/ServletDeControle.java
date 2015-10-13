@@ -50,15 +50,14 @@ public class ServletDeControle {
 	}
 
 	@RequestMapping("login")
-	public void login(HttpServletRequest request, HttpServletResponse response,
-			HttpSession session) throws IOException {
+	public void login(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
 		BancoDados bancoDados = new BancoDados();
 		Map<String, Object> map = new HashMap<String, Object>();
 		boolean isValid = false;
 		boolean dadosCadastroInvalidos = false;
 		boolean usernameInvalido = false;
 		PessoaFisica pessoaFisica = null;
-		PessoaJuridica pessoaJuridica = new PessoaJuridica();
+		PessoaJuridica pessoaJuridica = null;
 		String nomeUsuarioLogado = null;
 		
 		Login login = new Login();
@@ -69,7 +68,7 @@ public class ServletDeControle {
 		login.setSenha(senha);
 
 		try {
-			// valida se os campos nï¿½o estï¿½o vazios
+			// valida se os campos nao estao vazios
 			if (username != null && senha != null) {
 				bancoDados.conectarAoBco();
 				boolean autorizaLogar = bancoDados.login(login);
@@ -121,9 +120,17 @@ public class ServletDeControle {
 	}
 	
 	@RequestMapping("logout")
-	public String logout(HttpSession session) {
-	  session.invalidate();
-	  return "redirect:index";
+	public void logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		boolean isValid = true;
+		
+		// termina com a sessão
+		session.invalidate();
+		
+		map.put("isValid", isValid);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(new Gson().toJson(map));
 	}
 
 	/**
@@ -141,16 +148,16 @@ public class ServletDeControle {
 	 * @throws Exception
 	 */
 	@RequestMapping("cadastrar_pessoa_fisica")
-	public void cadastrarPessoaFisica(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public void cadastrarPessoaFisica(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		BancoDados bancoDados = new BancoDados();
 		Map<String, Object> map = new HashMap<String, Object>();
 		PessoaFisica pessoaFisica = new PessoaFisica();
 		Data data = new Data();
 		boolean isValid = false;
-		boolean PF = true;
+		boolean isPF = true;
 		boolean dadosCadastroInvalidos = false;
 		boolean usernameInvalido = false;
+		String nomeUsuarioLogado = null;
 
 		String nome = request.getParameter("nome");
 		String cpf = request.getParameter("cpf");
@@ -170,7 +177,7 @@ public class ServletDeControle {
 			pessoaFisica.setDataNascimento(data.converteStringParaData(dataNascimento));
 			pessoaFisica.setUsername(username);
 			pessoaFisica.setSenha(senha);
-			pessoaFisica.setPF(PF);
+			pessoaFisica.setPF(isPF);
 
 			// campo nï¿½o obrigatï¿½rio
 			if (telefone.equals("")) {
@@ -185,13 +192,24 @@ public class ServletDeControle {
 				boolean usernameNaoCadastrado = bancoDados.usernameNaoCadastrado(username);
 
 				if (usernameNaoCadastrado) {
-					int idLogin = bancoDados.geraLoginUsuario(
-					pessoaFisica.getUsername(),
-					pessoaFisica.getSenha(), pessoaFisica.isPF());
+					int idLogin = bancoDados.geraLoginUsuario(pessoaFisica.getUsername(), pessoaFisica.getSenha(), pessoaFisica.isPF());
 					pessoaFisica.setIdLogin(idLogin);
 					bancoDados.cadastrarPessoaFisica(pessoaFisica);
 
 					isValid = true;
+					// Pega os dados do usuario logado. Ta meio gambiarra, pode ser melhor.
+					Login login = new Login();
+					login.setUsername(pessoaFisica.getUsername());
+					login.setSenha(pessoaFisica.getSenha());
+					login = bancoDados.dadosUsuarioLogado(login);
+					
+					pessoaFisica = bancoDados.buscarPessoaFisica(idLogin);
+					nomeUsuarioLogado = pessoaFisica.getNome();
+					
+					// loga o usuario
+					session.setAttribute("usuarioLogado", login);
+					// utilizado para peencher o campo caso a pagina seja atualizada
+					session.setAttribute("nomeUsuarioLogado", nomeUsuarioLogado);
 				} else {
 					usernameInvalido = true;
 				}
@@ -220,14 +238,14 @@ public class ServletDeControle {
 	}
 
 	@RequestMapping("cadastrar_pessoa_juridica")
-	public void cadastrarPessoaJuridica(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public void cadastrarPessoaJuridica(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		BancoDados bancoDados = new BancoDados();
 		Map<String, Object> map = new HashMap<String, Object>();
 		boolean isValid = false;
 		boolean dadosCadastroInvalidos = false;
 		boolean usernameInvalido = false;
 		boolean isPF = false;
+		String nomeUsuarioLogado = null;
 
 		PessoaJuridica pessoaJuridica = new PessoaJuridica();
 
@@ -268,6 +286,22 @@ public class ServletDeControle {
 				bancoDados.cadastrarPessoaJuridica(pessoaJuridica);
 
 				isValid = true;
+				
+				// Pega os dados do usuario logado. Ta meio gambiarra, pode ser melhor.
+				Login login = new Login();
+				login.setUsername(pessoaJuridica.getUsername());
+				login.setSenha(pessoaJuridica.getSenha());
+				login = bancoDados.dadosUsuarioLogado(login);
+				
+				pessoaJuridica = bancoDados.buscarPessoaJuridica(login.getIdLogin());
+				nomeUsuarioLogado = pessoaJuridica.getNome();
+				
+				// loga o usuario
+				session.setAttribute("usuarioLogado", login);
+				// utilizado para peencher o campo caso a pagina seja atualizada
+				session.setAttribute("nomeUsuarioLogado", nomeUsuarioLogado);
+				///////////////////////////////////////////////////////
+				
 			} else {
 				usernameInvalido = true;
 			}

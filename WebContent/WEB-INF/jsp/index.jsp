@@ -73,15 +73,22 @@
                     <li >
                         <a href="#depoimentos">Ações</a>
                     </li>
-                    <li>
-                    	<a id="link_login_cadastro" href="javascript:abre_modal_login_cadastro()">Login ou Cadastro</a>
-                    </li>
+                    
+                    <!-- mantém a interface de login mesmo ao atualizar a página -->
                     <c:choose>
                     	<c:when test="${usuarioLogado != null }">
-                    		<li >
-		                        <a id="link_logout" href="logout">Sair :(</a>
-		                   </li>
+                    		<li id="li_login_cadastro">
+		                    	<a id="link_login_cadastro" href="javascript:abre_modal_editar_cadastro()">${nomeUsuarioLogado }</a>
+		                    </li>
+		                    <li id="li_logout">
+		                    	<a id="link_logout" href="javascript:submeter_form_logout()">Sair :(</a>
+		                    </li>
                     	</c:when>
+                    	<c:otherwise>
+                    		<li id="li_login_cadastro">
+		                    	<a id="link_login_cadastro" href="javascript:abre_modal_login_cadastro()">Login ou Cadastro</a>
+		                    </li>
+                    	</c:otherwise>
                     </c:choose>
                     
                 </ul>
@@ -93,11 +100,222 @@
         
         
         
-         <div id="divFundo"
+    <div id="divFundo"
 		style="min-width: 100%; height: 100%; position: fixed; background-color: black; opacity: 0.75; z-index: 9999; display: none;"
-		class="navbar navbar-fixed-top" role="navigation"></div>
+		class="navbar navbar-fixed-top" role="navigation">
+	</div>
 	        
         
+    <!-- modal editar cadastro -->
+    <div class="portfolio-modal modal fade" id="modal_editar_cadastro" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+			<div class="col-lg-8 col-lg-offset-2">
+				<div class="col-xs-12 ">
+					<ul class="nav nav-tabs" data-toggle="tabs">
+						<li id="li_editar_dados_"><a href="javascript:void(0);" title="" data-original-title="Editar Cadastro"><i class="fa fa-pencil"></i> Editar Cadastro</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            
+             <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                             <div class="tab-content">
+                             	<div class="tab-pane active" id="modal_tab_editar_cadastro">
+                             		<div class="row">
+						                <div class="col-lg-8 col-lg-offset-2">
+						                	<!-- valida qual form mostrar, se PF ou PJ -->
+						                	<c:choose>
+						                		<c:when test="${usuarioLogado.PF == true }">
+						                			<!-- isto é um IF. Se o usuário logado é PF, mostra o form abaixo... -->
+													<form name="form_editar_cadastro_pessoa_fisica"
+														id="form_editar_cadastro_pessoa_fisica"
+														accept-charset="iso-8859-1,utf-8">
+														<div class="row control-group">
+															<div
+																class="form-group col-xs-12 floating-label-form-group controls">
+																<label>Nome</label> <input type="text"
+																	class="form-control" placeholder="Nome" id="nome_editar"
+																	name="nome_editar">
+
+															</div>
+														</div>
+														<div class="row control-group">
+															<div
+																class="form-group col-xs-12 floating-label-form-group controls">
+																<label>Data de Nascimento</label> <input type="text"
+																	class="form-control" placeholder="Data de Nascimento"
+																	id="data_nascim_editar" name="data_nascim_editar"
+																	OnKeyUp="formatar('##/##/####', this);" maxlength="10">
+
+															</div>
+														</div>
+														<div class="row control-group">
+															<div
+																class="form-group col-xs-12 floating-label-form-group controls">
+																<label>CPF</label> <input type="text"
+																	class="form-control" placeholder="CPF" id="cpf_editar"
+																	name="cpf_editar" OnKeyUp="formatar('###.###.###-##', this);"
+																	maxlength="14">
+
+															</div>
+														</div>
+														<div class="row control-group">
+															<div
+																class="form-group col-xs-12 floating-label-form-group controls">
+																<label>Telefone</label> <input type="text"
+																	class="form-control" placeholder="xx-xxxx-xxxx"
+																	id="telefone_editar" name="telefone_editar"
+																	OnKeyUp="formatar('##-####-#####', this);"
+																	maxlength="13">
+
+															</div>
+														</div>
+														<div class="row control-group">
+															<div
+																class="form-group col-xs-12 floating-label-form-group controls">
+																<label>Email</label> <input type="text"
+																	class="form-control" placeholder="Email" id="email_editar"
+																	name="email_editar">
+
+															</div>
+														</div>
+														<div class="row control-group">
+															<div
+																class="form-group col-xs-12 floating-label-form-group controls">
+																<label>Usuário</label> <input type="text"
+																	class="form-control" placeholder="Usuário"
+																	id="username_editar" name="username_editar">
+
+															</div>
+														</div>
+														<div class="row control-group">
+															<div
+																class="form-group col-xs-12 floating-label-form-group controls">
+																<label>Senha</label> <input type="password"
+																	class="form-control" placeholder="Senha" id="senha_editar"
+																	name="senha_editar">
+
+															</div>
+														</div>
+
+														<br>
+														<div id="success"></div>
+														<div class="row">
+															<div class="form-group col-xs-12">
+																<button type="button"
+																	onclick="javascript:submeter_form_editar_cadastro_pessoa_fisica()"
+																	class="btn btn-success btn-lg">Enviar</button>
+															</div>
+														</div>
+													</form>
+												</c:when>
+												
+						                		<c:otherwise>
+						                			<!-- Caso contrário, cai nesse "ELSE" -->
+													<form name="form_editar_cadastro_pessoa_juridica"
+														id="form_editar_cadastro_pessoa_juridica"
+														accept-charset="iso-8859-1,utf-8">
+														<div class="row control-group">
+															<div
+																class="form-group col-xs-12 floating-label-form-group controls">
+																<label>Nome</label> <input type="text"
+																	class="form-control" placeholder="Nome" id="nome_editar"
+																	name="nome_editar">
+
+															</div>
+														</div>
+														<div class="row control-group">
+															<div
+																class="form-group col-xs-12 floating-label-form-group controls">
+																<label>CNPJ</label> <input type="text"
+																	class="form-control" placeholder="CNPJ" id="cnpj_editar"
+																	name="cnpj_editar"
+																	OnKeyUp="formatar('##.###.###/####-##', this);"
+																	maxlength="18">
+
+															</div>
+														</div>
+														<div class="row control-group">
+															<div
+																class="form-group col-xs-12 floating-label-form-group controls">
+																<label>Telefone</label> <input type="text"
+																	class="form-control" placeholder="Telefone"
+																	id="telefone_editar" name="telefone_editar"
+																	OnKeyUp="formatar('##-####-#####', this);"
+																	maxlength="13">
+
+															</div>
+														</div>
+														<div class="row control-group">
+															<div
+																class="form-group col-xs-12 floating-label-form-group controls">
+																<label>Email</label> <input type="text"
+																	class="form-control" placeholder="Email" id="email_editar"
+																	name="email_editar">
+
+															</div>
+														</div>
+														<div class="row control-group">
+															<div
+																class="form-group col-xs-12 floating-label-form-group controls">
+																<label>Endereço</label> <input type="text"
+																	class="form-control" placeholder="Endereco"
+																	id="endereco_editar" name="endereco_editar">
+
+															</div>
+														</div>
+														<div class="row control-group">
+															<div
+																class="form-group col-xs-12 floating-label-form-group controls">
+																<label>Usuário</label> <input type="text"
+																	class="form-control" placeholder="Usuário"
+																	id="username_editar" name="username_editar">
+
+															</div>
+														</div>
+														<div class="row control-group">
+															<div
+																class="form-group col-xs-12 floating-label-form-group controls">
+																<label>Senha</label> <input type="password"
+																	class="form-control" placeholder="Senha" id="senha_editar"
+																	name="senha_editar">
+
+															</div>
+														</div>
+
+														<br>
+														<div id="success"></div>
+														<div class="row">
+															<div class="form-group col-xs-12">
+																<button type="button"
+																	onclick="submeter_form_cadastro_pessoa_juridica()"
+																	class="btn btn-success btn-lg">Enviar</button>
+															</div>
+														</div>
+													</form>
+												</c:otherwise>
+						                	</c:choose>
+						                </div>
+						            </div>
+                             	</div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- fim modal editar cadastro -->
+    
     <!-- modal login -->
     <div class="portfolio-modal modal fade" id="modal_login_cadastro" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-content">
@@ -295,7 +513,6 @@
             </div>
         </div>
     </div>
-     
     <!-- fim modal login -->
     
     <!-- Header -->
@@ -324,22 +541,22 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-lg-offset-2">
+                <div class="col-lg-4 col-lg-md-4">
                <p class="refTexto">Este projeto está direcionado aos moradores, turistas e órgãos públicos que 
-estão diretamente envolvidos, situações de depredações do patrimônio público, além de te local com 
- informações e contribuições sobre os problemas que as pessoas enfrentam
-na cidade, este sistema disponibilizará aos usuários consultar e informar estes problemas que 
-denigrem e afeta a imagem da cidade.</p>
-
-<p class="refTexto">Através do sistemas os moradores da cidade poderá organizar-se em grupos, para concertar 
-limpar o patrimônio público, também ajudará os cidadãos a terem um contato direto com o 
-os órgãos públicos, que por sua vez terão maior agilidade com a visualização de mapa dos 
-problemas de depredações da cidade.</p>
-
-<p class="refTexto">Contrário do que atualmente acontece, em que as prefeituras não conseguem atender a demanda 
-de limpezas. As pessoas poderão "adotar" por tempo determinado a manutenção do patrimônio, 
-a fim de usufrui de seus benefício. Logo contamos com a sua colaboração para melhor desenvolvimento  
-e manutenção de nossa cidade.</p>
+				estão diretamente envolvidos, situações de depredações do patrimônio público, além de te local com 
+				 informações e contribuições sobre os problemas que as pessoas enfrentam
+				na cidade, este sistema disponibilizará aos usuários consultar e informar estes problemas que 
+				denigrem e afeta a imagem da cidade.</p>
+				
+				<p class="refTexto">Através do sistemas os moradores da cidade poderá organizar-se em grupos, para concertar 
+				limpar o patrimônio público, também ajudará os cidadãos a terem um contato direto com o 
+				os órgãos públicos, que por sua vez terão maior agilidade com a visualização de mapa dos 
+				problemas de depredações da cidade.</p>
+				
+				<p class="refTexto">Contrário do que atualmente acontece, em que as prefeituras não conseguem atender a demanda 
+				de limpezas. As pessoas poderão "adotar" por tempo determinado a manutenção do patrimônio, 
+				a fim de usufrui de seus benefício. Logo contamos com a sua colaboração para melhor desenvolvimento  
+				e manutenção de nossa cidade.</p>
 					
                
                 </div>
@@ -481,8 +698,8 @@ e manutenção de nossa cidade.</p>
                         </ul>
                     </div>
                     <div class="footer-col col-md-4">
-                        <h3>Origem Nossa Cidade Limpa</h3>
-                        <p>Nosso projeto, surgiu da disciplina de Gerência de Projetos, lecionada na PUCRS.
+                        <h3>Origem do projeto</h3>
+                        <p>O trabalho tem como objetivo o aprendizado sobre metodologias, técnicas e ferramentas de gerenciamento de projetos de software, tais como planejamento, execução, acompanhamento, controle e encerramento de um projeto de software. 
                         </p>
                     </div>
                 </div>
@@ -492,7 +709,7 @@ e manutenção de nossa cidade.</p>
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                       Gerência de Projetos 2015/2  PUCRS - Porto Alegre - RS.
+                       Gerência de Projetos de Software 2015/2  PUCRS - Porto Alegre - RS.
                     </div>
                 </div>
             </div>

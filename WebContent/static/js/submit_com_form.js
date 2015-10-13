@@ -97,14 +97,19 @@ function submeter_form_cadastro_pessoa_fisica(){
 		                width: 'auto',
 		                allow_dismiss: false
 		            });
+					$('#link_login_cadastro').text(pessoaFisica.nome);
+					$('#link_login_cadastro').attr("href", "javascript:abre_modal_editar_cadastro();");
 					
-					
-					
-					
-					LimpaDadosPessoaFisica();
-					//Simula click na div modal para fecha-la
-					$('div[class="close-modal"]:eq(0)').click();
-											
+					//Alterar a Li com o nome da pessoa e opção de editar dados
+					$('#link_login_cadastro').text(pessoaFisica.nome);
+					// Altera o link para o modal de edição do cadastro
+					$('#link_login_cadastro').attr("href", "javascript:abre_modal_editar_cadastro();");
+					// Adiciona o link para logout
+					$('#li_login_cadastro').after('<li id="li_logout"><a id="link_logout" href="javascript:submeter_form_logout()">Sair :(</a></li>');
+					// Fecha o modal de login
+					$('#modal_login_cadastro').modal('hide');
+					//Limpar as variaveis do cadastro de PF
+					$('#form_cadastrar_pessoa_fisica')[0].reset();
 				}
 				else {
 					if(data.usernameInvalido){
@@ -178,9 +183,6 @@ function submeter_form_cadastro_pessoa_juridica(){
 		return false;
 	}
 	
-	
-	
-	
 	var cnpj =  $('#cnpj').val();
 	if(!validarCNPJ(cnpj)){
 		$.bootstrapGrowl("CNPJ inválido!", {
@@ -218,9 +220,17 @@ function submeter_form_cadastro_pessoa_juridica(){
 						width: 'auto',
 						allow_dismiss: false
 					});
-					LimpaDadosPessoaJuridica();
-					//Simula click na div modal para fecha-la
-					$('div[class="close-modal"]:eq(0)').click();
+					
+					//Alterar a Li com o nome da pessoa e opção de editar dados
+					$('#link_login_cadastro').text(pessoaJuridica.nome);
+					// Altera o link para o modal de edição do cadastro
+					$('#link_login_cadastro').attr("href", "javascript:abre_modal_editar_cadastro();");
+					// Adiciona o link para logout
+					$('#li_login_cadastro').after('<li id="li_logout"><a id="link_logout" href="javascript:submeter_form_logout()">Sair :(</a></li>');
+					// Fecha o modal de login
+					$('#modal_login_cadastro').modal('hide');
+					//Limpar as variaveis do cadastro de PF
+					$('#form_cadastrar_pessoa_juridica')[0].reset();
 
 				}
 				else {
@@ -252,20 +262,44 @@ function submeter_form_cadastro_pessoa_juridica(){
 	
 }
 
-function submeter_form_login(){
-	var textoBotao = $('form[id*="form_login"] button').text();
-	if(textoBotao.indexOf("Env") > -1){
-		LogarUsuario();
-	}
-	else{
-		DeslogarUsuario();
-	}
-}
-
-function DeslogarUsuario(){
+function submeter_form_logout(){
 	
-	//Implementar o método que faz a chamada do ajax para deslogar
+	$.ajax({
+		url: 'logout',
+		// async: true,
+		type: 'POST',
+		dataType: 'json',
+		data: {'submit':true},
+		success: function(data){
+			if(data.isValid) {
+				// Remove o link para logoff
+				$('#link_logout').remove();
+				//Alterar a Li para o padrão
+				$('#link_login_cadastro').text("Login ou Cadastro");
+				// Altera o link para o modal de login/cadastro
+				$('#link_login_cadastro').attr("href", "javascript:abre_modal_login_cadastro();");
+				
+				$.bootstrapGrowl("Logoff efetuado com sucesso!", {
+					type:'success',
+					align:'center',
+					width: 'auto',
+					allow_dismiss: false
+				});
+			}
+			else {
+				$.bootstrapGrowl("Houve um erro ao fazer logoff!", {
+					type:'danger',
+					align:'center',
+					width: 'auto',
+					allow_dismiss: false
+				});
+			}
+		}
 	
+	});
+	return false;
+	
+	/*
 	//Aterar o titulo do texto do botao
 	$('form[id*="form_login"] button').text("Enviar");
 	//Alterar a Li com Login e Cadastro				
@@ -280,10 +314,11 @@ function DeslogarUsuario(){
 	//Habilita os campos para fazer novamente o login					
 	$('form[id*="form_login"] [id$="name"]').prop('disabled', false);
 	$('form[id*="form_login"] [id$="senha"]').prop('disabled', false);
-
+	*/
 }
 
-function LogarUsuario(){
+
+function submeter_form_login(){
 	var usuario = $('div[id*="modal_tab_login"] [id$="name"] ').val();
 	var senha = $('div[id*="modal_tab_login"] [id$="senha"] ').val();
 	
@@ -323,54 +358,69 @@ function LogarUsuario(){
 			success: function(data){
 				if(data.isValid) {
 					var pessoaFisica = data.pessoaFisica;
+					var pessoaJuridica = data.pessoaJuridica;
 					
-					$.bootstrapGrowl("Bem vindo " + pessoaFisica.nome + "!", {
-						type:'success',
-						align:'center',
-						width: 'auto',
-						allow_dismiss: false
-					});
-					
-					// adiciona o link para logout apos o link de login
-					$('#link_login_cadastro').after('<a id="link_logout" href="/logout">Sair :(</a>');
-					//Alterar a Li com o nome da pessoa e opção de editar dados
-					$('#link_login_cadastro').text(pessoaFisica.nome);
-					$('#link_login_cadastro').attr("href", "javascript:abre_modal_editar_cadastro();");
-					
-					
-					
-					
-					//Limpar as variaveis
-					LimpaDadosLogin();
-					//Aterar o titulo do texto do botao
-					$('form[id*="form_login"] button').text("Sair");
-					
-					//Simula click na div modal para fecha-la
-					$('div[class="close-modal"]:eq(0)').click();
-					//Após se deslogar aparecerá as li para cadastro pf e pj
-					$('li[id*="li_PJ"]').hide();
-					//Bloqueio os campos para logar com outro usuario
-					$('form[id*="form_login"] [id$="name"]').prop('disabled', true);
-					$('form[id*="form_login"] [id$="senha"]').prop('disabled', true);
-					
-					if(data.TipoUsuario){
-						$('li[id*="li_PF"] a').text("Alteraçao de dados pessoa física");
-						//Aterar o titulo do texto do botao
-						$('form[id*="form_cadastrar_pessoa_fisica"] button').text("Alterar");
-						$('li[id*="li_PF"]').hide();
+					// se for pessoa fisica...
+					if(pessoaFisica != null) {
+						$.bootstrapGrowl("Bem vindo " + pessoaFisica.nome + "!", {
+							type:'success',
+							align:'center',
+							width: 'auto',
+							allow_dismiss: false
+						});
 						
-						$('form[id*="form_cadastrar_pessoa_fisica"] [id$="telefone"]').val(data.stelefone);
-						$('form[id*="form_cadastrar_pessoa_fisica"] [id$="data_nascim"]').val(data.sdatanascimento);
-						$('form[id*="form_cadastrar_pessoa_fisica"] [id$="cpf"]').val(data.scpf);
-						$('form[id*="form_cadastrar_pessoa_fisica"] [id$="email"]').val(data.semail);
-						$('form[id*="form_cadastrar_pessoa_fisica"] [id$="username"]').val(data.susername);
-						$('form[id*="form_cadastrar_pessoa_fisica"] [id$="senha"]').val(data.ssenha);
-						$('form[id*="form_cadastrar_pessoa_fisica"] [id$="nome"]').val(data.snomeUsuario);					
+						//Alterar a Li com o nome da pessoa e opção de editar dados
+						$('#link_login_cadastro').text(pessoaFisica.nome);
+						// Altera o link para o modal de edição do cadastro
+						$('#link_login_cadastro').attr("href", "javascript:abre_modal_editar_cadastro();");
+						// Adiciona o link para logout
+						$('#li_login_cadastro').after('<li id="li_logout"><a id="link_logout" href="javascript:submeter_form_logout()">Sair :(</a></li>');
+						// Fecha o modal de login
+						$('#modal_login_cadastro').modal('hide');
 						
-					}else{
+						//Limpar as variaveis do login
+						$('#form_login')[0].reset();
 						
-						
+						//preenche campos de edição de cadastro com os dados do usuário
+						$('#nome_editar').val(pessoaFisica.nome);
+						$('#data_nascim_editar').val(pessoaFisica.dataNascimento);
+						$('#cpf_editar').val(pessoaFisica.cpf);
+						$('#telefone_editar').val(pessoaFisica.telefone);
+						$('#email_editar').val(pessoaFisica.email);
+						$('#username_editar').val(pessoaFisica.username);
 					}
+					// senão, é pessoa juridica
+					else {
+						$.bootstrapGrowl("Bem vindo " + pessoaJuridica.nome + "!", {
+							type:'success',
+							align:'center',
+							width: 'auto',
+							allow_dismiss: false
+						});
+						
+						//Alterar a Li com o nome da pessoa e opção de editar dados
+						$('#link_login_cadastro').text(pessoaJuridica.nome);
+						// Altera o link para o modal de edição do cadastro
+						$('#link_login_cadastro').attr("href", "javascript:abre_modal_editar_cadastro();");
+						// Adiciona o link para logout
+						$('#li_login_cadastro').after('<li id="li_logout"><a id="link_logout" href="javascript:submeter_form_logout()">Sair :(</a></li>');
+						// Fecha o modal de login
+						$('#modal_login_cadastro').modal('hide');
+						
+						//Limpar as variaveis do login
+						$('#form_login')[0].reset();
+						
+						$('nome_editar').val(pessoaJuridica.nome);
+						$('cnpj_editar').val(pessoaJuridica.cnpj);
+						$('telefone_editar').val(pessoaJuridica.telefone);
+						$('email_editar').val(pessoaJuridica.email);
+						$('endereco_editar').val(pessoaJuridica.endereco);
+						$('username_editar').val(pessoaJuridica.username);
+					}
+					
+					
+					
+					
 				}
 				else {
 					if(data.dadosCadastroInvalidos = true) {
@@ -429,7 +479,7 @@ function abre_modal_login_cadastro() {
 }
 
 function abre_modal_editar_cadastro() {
-	$('#modal_editar_cadastro()').modal('show');
+	$('#modal_editar_cadastro').modal('show');
 }
 
 
