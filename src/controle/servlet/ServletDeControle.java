@@ -66,7 +66,15 @@ public class ServletDeControle {
 		boolean pfOuPj = true;
 		boolean dadosCadastroInvalidos = false;
 		boolean usernameInvalido = false;
+		
 		String nomeUsuarioLogado = "";
+		String scpf = "";
+		String sdataNascimento ="";
+		String susername = "";
+		String stelefone = "";
+		String semail = "";
+		String ssenha = "";
+		boolean  beh_PF = false;
 		
 		Login login = new Login();
 
@@ -87,9 +95,22 @@ public class ServletDeControle {
 					bancoDados.conectarAoBco();
 					login = bancoDados.dadosUsuarioLogado(login);
 					
-					System.out.println(login.toString());
-					PessoaFisica pessoaFisica = bancoDados.buscarPessoaFisica(login.getIdLogin());	
-					nomeUsuarioLogado = pessoaFisica.getNome();
+					if(login.isPfOuPj()){
+						System.out.println(login.toString());
+						PessoaFisica pessoaFisica = bancoDados.buscarPessoaFisica(login.getIdLogin());	
+						nomeUsuarioLogado = pessoaFisica.getNome();
+						scpf = pessoaFisica.getCpf();
+						sdataNascimento = pessoaFisica.getDataNascimentoString();
+						semail = pessoaFisica.getEmail();
+						stelefone = pessoaFisica.getTelefone();
+						ssenha = pessoaFisica.getSenha();
+						susername = pessoaFisica.getUsername();					
+					}
+					else{
+						
+						////?????
+					}
+					beh_PF = login.isPfOuPj();
 					
 					System.out.println(nomeUsuarioLogado);
 					
@@ -108,8 +129,18 @@ public class ServletDeControle {
 			// Levanta p�gina Erro 500 (n�o existe)
 		}
 
+		
+		map.put("TipoUsuario", beh_PF);		
+		map.put("snomeUsuario", nomeUsuarioLogado);
+		map.put("scpf", scpf);
+		map.put("semail", semail);
+		map.put("stelefone", stelefone);
+		map.put("sdatanascimento", sdataNascimento);
+		map.put("susername", susername);
+		map.put("ssenha", ssenha);
+		
+		
 		map.put("isValid", isValid);
-		map.put("nomeUsuario", nomeUsuarioLogado);
 		map.put("login", login);
 		map.put("dadosInvalidos", dadosCadastroInvalidos);
 		map.put("usernameInvalido", usernameInvalido);
