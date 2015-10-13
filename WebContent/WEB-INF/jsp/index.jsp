@@ -134,8 +134,8 @@
 						                <div class="col-lg-8 col-lg-offset-2">
 						                	<!-- valida qual form mostrar, se PF ou PJ -->
 						                	<c:choose>
-						                		<c:when test="${usuarioLogado.PF == true }">
-						                			<!-- isto é um IF. Se o usuário logado é PF, mostra o form abaixo... -->
+						                		 <c:when test="${usuarioLogado.PF == true}">   		
+						                   			<!-- isto é um IF. Se o usuário logado é PF, mostra o form abaixo... -->
 													<form name="form_editar_cadastro_pessoa_fisica"
 														id="form_editar_cadastro_pessoa_fisica"
 														accept-charset="iso-8859-1,utf-8">
@@ -297,7 +297,7 @@
 														<div class="row">
 															<div class="form-group col-xs-12">
 																<button type="button"
-																	onclick="submeter_form_cadastro_pessoa_juridica()"
+																	onclick="submeter_form_editar_cadastro_pessoa_juridico()"
 																	class="btn btn-success btn-lg">Enviar</button>
 															</div>
 														</div>

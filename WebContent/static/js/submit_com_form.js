@@ -202,36 +202,297 @@ function submeter_form_cadastro_pessoa_juridica(){
 			allow_dismiss: false
 		});
 		
+		
+		
+		
+	
+			$.ajax({
+				url: 'cadastrar_pessoa_juridica',
+				async: true,
+				type: 'POST',
+				dataType: 'json',
+				data: $('#form_cadastrar_pessoa_juridica').serialize(),
+				success: function(data){
+					if(data.isValid) {
+						
+						var pessoaJuridica = data.pessoaJuridica;
+						
+						
+						$.bootstrapGrowl("Pessoa física " + pessoaJuridica.nome + " cadastrada com sucesso!", {
+							type:'success',
+							align:'center',
+							width: 'auto',
+							allow_dismiss: false
+						});
+						
+						//Alterar a Li com o nome da pessoa e opção de editar dados
+						$('#link_login_cadastro').text(pessoaJuridica.nome);
+						// Altera o link para o modal de edição do cadastro
+						$('#link_login_cadastro').attr("href", "javascript:abre_modal_editar_cadastro();");
+						// Adiciona o link para logout
+						$('#li_login_cadastro').after('<li id="li_logout"><a id="link_logout" href="javascript:submeter_form_logout()">Sair :(</a></li>');
+						// Fecha o modal de login
+						$('#modal_login_cadastro').modal('hide');
+						//Limpar as variaveis do cadastro de PF
+						$('#form_cadastrar_pessoa_juridica')[0].reset();
+
+					}
+					else {
+						if(data.usernameInvalido){
+							$.bootstrapGrowl("UserName já utilizado!", {
+					            type:'danger',
+					            align:'center',
+					            width: 'auto',
+					            allow_dismiss: false
+					        });
+							return false;
+						}else{
+							$.bootstrapGrowl("Erro ao adicionar pessoa jurídica!", {
+					            type:'danger',
+					            align:'center',
+					            width: 'auto',
+					            allow_dismiss: false
+					        });
+							return false;						
+						}
+					}
+				}
+			
+			});
+		return false;
+/*		
+	}
+*/
+	
+}
+
+
+
+
+
+
+
+
+function submeter_form_editar_cadastro_pessoa_fisica(){
+	var matchdata = new RegExp(/((0[1-9]|[12][0-9]|3[01])\/(0[13578]|1[02])\/[12][0-9]{3})|((0[1-9]|[12][0-9]|30)\/(0[469]|11)\/[12][0-9]{3})|((0[1-9]|1[0-9]|2[0-8])\/02\/[12][0-9]([02468][1235679]|[13579][01345789]))|((0[1-9]|[12][0-9])\/02\/[12][0-9]([02468][048]|[13579][26]))/gi);
+	var endereco = $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="endereco_editar"]').val();
+	var cnpj =  $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="cpf_editar"]').val();
+	var email = $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="email_editar"]').val();
+	var usuario = $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="username_editar"]').val();
+	var senha =  $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="senha_editar"]').val();
+	var nome =  $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="nome_editar"]').val();
+	var data =  $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="data_nascim_editar"]').val();
+	var dadosemBranco =""
+		
+	if(nome == "" || nome == undefined){ 
+		if(dadosemBranco != "") dadosemBranco +=",";
+		dadosemBranco +="nome";
+	}
+	if(data =="" || data == undefined){ 
+		if(dadosemBranco != "") dadosemBranco +=",";
+		dadosemBranco +="data";
+	}
+	if(cpf =="" || cpf == undefined){ 
+		if(dadosemBranco != "") dadosemBranco +=",";
+		dadosemBranco +="cpf";
+	}
+	if(endereco =="" || endereco == undefined){ 
+		if(dadosemBranco != "") dadosemBranco +=",";
+		dadosemBranco +="endereço";
+	}
+	if(email =="" || email == undefined){ 
+		if(dadosemBranco != "") dadosemBranco +=",";
+		dadosemBranco +="email";
+	}	
+	if(usuario =="" || usuario == undefined){ 
+		if(dadosemBranco != "") dadosemBranco +=",";
+		dadosemBranco +="usuário";
+	}
+	if(senha =="" ||senha == undefined){ 
+		if(dadosemBranco != "") dadosemBranco +=",";
+		dadosemBranco +="senha";
+	}
+	
+	
+	if(dadosemBranco !=""){
+		$.bootstrapGrowl(dadosemBranco + " em branco!", {
+            type:'danger',
+            align:'center',
+            width: 'auto',
+            allow_dismiss: false
+        });
+		return false;
+	}
+	
+	if(!ValidaCPF(cpf)){
+		$.bootstrapGrowl("CPF inválido!", {
+            type:'danger',
+            align:'center',
+            width: 'auto',
+            allow_dismiss: false
+        });
+		return false;
+	}
+	
+	if(!data.match(matchdata)) {
+		$.bootstrapGrowl("Informe uma data correta, no formato 31/12/2015!", {
+            type:'danger',
+            align:'center',
+            width: 'auto',
+            allow_dismiss: false
+        });
+		return false;
+	}
+	if(!verificarData(data)){
+		$.bootstrapGrowl("Data de nascimento incorreta!", {
+            type:'danger',
+            align:'center',
+            width: 'auto',
+            allow_dismiss: false
+        });
+		return false;
+	}
+	
+
+		$.bootstrapGrowl("Enviando os dados, aguarde...", {
+			type:'info',
+			align:'center',
+			width: 'auto',
+			allow_dismiss: false
+		});
+		
+		
+	$.ajax({
+		url: 'alterar_cadastro_pf',
+		async: true,
+		type: 'POST',
+		dataType: 'json',
+		data: $('#form_editar_cadastro_pessoa_fisica').serialize(),
+		success: function(data){
+			if(data.isValid) {
+				
+				var pessoaJuridica = data.pessoaJuridica;
+				
+				
+				$.bootstrapGrowl("Alteração relizada com sucesso!", {
+					type:'success',
+					align:'center',
+					width: 'auto',
+					allow_dismiss: false
+				});
+				
+				
+			}
+			else {
+				if(data.usernameInvalido){
+					$.bootstrapGrowl("UserName já utilizado!", {
+			            type:'danger',
+			            align:'center',
+			            width: 'auto',
+			            allow_dismiss: false
+			        });
+					return false;
+				}else{
+					$.bootstrapGrowl("Erro ao adicionar pessoa física!", {
+			            type:'danger',
+			            align:'center',
+			            width: 'auto',
+			            allow_dismiss: false
+			        });
+					return false;						
+				}
+			}
+		}
+	
+	});
+	
+	return false;
+	
+}
+
+
+function submeter_form_editar_cadastro_pessoa_juridico(){
+
+	var endereco = $('form[id*="form_editar_cadastro_pessoa_juridica"] [id$="endereco_editar"]').val();
+	var cnpj =  $('form[id*="form_editar_cadastro_pessoa_juridica"] [id$="cnpj_editar"]').val();
+	var email = $('form[id*="form_editar_cadastro_pessoa_juridica"] [id$="email_editar"]').val();
+	var usuario =  $('form[id*="form_editar_cadastro_pessoa_juridica"] [id$="username_editar"]').val()
+	var senha =  $('form[id*="form_editar_cadastro_pessoa_juridica"] [id$="senha_editar"]').val();
+	var nome =   $('form[id*="form_editar_cadastro_pessoa_juridica"] [id$="nome_editar"]').val();
+	var dadosemBranco =""
+		
+	if(nome == "" || nome == undefined){ 
+		if(dadosemBranco != "") dadosemBranco +=",";
+		dadosemBranco +="nome";
+	}	
+	if(cnpj =="" || cnpj == undefined){ 
+		if(dadosemBranco != "") dadosemBranco +=",";
+		dadosemBranco +="cnpj";
+	}
+	if(endereco =="" || endereco == undefined){ 
+		if(dadosemBranco != "") dadosemBranco +=",";
+		dadosemBranco +="endereço";
+	}
+	if(email =="" || email == undefined){ 
+		if(dadosemBranco != "") dadosemBranco +=",";
+		dadosemBranco +="email";
+	}	
+	if(usuario =="" || usuario == undefined){ 
+		if(dadosemBranco != "") dadosemBranco +=",";
+		dadosemBranco +="usuário";
+	}
+	if(senha =="" ||senha == undefined){ 
+		if(dadosemBranco != "") dadosemBranco +=",";
+		dadosemBranco +="senha";
+	}
+	
+	
+	if(dadosemBranco !=""){
+		$.bootstrapGrowl(dadosemBranco + " em branco!", {
+            type:'danger',
+            align:'center',
+            width: 'auto',
+            allow_dismiss: false
+        });
+		return false;
+	}
+	
+	
+	if(!validarCNPJ(cnpj)){
+		$.bootstrapGrowl("CNPJ inválido!", {
+			type:'danger',
+			align:'center',
+			width: 'auto',
+			allow_dismiss: false
+		});
+		
+		return false;
+	}
+
+		$.bootstrapGrowl("Enviando os dados, aguarde...", {
+			type:'info',
+			align:'center',
+			width: 'auto',
+			allow_dismiss: false
+		});
+				
 		$.ajax({
-			url: 'cadastrar_pessoa_juridica',
+			url: 'alterar_cadastro_pj',
 			async: true,
 			type: 'POST',
 			dataType: 'json',
-			data: $('#form_cadastrar_pessoa_juridica').serialize(),
+			data: $('#form_editar_cadastro_pessoa_juridica').serialize(),
 			success: function(data){
 				if(data.isValid) {
-					
 					var pessoaJuridica = data.pessoaJuridica;
-					
-					
-					$.bootstrapGrowl("Pessoa física " + pessoaJuridica.nome + " cadastrada com sucesso!", {
+									
+					$.bootstrapGrowl("Alteração realizada com sucesso!", {
 						type:'success',
 						align:'center',
 						width: 'auto',
 						allow_dismiss: false
 					});
 					
-					//Alterar a Li com o nome da pessoa e opção de editar dados
-					$('#link_login_cadastro').text(pessoaJuridica.nome);
-					// Altera o link para o modal de edição do cadastro
-					$('#link_login_cadastro').attr("href", "javascript:abre_modal_editar_cadastro();");
-					// Adiciona o link para logout
-					$('#li_login_cadastro').after('<li id="li_logout"><a id="link_logout" href="javascript:submeter_form_logout()">Sair :(</a></li>');
-					// Fecha o modal de login
-					$('#modal_login_cadastro').modal('hide');
-					//Limpar as variaveis do cadastro de PF
-					$('#form_cadastrar_pessoa_juridica')[0].reset();
-
 				}
 				else {
 					if(data.usernameInvalido){
@@ -252,18 +513,14 @@ function submeter_form_cadastro_pessoa_juridica(){
 						return false;						
 					}
 				}
-			}
-		
+			}		
 		});
 		return false;
-/*		
-	}
-*/
-	
 }
 
-function submeter_form_logout(){
-	
+
+
+function submeter_form_logout(){	
 	$.ajax({
 		url: 'logout',
 		// async: true,
@@ -383,11 +640,12 @@ function submeter_form_login(){
 						
 						//preenche campos de edição de cadastro com os dados do usuário
 						$('#nome_editar').val(pessoaFisica.nome);
-						$('#data_nascim_editar').val(pessoaFisica.dataNascimento);
+						$('#data_nascim_editar').val((data.dtNascimento!= undefined) ? data.dtNascimento: "" );
 						$('#cpf_editar').val(pessoaFisica.cpf);
 						$('#telefone_editar').val(pessoaFisica.telefone);
 						$('#email_editar').val(pessoaFisica.email);
 						$('#username_editar').val(pessoaFisica.username);
+						$('#senha_editar').val(data.login.senha);
 					}
 					// senão, é pessoa juridica
 					else {
@@ -410,12 +668,13 @@ function submeter_form_login(){
 						//Limpar as variaveis do login
 						$('#form_login')[0].reset();
 						
-						$('nome_editar').val(pessoaJuridica.nome);
-						$('cnpj_editar').val(pessoaJuridica.cnpj);
-						$('telefone_editar').val(pessoaJuridica.telefone);
-						$('email_editar').val(pessoaJuridica.email);
-						$('endereco_editar').val(pessoaJuridica.endereco);
-						$('username_editar').val(pessoaJuridica.username);
+						$('#nome_editar').val(pessoaJuridica.nome);
+						$('#cnpj_editar').val(pessoaJuridica.cnpj);
+						$('#telefone_editar').val(pessoaJuridica.telefone);
+						$('#email_editar').val(pessoaJuridica.email);
+						$('#endereco_editar').val(pessoaJuridica.endereco);
+						$('#username_editar').val(pessoaJuridica.username);
+						$('#senha_editar').val(data.login.senha);
 					}
 					
 					
