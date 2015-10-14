@@ -132,7 +132,7 @@ public class BancoDados {
 		String sql = "insert into login "
 				+ "(username, "
 				+ "senha, "
-				+ "pf_ou_pj) "
+				+ "is_pf) "
 				
 				+ "values (?, ?, ?)";
 		
@@ -225,7 +225,7 @@ public class BancoDados {
         ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();
         login.setIdLogin(resultSet.getInt("id_login"));
-        login.setPF(resultSet.getBoolean("pf_ou_pj"));
+        login.setPF(resultSet.getBoolean("is_pf"));
         
         
 		return login;
@@ -254,5 +254,58 @@ public class BancoDados {
         resultSet.close();
         
         return pj;
+	}
+
+	public void editarDadosLogin(int idLogin, String username, String senha) throws SQLException {
+		String sql = "update login "
+				+ "set username = ?, "
+				+ "senha = ? "
+				+ "where id_login = ?";
+		
+		preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.setString(1, username);
+		preparedStatement.setString(2, senha);
+		preparedStatement.setInt(3, idLogin);
+		preparedStatement.executeUpdate();
+	}
+
+	public void editarCadastroPessoaFisica(PessoaFisica pessoaFisica) throws SQLException {
+		String sql = "update pessoa_fisica "
+				+ "set nome = ?, "
+				+ "cpf = ?, "
+				+ "email = ?, "
+				+ "data_nascimento = ?, "
+				+ "telefone = ? "
+				+ "where id_login = ?";
+
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, pessoaFisica.getNome());
+        preparedStatement.setString(2, pessoaFisica.getCpf());
+        preparedStatement.setString(3, pessoaFisica.getEmail());
+        preparedStatement.setDate(4, pessoaFisica.getDataNascimento());
+        preparedStatement.setString(5, pessoaFisica.getTelefone());
+        preparedStatement.setInt(6, pessoaFisica.getIdLogin());
+
+        preparedStatement.executeUpdate();
+	}
+
+	public void editarCadastroPessoaJuridica(PessoaJuridica pessoaJuridica) throws SQLException {
+		String sql = "update pessoa_juridica "
+				+ "set nome = ?, "
+				+ "cnpj = ?, "
+				+ "email = ?, "
+				+ "endereco = ?, "
+				+ "telefone = ? "
+				+ "where id_login = ? ";
+
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, pessoaJuridica.getNome());
+        preparedStatement.setString(2, pessoaJuridica.getCnpj());
+        preparedStatement.setString(3, pessoaJuridica.getEmail());
+        preparedStatement.setString(4, pessoaJuridica.getEndereco());
+        preparedStatement.setString(5, pessoaJuridica.getTelefone());
+        preparedStatement.setInt(6, pessoaJuridica.getIdLogin());
+
+        preparedStatement.executeUpdate();
 	}
 }

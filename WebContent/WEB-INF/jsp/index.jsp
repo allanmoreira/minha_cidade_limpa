@@ -16,6 +16,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     
+    <link rel="shortcut icon" href="<c:url value="static_startbootstrap-freelancer-1.0.3/img/icone_limpeza.jpg" />">
+    
     <!-- //////////// -->
     <link rel="stylesheet" href="<c:url value="static/css/EstiloSiteAdicional.css"/>">
     <!-- //////////// -->
@@ -77,9 +79,19 @@
                     <!-- mantém a interface de login mesmo ao atualizar a página -->
                     <c:choose>
                     	<c:when test="${usuarioLogado != null }">
-                    		<li id="li_login_cadastro">
-		                    	<a id="link_login_cadastro" href="javascript:abre_modal_editar_cadastro()">${nomeUsuarioLogado }</a>
-		                    </li>
+                    		<c:choose>
+                    			<c:when test="${usuarioLogado.PF == true }">
+                    				<li id="li_login_cadastro">
+				                    	<a id="link_login_cadastro" href="javascript:abre_modal_editar_cadastro_pessoa_fisica()">${nomeUsuarioLogado }</a>
+				                    </li>
+                    			</c:when>
+                    			<c:otherwise>
+                    				<li id="li_login_cadastro">
+				                    	<a id="link_login_cadastro" href="javascript:abre_modal_editar_cadastro_pessoa_juridica()">${nomeUsuarioLogado }</a>
+				                    </li>
+                    			</c:otherwise>
+                    		</c:choose>
+		                    
 		                    <li id="li_logout">
 		                    	<a id="link_logout" href="javascript:submeter_form_logout()">Sair :(</a>
 		                    </li>
@@ -106,13 +118,13 @@
 	</div>
 	        
         
-    <!-- modal editar cadastro -->
-    <div class="portfolio-modal modal fade" id="modal_editar_cadastro" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- modal editar PF -->
+    <div class="portfolio-modal modal fade" id="modal_editar_cadastro_pessoa_fisica" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-content">
 			<div class="col-lg-8 col-lg-offset-2">
 				<div class="col-xs-12 ">
 					<ul class="nav nav-tabs" data-toggle="tabs">
-						<li id="li_editar_dados_"><a href="javascript:void(0);" title="" data-original-title="Editar Cadastro"><i class="fa fa-pencil"></i> Editar Cadastro</a></li>
+						<li id="li_editar_dados_"><a href="javascript:void(0);" title="" data-original-title="Editar Cadastro"><i class="fa fa-pencil"></i> Editar Cadastro de Pessoa Física</a></li>
 					</ul>
 				</div>
 			</div>
@@ -132,19 +144,16 @@
                              	<div class="tab-pane active" id="modal_tab_editar_cadastro">
                              		<div class="row">
 						                <div class="col-lg-8 col-lg-offset-2">
-						                	<!-- valida qual form mostrar, se PF ou PJ -->
-						                	<c:choose>
-						                		 <c:when test="${usuarioLogado.PF == true}">   		
-						                   			<!-- isto é um IF. Se o usuário logado é PF, mostra o form abaixo... -->
-													<form name="form_editar_cadastro_pessoa_fisica"
+						                	
+											<form name="form_editar_cadastro_pessoa_fisica"
 														id="form_editar_cadastro_pessoa_fisica"
 														accept-charset="iso-8859-1,utf-8">
 														<div class="row control-group">
 															<div
 																class="form-group col-xs-12 floating-label-form-group controls">
 																<label>Nome</label> <input type="text"
-																	class="form-control" placeholder="Nome" id="nome_editar"
-																	name="nome_editar">
+																	class="form-control" placeholder="Nome" id="nome_editar_pf"
+																	name="nome_editar_pf" value="${pessoaFisica.nome }">
 
 															</div>
 														</div>
@@ -153,8 +162,8 @@
 																class="form-group col-xs-12 floating-label-form-group controls">
 																<label>Data de Nascimento</label> <input type="text"
 																	class="form-control" placeholder="Data de Nascimento"
-																	id="data_nascim_editar" name="data_nascim_editar"
-																	OnKeyUp="formatar('##/##/####', this);" maxlength="10">
+																	id="data_nascim_editar_pf" name="data_nascim_editar_pf"
+																	OnKeyUp="formatar('##/##/####', this);" maxlength="10"  value="${pessoaFisica.dataNascimento }">
 
 															</div>
 														</div>
@@ -162,9 +171,9 @@
 															<div
 																class="form-group col-xs-12 floating-label-form-group controls">
 																<label>CPF</label> <input type="text"
-																	class="form-control" placeholder="CPF" id="cpf_editar"
-																	name="cpf_editar" OnKeyUp="formatar('###.###.###-##', this);"
-																	maxlength="14">
+																	class="form-control" placeholder="CPF" id="cpf_editar_pf"
+																	name="cpf_editar_pf" OnKeyUp="formatar('###.###.###-##', this);"
+																	maxlength="14" value="${pessoaFisica.cpf }">
 
 															</div>
 														</div>
@@ -173,9 +182,9 @@
 																class="form-group col-xs-12 floating-label-form-group controls">
 																<label>Telefone</label> <input type="text"
 																	class="form-control" placeholder="xx-xxxx-xxxx"
-																	id="telefone_editar" name="telefone_editar"
+																	id="telefone_editar_pf" name="telefone_editar_pf"
 																	OnKeyUp="formatar('##-####-#####', this);"
-																	maxlength="13">
+																	maxlength="13"  value="${pessoaFisica.telefone }">
 
 															</div>
 														</div>
@@ -183,8 +192,8 @@
 															<div
 																class="form-group col-xs-12 floating-label-form-group controls">
 																<label>Email</label> <input type="text"
-																	class="form-control" placeholder="Email" id="email_editar"
-																	name="email_editar">
+																	class="form-control" placeholder="Email" id="email_editar_pf"
+																	name="email_editar_pf"  value="${pessoaFisica.email }">
 
 															</div>
 														</div>
@@ -193,7 +202,7 @@
 																class="form-group col-xs-12 floating-label-form-group controls">
 																<label>Usuário</label> <input type="text"
 																	class="form-control" placeholder="Usuário"
-																	id="username_editar" name="username_editar">
+																	id="username_editar_pf" name="username_editar_pf"  value="${pessoaFisica.username }">
 
 															</div>
 														</div>
@@ -201,8 +210,8 @@
 															<div
 																class="form-group col-xs-12 floating-label-form-group controls">
 																<label>Senha</label> <input type="password"
-																	class="form-control" placeholder="Senha" id="senha_editar"
-																	name="senha_editar">
+																	class="form-control" placeholder="Senha" id="senha_editar_pf"
+																	name="senha_editar_pf"  value="${pessoaFisica.senha }">
 
 															</div>
 														</div>
@@ -217,19 +226,56 @@
 															</div>
 														</div>
 													</form>
-												</c:when>
 												
-						                		<c:otherwise>
-						                			<!-- Caso contrário, cai nesse "ELSE" -->
-													<form name="form_editar_cadastro_pessoa_juridica"
+						                </div>
+						            </div>
+                             	</div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- fim modal editar cadastro PF -->
+        
+    <!-- modal editar cadastro PJ -->
+    <div class="portfolio-modal modal fade" id="modal_editar_cadastro_pessoa_juridica" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+			<div class="col-lg-8 col-lg-offset-2">
+				<div class="col-xs-12 ">
+					<ul class="nav nav-tabs" data-toggle="tabs">
+						<li id="li_editar_dados_"><a href="javascript:void(0);" title="" data-original-title="Editar Cadastro"><i class="fa fa-pencil"></i> Editar Cadastro de Pessoa Jurídica</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            
+             <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                             <div class="tab-content">
+                             	<div class="tab-pane active" >
+                             		<div class="row">
+						                <div class="col-lg-8 col-lg-offset-2">
+						                	<!-- valida qual form mostrar, se PF ou PJ -->
+						                	
+												<form name="form_editar_cadastro_pessoa_juridica"
 														id="form_editar_cadastro_pessoa_juridica"
 														accept-charset="iso-8859-1,utf-8">
 														<div class="row control-group">
 															<div
 																class="form-group col-xs-12 floating-label-form-group controls">
 																<label>Nome</label> <input type="text"
-																	class="form-control" placeholder="Nome" id="nome_editar"
-																	name="nome_editar">
+																	class="form-control" placeholder="Nome" id="nome_editar_pj"
+																	name="nome_editar_pj" value="${pessoaJuridica.nome }">
 
 															</div>
 														</div>
@@ -237,10 +283,10 @@
 															<div
 																class="form-group col-xs-12 floating-label-form-group controls">
 																<label>CNPJ</label> <input type="text"
-																	class="form-control" placeholder="CNPJ" id="cnpj_editar"
-																	name="cnpj_editar"
+																	class="form-control" placeholder="CNPJ" id="cnpj_editar_pj"
+																	name="cnpj_editar_pj"
 																	OnKeyUp="formatar('##.###.###/####-##', this);"
-																	maxlength="18">
+																	maxlength="18"value="${pessoaJuridica.cnpj }">
 
 															</div>
 														</div>
@@ -249,9 +295,9 @@
 																class="form-group col-xs-12 floating-label-form-group controls">
 																<label>Telefone</label> <input type="text"
 																	class="form-control" placeholder="Telefone"
-																	id="telefone_editar" name="telefone_editar"
+																	id="telefone_editar_pj" name="telefone_editar_pj"
 																	OnKeyUp="formatar('##-####-#####', this);"
-																	maxlength="13">
+																	maxlength="13"value="${pessoaJuridica.telefone }">
 
 															</div>
 														</div>
@@ -259,8 +305,8 @@
 															<div
 																class="form-group col-xs-12 floating-label-form-group controls">
 																<label>Email</label> <input type="text"
-																	class="form-control" placeholder="Email" id="email_editar"
-																	name="email_editar">
+																	class="form-control" placeholder="Email" id="email_editar_pj"
+																	name="email_editar_pj" value="${pessoaJuridica.email }">
 
 															</div>
 														</div>
@@ -269,7 +315,7 @@
 																class="form-group col-xs-12 floating-label-form-group controls">
 																<label>Endereço</label> <input type="text"
 																	class="form-control" placeholder="Endereco"
-																	id="endereco_editar" name="endereco_editar">
+																	id="endereco_editar_pj" name="endereco_editar_pj" value="${pessoaJuridica.endereco }">
 
 															</div>
 														</div>
@@ -278,7 +324,7 @@
 																class="form-group col-xs-12 floating-label-form-group controls">
 																<label>Usuário</label> <input type="text"
 																	class="form-control" placeholder="Usuário"
-																	id="username_editar" name="username_editar">
+																	id="username_editar_pj" name="username_editar_pj" value="${pessoaJuridica.username }">
 
 															</div>
 														</div>
@@ -286,8 +332,8 @@
 															<div
 																class="form-group col-xs-12 floating-label-form-group controls">
 																<label>Senha</label> <input type="password"
-																	class="form-control" placeholder="Senha" id="senha_editar"
-																	name="senha_editar">
+																	class="form-control" placeholder="Senha" id="senha_editar_pj"
+																	name="senha_editar_pj" value="${pessoaJuridica.senha }">
 
 															</div>
 														</div>
@@ -301,9 +347,7 @@
 																	class="btn btn-success btn-lg">Enviar</button>
 															</div>
 														</div>
-													</form>
-												</c:otherwise>
-						                	</c:choose>
+												</form>
 						                </div>
 						            </div>
                              	</div>
@@ -315,6 +359,9 @@
         </div>
     </div>
     <!-- fim modal editar cadastro -->
+    
+    
+    
     
     <!-- modal login -->
     <div class="portfolio-modal modal fade" id="modal_login_cadastro" tabindex="-1" role="dialog" aria-hidden="true">
@@ -402,7 +449,7 @@
 						                        <div class="row control-group">
 						                            <div class="form-group col-xs-12 floating-label-form-group controls">
 						                                <label>Telefone</label>
-						                                <input type="text" class="form-control" placeholder="xx-xxxx-xxxx" id="telefone" name="telefone"  OnKeyUp="formatar('##-####-#####', this);" maxlength="13" >
+						                                <input type="text" class="form-control" placeholder="Telefone" id="telefone" name="telefone"  OnKeyUp="formatar('##-####-#####', this);" maxlength="13" >
 						                                
 						                            </div>
 						                        </div>

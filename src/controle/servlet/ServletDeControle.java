@@ -84,12 +84,16 @@ public class ServletDeControle {
 						dataNascimento = pessoaFisica.getDataNascimentoString();
 						nomeUsuarioLogado = pessoaFisica.getNome();
 						bancoDados.encerrarConexao();
+						// para caso a página seja atualizada
+						session.setAttribute("pessoaFisica", pessoaFisica);
 					}
 					else{
 						bancoDados.conectarAoBco();
 						pessoaJuridica = bancoDados.buscarPessoaJuridica(login.getIdLogin());
 						nomeUsuarioLogado = pessoaJuridica.getNome();
 						bancoDados.encerrarConexao();
+						// para caso a página seja atualizada
+						session.setAttribute("pessoaJuridica", pessoaJuridica);
 					}
 					
 					session.setAttribute("usuarioLogado", login);
@@ -127,7 +131,7 @@ public class ServletDeControle {
 		Map<String, Object> map = new HashMap<String, Object>();
 		boolean isValid = true;
 		
-		// termina com a sess�o
+		// termina com a sess�o
 		session.invalidate();
 		
 		map.put("isValid", isValid);
@@ -209,6 +213,8 @@ public class ServletDeControle {
 					pessoaFisica = bancoDados.buscarPessoaFisica(idLogin);
 					nomeUsuarioLogado = pessoaFisica.getNome();
 					
+					// para caso a página seja atualizada
+					session.setAttribute("pessoaFisica", pessoaFisica);
 					// loga o usuario
 					session.setAttribute("usuarioLogado", login);
 					// utilizado para peencher o campo caso a pagina seja atualizada
@@ -299,6 +305,8 @@ public class ServletDeControle {
 				pessoaJuridica = bancoDados.buscarPessoaJuridica(login.getIdLogin());
 				nomeUsuarioLogado = pessoaJuridica.getNome();
 				
+				// para caso a página seja atualizada
+				session.setAttribute("pessoaJuridica", pessoaJuridica);
 				// loga o usuario
 				session.setAttribute("usuarioLogado", login);
 				// utilizado para peencher o campo caso a pagina seja atualizada
@@ -416,7 +424,7 @@ public class ServletDeControle {
 	
 	
 	@RequestMapping("alterar_cadastro_pj")
-	public void UpdateCadastroPJ(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+	public void updateCadastroPJ(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		BancoDados bancoDados = new BancoDados();
 		Map<String, Object> map = new HashMap<String, Object>();
 		boolean isValid = false;
@@ -427,13 +435,15 @@ public class ServletDeControle {
 
 		PessoaJuridica pessoaJuridica = new PessoaJuridica();
 
-		String nome = request.getParameter("nome_editar");
-		String cnpj = request.getParameter("cnpj_editar");
-		String telefone = request.getParameter("telefone_editar");
-		String email = request.getParameter("email_editar");
-		String endereco = request.getParameter("endereco_editar");
-		String username = request.getParameter("username_editar");
-		String senha = request.getParameter("senha_editar");
+		String nome = request.getParameter("nome_editar_pj");
+		String cnpj = request.getParameter("cnpj_editar_pj");
+		String telefone = request.getParameter("telefone_editar_pj");
+		String email = request.getParameter("email_editar_pj");
+		String endereco = request.getParameter("endereco_editar_pj");
+		String username = request.getParameter("username_editar_pj");
+		String senha = request.getParameter("senha_editar_pj");
+		
+		System.out.println(">"+username+"<");
 
 		if (!nome.equals("") && !cnpj.equals("") && !telefone.equals("")
 				&& !email.equals("") && !senha.equals("")) {
@@ -443,6 +453,10 @@ public class ServletDeControle {
 			pessoaJuridica.setTelefone(telefone);
 			pessoaJuridica.setEmail(email);
 			pessoaJuridica.setPF(isPF);
+			pessoaJuridica.setUsername(username);
+			pessoaJuridica.setSenha(senha);
+			
+			System.out.println(">"+pessoaJuridica.getUsername()+"<");
 
 			if (endereco.equals("")) {
 				pessoaJuridica.setEndereco(null);
@@ -451,17 +465,19 @@ public class ServletDeControle {
 			}
 
 			bancoDados.conectarAoBco();
-			boolean usernameNaoCadastrado = bancoDados
-					.usernameNaoCadastrado(username);
+			boolean usernameNaoCadastrado = bancoDados.usernameNaoCadastrado(username);
 
 			if (usernameNaoCadastrado) {
-				/*
-				 pessoaJuridica.setUsername(username);
 				
-				pessoaJuridica.setSenha(senha);
-				int idLogin = bancoDados.geraLoginUsuario(
-						pessoaJuridica.getUsername(),
-						pessoaJuridica.getSenha(), pessoaJuridica.isPF());
+				Login usuarioSessao = (Login) session.getAttribute("usuarioLogado");
+				pessoaJuridica.setIdLogin(usuarioSessao.getIdLogin());	
+				
+				bancoDados.editarDadosLogin(pessoaJuridica.getIdLogin(), pessoaJuridica.getUsername(), pessoaJuridica.getSenha());
+				bancoDados.editarCadastroPessoaJuridica(pessoaJuridica);
+				
+				pessoaJuridica.setUsername(username);
+				
+				int idLogin = bancoDados.geraLoginUsuario(pessoaJuridica.getUsername(), pessoaJuridica.getSenha(), pessoaJuridica.isPF());
 				pessoaJuridica.setIdLogin(idLogin);
 				bancoDados.cadastrarPessoaJuridica(pessoaJuridica);
 
@@ -476,10 +492,10 @@ public class ServletDeControle {
 				pessoaJuridica = bancoDados.buscarPessoaJuridica(login.getIdLogin());
 				nomeUsuarioLogado = pessoaJuridica.getNome();
 				
-				 */
-				
+				// para caso a página seja atualizada
+				session.setAttribute("pessoaJuridica", pessoaJuridica);
 				// loga o usuario
-				//session.setAttribute("usuarioLogado", login);
+				session.setAttribute("usuarioLogado", login);
 				// utilizado para peencher o campo caso a pagina seja atualizada
 				session.setAttribute("nomeUsuarioLogado", nomeUsuarioLogado);
 				///////////////////////////////////////////////////////
@@ -506,7 +522,7 @@ public class ServletDeControle {
 
 	
 	@RequestMapping("alterar_cadastro_pf")
-	public void UpdateCadastroPF(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+	public void updateCadastroPF(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		BancoDados bancoDados = new BancoDados();
 		Map<String, Object> map = new HashMap<String, Object>();
 		PessoaFisica pessoaFisica = new PessoaFisica();
@@ -517,13 +533,13 @@ public class ServletDeControle {
 		boolean usernameInvalido = false;
 		String nomeUsuarioLogado = null;
 
-		String nome = request.getParameter("nome_editar");
-		String cpf = request.getParameter("cpf_editar");
-		String email = request.getParameter("email_editar");
-		String username = request.getParameter("username_editar");
-		String senha = request.getParameter("senha_editar");
-		String dataNascimento = request.getParameter("data_nascim_editar");
-		String telefone = request.getParameter("telefone_editar");
+		String nome = request.getParameter("nome_editar_pf");
+		String cpf = request.getParameter("cpf_editar_pf");
+		String email = request.getParameter("email_editar_pf");
+		String username = request.getParameter("username_editar_pf");
+		String senha = request.getParameter("senha_editar_pf");
+		String dataNascimento = request.getParameter("data_nascim_editar_pf");
+		String telefone = request.getParameter("telefone_editar_pf");
 
 		// valida se os campos n�o est�o vazios
 		if (!nome.equals("") && !cpf.equals("") && !email.equals("")
@@ -536,7 +552,7 @@ public class ServletDeControle {
 			pessoaFisica.setUsername(username);
 			pessoaFisica.setSenha(senha);
 			pessoaFisica.setPF(isPF);
-
+			
 			// campo n�o obrigat�rio
 			if (telefone.equals("")) {
 				pessoaFisica.setTelefone(null);
@@ -550,12 +566,10 @@ public class ServletDeControle {
 				boolean usernameNaoCadastrado = bancoDados.usernameNaoCadastrado(username);
 
 				if (usernameNaoCadastrado) {
-					
-					
-					
-					/*int idLogin = bancoDados.geraLoginUsuario(pessoaFisica.getUsername(), pessoaFisica.getSenha(), pessoaFisica.isPF());
-					pessoaFisica.setIdLogin(idLogin);
-					bancoDados.cadastrarPessoaFisica(pessoaFisica);
+					Login usuarioSessao = (Login) session.getAttribute("usuarioLogado");
+					pessoaFisica.setIdLogin(usuarioSessao.getIdLogin());					
+					bancoDados.editarDadosLogin(pessoaFisica.getIdLogin(), pessoaFisica.getUsername(), pessoaFisica.getSenha());
+					bancoDados.editarCadastroPessoaFisica(pessoaFisica);
 
 					isValid = true;
 					// Pega os dados do usuario logado. Ta meio gambiarra, pode ser melhor.
@@ -564,13 +578,13 @@ public class ServletDeControle {
 					login.setSenha(pessoaFisica.getSenha());
 					login = bancoDados.dadosUsuarioLogado(login);
 					
-					pessoaFisica = bancoDados.buscarPessoaFisica(idLogin);
+					pessoaFisica = bancoDados.buscarPessoaFisica(pessoaFisica.getIdLogin());
 					nomeUsuarioLogado = pessoaFisica.getNome();
-					*/
 					
-					
-					// loga o usuario
-				//	session.setAttribute("usuarioLogado", login);
+					// para caso a página seja atualizada
+					session.setAttribute("pessoaFisica", pessoaFisica);
+					// altera na sessão os dados do usuário logado
+					session.setAttribute("usuarioLogado", login);
 					// utilizado para peencher o campo caso a pagina seja atualizada
 					session.setAttribute("nomeUsuarioLogado", nomeUsuarioLogado);
 				} else {

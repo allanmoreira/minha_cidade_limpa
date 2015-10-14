@@ -103,7 +103,7 @@ function submeter_form_cadastro_pessoa_fisica(){
 					//Alterar a Li com o nome da pessoa e opção de editar dados
 					$('#link_login_cadastro').text(pessoaFisica.nome);
 					// Altera o link para o modal de edição do cadastro
-					$('#link_login_cadastro').attr("href", "javascript:abre_modal_editar_cadastro();");
+					$('#link_login_cadastro').attr("href", "javascript:abre_modal_editar_cadastro_pessoa_fisica();");
 					// Adiciona o link para logout
 					$('#li_login_cadastro').after('<li id="li_logout"><a id="link_logout" href="javascript:submeter_form_logout()">Sair :(</a></li>');
 					// Fecha o modal de login
@@ -228,7 +228,7 @@ function submeter_form_cadastro_pessoa_juridica(){
 						//Alterar a Li com o nome da pessoa e opção de editar dados
 						$('#link_login_cadastro').text(pessoaJuridica.nome);
 						// Altera o link para o modal de edição do cadastro
-						$('#link_login_cadastro').attr("href", "javascript:abre_modal_editar_cadastro();");
+						$('#link_login_cadastro').attr("href", "javascript:abre_modal_editar_cadastro_pessoa_juridica();");
 						// Adiciona o link para logout
 						$('#li_login_cadastro').after('<li id="li_logout"><a id="link_logout" href="javascript:submeter_form_logout()">Sair :(</a></li>');
 						// Fecha o modal de login
@@ -275,13 +275,13 @@ function submeter_form_cadastro_pessoa_juridica(){
 
 function submeter_form_editar_cadastro_pessoa_fisica(){
 	var matchdata = new RegExp(/((0[1-9]|[12][0-9]|3[01])\/(0[13578]|1[02])\/[12][0-9]{3})|((0[1-9]|[12][0-9]|30)\/(0[469]|11)\/[12][0-9]{3})|((0[1-9]|1[0-9]|2[0-8])\/02\/[12][0-9]([02468][1235679]|[13579][01345789]))|((0[1-9]|[12][0-9])\/02\/[12][0-9]([02468][048]|[13579][26]))/gi);
-	var endereco = $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="endereco_editar"]').val();
-	var cnpj =  $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="cpf_editar"]').val();
-	var email = $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="email_editar"]').val();
-	var usuario = $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="username_editar"]').val();
-	var senha =  $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="senha_editar"]').val();
-	var nome =  $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="nome_editar"]').val();
-	var data =  $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="data_nascim_editar"]').val();
+	var endereco = $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="endereco_editar_pf"]').val();
+	var cnpj =  $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="cpf_editar_pf"]').val();
+	var email = $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="email_editar_pf"]').val();
+	var usuario = $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="username_editar_pf"]').val();
+	var senha =  $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="senha_editar_pf"]').val();
+	var nome =  $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="nome_editar_pf"]').val();
+	var data =  $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="data_nascim_editar_pf"]').val();
 	var dadosemBranco =""
 		
 	if(nome == "" || nome == undefined){ 
@@ -373,14 +373,12 @@ function submeter_form_editar_cadastro_pessoa_fisica(){
 				
 				var pessoaJuridica = data.pessoaJuridica;
 				
-				
 				$.bootstrapGrowl("Alteração relizada com sucesso!", {
 					type:'success',
 					align:'center',
 					width: 'auto',
 					allow_dismiss: false
 				});
-				
 				
 			}
 			else {
@@ -413,12 +411,12 @@ function submeter_form_editar_cadastro_pessoa_fisica(){
 
 function submeter_form_editar_cadastro_pessoa_juridico(){
 
-	var endereco = $('form[id*="form_editar_cadastro_pessoa_juridica"] [id$="endereco_editar"]').val();
-	var cnpj =  $('form[id*="form_editar_cadastro_pessoa_juridica"] [id$="cnpj_editar"]').val();
-	var email = $('form[id*="form_editar_cadastro_pessoa_juridica"] [id$="email_editar"]').val();
-	var usuario =  $('form[id*="form_editar_cadastro_pessoa_juridica"] [id$="username_editar"]').val()
-	var senha =  $('form[id*="form_editar_cadastro_pessoa_juridica"] [id$="senha_editar"]').val();
-	var nome =   $('form[id*="form_editar_cadastro_pessoa_juridica"] [id$="nome_editar"]').val();
+	var endereco = $('form[id*="form_editar_cadastro_pessoa_juridica"] [id$="endereco_editar_pj"]').val();
+	var cnpj =  $('form[id*="form_editar_cadastro_pessoa_juridica"] [id$="cnpj_editar_pj"]').val();
+	var email = $('form[id*="form_editar_cadastro_pessoa_juridica"] [id$="email_editar_pj"]').val();
+	var usuario =  $('form[id*="form_editar_cadastro_pessoa_juridica"] [id$="username_editar_pj"]').val()
+	var senha =  $('form[id*="form_editar_cadastro_pessoa_juridica"] [id$="senha_editar_pj"]').val();
+	var nome =   $('form[id*="form_editar_cadastro_pessoa_juridica"] [id$="nome_editar_pj"]').val();
 	var dadosemBranco =""
 		
 	if(nome == "" || nome == undefined){ 
@@ -529,6 +527,9 @@ function submeter_form_logout(){
 		data: {'submit':true},
 		success: function(data){
 			if(data.isValid) {
+				// Apaga os formulários de edição de PF e de PJ
+				$('#form_editar_cadastro_pessoa_fisica')[0].reset();
+				$('#form_editar_cadastro_pessoa_juridica')[0].reset();
 				// Remove o link para logoff
 				$('#link_logout').remove();
 				//Alterar a Li para o padrão
@@ -629,7 +630,7 @@ function submeter_form_login(){
 						//Alterar a Li com o nome da pessoa e opção de editar dados
 						$('#link_login_cadastro').text(pessoaFisica.nome);
 						// Altera o link para o modal de edição do cadastro
-						$('#link_login_cadastro').attr("href", "javascript:abre_modal_editar_cadastro();");
+						$('#link_login_cadastro').attr("href", "javascript:abre_modal_editar_cadastro_pessoa_fisica();");
 						// Adiciona o link para logout
 						$('#li_login_cadastro').after('<li id="li_logout"><a id="link_logout" href="javascript:submeter_form_logout()">Sair :(</a></li>');
 						// Fecha o modal de login
@@ -638,14 +639,15 @@ function submeter_form_login(){
 						//Limpar as variaveis do login
 						$('#form_login')[0].reset();
 						
+						
 						//preenche campos de edição de cadastro com os dados do usuário
-						$('#nome_editar').val(pessoaFisica.nome);
-						$('#data_nascim_editar').val((data.dtNascimento!= undefined) ? data.dtNascimento: "" );
-						$('#cpf_editar').val(pessoaFisica.cpf);
-						$('#telefone_editar').val(pessoaFisica.telefone);
-						$('#email_editar').val(pessoaFisica.email);
-						$('#username_editar').val(pessoaFisica.username);
-						$('#senha_editar').val(data.login.senha);
+						$('#nome_editar_pf').val(pessoaFisica.nome);
+						$('#data_nascim_editar_pf').val((data.dtNascimento!= undefined) ? data.dtNascimento: "" );
+						$('#cpf_editar_pf').val(pessoaFisica.cpf);
+						$('#telefone_editar_pf').val(pessoaFisica.telefone);
+						$('#email_editar_pf').val(pessoaFisica.email);
+						$('#username_editar_pf').val(pessoaFisica.username);
+						$('#senha_editar_pf').val(data.login.senha);
 					}
 					// senão, é pessoa juridica
 					else {
@@ -659,7 +661,7 @@ function submeter_form_login(){
 						//Alterar a Li com o nome da pessoa e opção de editar dados
 						$('#link_login_cadastro').text(pessoaJuridica.nome);
 						// Altera o link para o modal de edição do cadastro
-						$('#link_login_cadastro').attr("href", "javascript:abre_modal_editar_cadastro();");
+						$('#link_login_cadastro').attr("href", "javascript:abre_modal_editar_cadastro_pessoa_juridica();");
 						// Adiciona o link para logout
 						$('#li_login_cadastro').after('<li id="li_logout"><a id="link_logout" href="javascript:submeter_form_logout()">Sair :(</a></li>');
 						// Fecha o modal de login
@@ -668,17 +670,14 @@ function submeter_form_login(){
 						//Limpar as variaveis do login
 						$('#form_login')[0].reset();
 						
-						$('#nome_editar').val(pessoaJuridica.nome);
-						$('#cnpj_editar').val(pessoaJuridica.cnpj);
-						$('#telefone_editar').val(pessoaJuridica.telefone);
-						$('#email_editar').val(pessoaJuridica.email);
-						$('#endereco_editar').val(pessoaJuridica.endereco);
-						$('#username_editar').val(pessoaJuridica.username);
-						$('#senha_editar').val(data.login.senha);
+						$('#nome_editar_pj').val(pessoaJuridica.nome);
+						$('#cnpj_editar_pj').val(pessoaJuridica.cnpj);
+						$('#telefone_editar_pj').val(pessoaJuridica.telefone);
+						$('#email_editar_pj').val(pessoaJuridica.email);
+						$('#endereco_editar_pj').val(pessoaJuridica.endereco);
+						$('#username_editar_pj').val(pessoaJuridica.username);
+						$('#senha_editar_pj').val(data.login.senha);
 					}
-					
-					
-					
 					
 				}
 				else {
@@ -737,8 +736,13 @@ function abre_modal_login_cadastro() {
 	$('#modal_login_cadastro').modal('show');
 }
 
-function abre_modal_editar_cadastro() {
-	$('#modal_editar_cadastro').modal('show');
+function abre_modal_editar_cadastro_pessoa_juridica() {
+	$('#modal_editar_cadastro_pessoa_juridica').modal('show');
 }
+
+function abre_modal_editar_cadastro_pessoa_fisica() {
+	$('#modal_editar_cadastro_pessoa_fisica').modal('show');
+}
+
 
 
