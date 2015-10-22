@@ -8,16 +8,17 @@ public class MarcacaoDepredacao {
 	private String tipoDepredacao, descricao, status, dataMarcacaoString;
 	private String dataMarcacao;
 	private boolean cadidatoResolverProblema;
-	private int idPessoaFisicaFezMarcacao;
-	private String posLon, posLat, html, id;
+	private int idPessoaFisicaFezMarcacao, idMarcacaoDepredacao;
+	private String posLon, posLat, html;
 	
 	
 	
-	public String getid() {
-		return id;
+	
+	public int getIdMarcacaoDepredacao() {
+		return idMarcacaoDepredacao;
 	}
-	public void setid(String id) {
-		this.id = id;
+	public void setIdMarcacaoDepredacao(int idMarcacaoDepredacao) {
+		this.idMarcacaoDepredacao = idMarcacaoDepredacao;
 	}
 	public String getHtml() {
 		return html;

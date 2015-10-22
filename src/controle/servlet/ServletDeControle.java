@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 @Controller
 public class ServletDeControle {
@@ -41,12 +43,37 @@ public class ServletDeControle {
 	 */
 	
 	@RequestMapping("index")
-	public ModelAndView homeNovoTemplate(HttpServletRequest request,
-			HttpServletResponse response, HttpSession session) {
+	public ModelAndView homeNovoTemplate(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-
 		mv.setViewName("index");
 		return mv;
+	}
+	
+	@RequestMapping("lista_marcacoes_cadastradas")
+	public void ListaMarcacoesCadastradas(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		Map<String, Object> map = new HashMap<String, Object>();
+		BancoDados bancoDados = new BancoDados();
+		ArrayList<MarcacaoDepredacao> listaMarcacoesCadastradas = new ArrayList<MarcacaoDepredacao>();
+		boolean isValid = false;
+		
+		try {
+			bancoDados.conectarAoBco();
+			listaMarcacoesCadastradas = bancoDados.listaMarcacoesCadastradas();
+			bancoDados.encerrarConexao();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		map.put("isValid", isValid);
+		map.put("listaMarcacoesCadastradas", listaMarcacoesCadastradas);
+
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(new Gson().toJson(map));
 	}
 
 	@RequestMapping("login")

@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
+import java.util.ArrayList;
 
 import modelos.Login;
 import modelos.MarcacaoDepredacao;
@@ -104,7 +105,7 @@ public class BancoDados {
 				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, oMarcacao.getid());
+        preparedStatement.setInt(1, oMarcacao.getIdMarcacaoDepredacao());
         preparedStatement.setString(2, oMarcacao.getTipoDepredacao());
         preparedStatement.setString(3, oMarcacao.getDescricao());
         preparedStatement.setString(4, oMarcacao.getDataMarcacao());
@@ -307,5 +308,29 @@ public class BancoDados {
         preparedStatement.setInt(6, pessoaJuridica.getIdLogin());
 
         preparedStatement.executeUpdate();
+	}
+	
+	public ArrayList<MarcacaoDepredacao> listaMarcacoesCadastradas() throws SQLException{
+		ArrayList<MarcacaoDepredacao> listaMarcacoesCadastradas = new ArrayList<MarcacaoDepredacao>();
+		String sql = "select * from marcacao_depredacao";
+		
+		preparedStatement = connection.prepareStatement(sql);
+		ResultSet resultSet = preparedStatement.executeQuery();
+		
+		while(resultSet.next()){
+			MarcacaoDepredacao md = new MarcacaoDepredacao();
+			md.setIdMarcacaoDepredacao(resultSet.getInt("id_marcacao_depredacao"));
+			md.setTipoDepredacao(resultSet.getString("tipo_depredacao"));
+			md.setDescricao(resultSet.getString("descricao"));
+			md.setDataMarcacao(resultSet.getString("data_marcacao"));
+			md.setIdPessoaFisicaFezMarcacao(resultSet.getInt("id_pessoa_fisica_fez_narcacao"));
+			md.setHtml(resultSet.getString("html_depredacao"));
+			md.setPosLat(resultSet.getString("lat"));
+			md.setPosLon(resultSet.getString("lon"));
+			md.setStatus(resultSet.getString("status"));
+			
+			listaMarcacoesCadastradas.add(md);
+		}
+		return listaMarcacoesCadastradas;
 	}
 }

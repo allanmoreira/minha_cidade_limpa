@@ -221,6 +221,32 @@
 			}
 		}  
 	  }
-
+	
+	function buscaListaMarcacoesCadastradas(){
+		$.ajax({
+			url: 'lista_marcacoes_cadastradas',
+			type: 'POST',
+			dataType: 'json',
+//			data: {'submit':true},
+			data: objDenuncia,
+			success: function(data){
+				if(data.isValid) {
+					var listaMarcacoes = data.listaMarcacoesCadastradas;
+					$.each(listaMarcacoes, function(i){
+						
+						aletrt(listaMarcacoes[i].idMarcacao);
+						
+					});
+				
+				}
+				else {
+					alert("Usuário não está logado! Faça login ou cadastre-se!");
+					
+					return false;
+				}
+			}
+	
+		});
+	}
 	  
 	//google.maps.event.addDomListener(window, 'load', initialize);

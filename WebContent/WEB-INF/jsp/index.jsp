@@ -951,6 +951,13 @@
 	<script src="<c:url value="static/js/submit_com_form.js"/>"></script>
 	<script src="<c:url value="static/js/montagemMap.js"/>"></script>
 	<script src="<c:url value="static/js/bootstrap_growl.js"/>"></script>
+
+	<script/>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				buscaListaMarcacoesCadastradas();
+			});
+	</script>
 	
 
 </body>
