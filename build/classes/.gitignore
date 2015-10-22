@@ -1,3 +1,4 @@
 /controle/
 /modelos/
 .classpath
+/build/classes/.gitignore
