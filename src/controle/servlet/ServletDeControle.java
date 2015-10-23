@@ -375,14 +375,13 @@ public class ServletDeControle {
 											// op��o de den�ncia
 											// an�nima!!!!
 
-		PessoaFisica pf = new PessoaFisica();
-
 		Login usuarioSessao = (Login) session.getAttribute("usuarioLogado");
 
 		if (usuarioSessao != null) {
 			usuarioLogado = true;
 
 			String sCat = request.getParameter("cat");
+			String sCaminho = request.getParameter("cam");
 			String sTipo = request.getParameter("tit");
 			String sLat = request.getParameter("lat");
 			String sLong = request.getParameter("lon");
@@ -397,23 +396,12 @@ public class ServletDeControle {
 			oMarcacao.setHtml(sHtml);
 			oMarcacao.setCadidatoResolverProblema(false);
 			oMarcacao.setDataMarcacao(sData);
-
-			if (denunciaAnonima == false) {
-				try {
-					pf = bancoDados.buscarPessoaFisica(usuarioSessao
-							.getIdLogin());
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-				}
-				oMarcacao.setIdPessoaFisicaFezMarcacao(pf.getIdPessoaFisica());
-			} else {
-				oMarcacao.setIdPessoaFisicaFezMarcacao(0);
-			}
+			oMarcacao.setIdPessoaFisicaFezMarcacao(usuarioSessao.getIdLogin());
+			
+			//COLOCAR O CAMPO QUE CONTEM O CAMINHO DA IMAGEM
 
 			try {
 				bancoDados.conectarAoBco();
-				// int idLogin = bancoDados.geraLoginUsuario();
-
 				bancoDados.cadastrarMarcacao(oMarcacao);
 				bancoDados.encerrarConexao();
 

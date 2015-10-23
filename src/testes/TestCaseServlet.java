@@ -1,16 +1,16 @@
 package testes;
-import static org.junit.Assert.*;
+//import static org.junit.Assert.*;
 
 import java.sql.SQLException;
 
-import org.junit.Test;
+//import org.junit.Test;
 
 import controle.bancoDados.BancoDados;
 
 
 public class TestCaseServlet {
 
-	@Test
+/*	@Test
 	public void testUsuarioNaoCadastradoNoBanco() {
 		BancoDados bco = new BancoDados();
 		
@@ -22,12 +22,12 @@ public class TestCaseServlet {
 			boolean actual = bco.usernameNaoCadastrado(un);
 			bco.encerrarConexao();
 			
-			assertEquals(expected, actual);
+			//assertEquals(expected, actual);
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	}
-
+*/
 }

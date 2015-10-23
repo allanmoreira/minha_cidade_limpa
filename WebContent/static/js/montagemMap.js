@@ -55,16 +55,16 @@
 	var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
 	var icons = {
 	  Problema: {
-	    icon: iconBase + 'img/icones/vermelho.ico'
+	    icon: iconBase + 'static/img/icones/vermelho.png'
 	  },
 	  Resolvendo: {
-	    icon: iconBase + 'img/icones/azul.ico'
+	    icon: iconBase + 'static/img/icones/azul.png'
 	  },
 	  Analizando: {
-	    icon: iconBase + 'img/icones/cinza.ico'
+	    icon: iconBase + 'static/img/icones/cinza.png'
 	  },
 	  Pronto: {
-	    icon: iconBase + 'img/icones/verde.ico'
+	    icon: iconBase + 'static/img/icones/verde.png'
 	  }
 	};
 
@@ -104,7 +104,7 @@
 	        map.setZoom(11);
 	        markerClick = new google.maps.Marker({
 	          position: latlng,
-	          icon: 'img/icones/vermelho.png',
+	          icon: 'static/img/icones/vermelho.png',
 	          map: map
 	        });
 
@@ -127,13 +127,13 @@
 	 marker.addListener('click', function() {
 	  infowindow.open(map, markerClick); 
 	});
-	/*  map.addListener('click', function(event) {
+	  map.addListener('click', function(event) {
 		$('img[id*="gifLoader"]').css('display','block');
 		latitude.lat =event.latLng.A;
 		latitude.lng =event.latLng.F;
 		geocodeLatLng(geocoder, map, infowindow, latitude);
 	  });
-	  */
+	  
 
 	 //Click para fechar a div de cadastro
 	$('button[id*="btnFechar"]').click(function(){
@@ -165,12 +165,15 @@
 	    //Cria o objeto e adiciona no JSON
 		var objDenuncia = {}
 		objDenuncia["categoria"] = 'Denuncia';
-		objDenuncia["icon"] = 'img/icones/vermelho.png';
+		objDenuncia["icon"] = 'static/img/icones/vermelho.png';
 		objDenuncia["lat"] = ""+ latitude.lat + "";
 		objDenuncia["lon"] = ""+ latitude.lng + "";
 		objDenuncia["title"] = "" + titulo + "";
 		objDenuncia["html"] = "" + contentString + "";
 		objDenuncia["id"] = DadosPoa.DadosPoa.length + 1;
+		
+		//VINICIUS COLOCAR OS DADOS DO CAMINHO AQUI
+		objDenuncia["caminho"] ="";
 		
 		//Chama a função que salva a denuncia no banco
 		salvarMarkBD(objDenuncia);
@@ -180,26 +183,41 @@
 	//Função que salva a marcação no banco de dados
 	function salvarMarkBD(objDenuncia){
 		$.ajax({
-			url: 'salvar_marcacao?cat='+ objDenuncia.categoria +'&lat='+objDenuncia.lat+'&lon='+objDenuncia.lon+'&tit='+objDenuncia.title+'&html='+objDenuncia.html+'&id='+objDenuncia.id,
+			url: 'salvar_marcacao?cam='+ objDenuncia.caminho +'&cat='+ objDenuncia.categoria +'&lat='+objDenuncia.lat+'&lon='+objDenuncia.lon+'&tit='+objDenuncia.title+'&html='+objDenuncia.html+'&id='+objDenuncia.id,
 			type: 'POST',
 			dataType: 'json',
 //			data: {'submit':true},
 			data: objDenuncia,
 			success: function(data){
 				if(data.isValid) {
-					//Se salvar correto no banco de dados, 
-					//retorna nesta condição e salva a marcação no map 
-					var obj = data.pessoaFisica;
-										
-					DadosPoa.DadosPoa.push(objDenuncia); 
+					$.bootstrapGrowl("contribuição registrada com sucesso!", {
+						type:'success',
+						align:'center',
+						width: 'auto',
+						allow_dismiss: false
+					});					
+					//DadosPoa.DadosPoa.push(objDenuncia); 
 					marker.setMap(map);
 			    	AdicionaInfoMarker(markerClick, map, infowindow, contentString);					
-				
-					return true;
-				
+					return true;				
 				}
 				else {
-					alert("Usuário não está logado! Faça login ou cadastre-se!");
+				 if(!data.usuarioLogado){
+						$.bootstrapGrowl("Usuário não está logado! Faça login ou cadastre-se!", {
+							type:'success',
+							align:'center',
+							width: 'auto',
+							allow_dismiss: false
+						});
+					
+				 }else{
+						$.bootstrapGrowl("Erro ao salvar denúncio, entre em contato conosco!", {
+				            type:'danger',
+				            align:'center',
+				            width: 'auto',
+				            allow_dismiss: false
+				        });	 
+				 }			
 					
 					return false;
 				}
@@ -223,7 +241,8 @@
 	  }
 	
 	function buscaListaMarcacoesCadastradas(){
-		$.ajax({
+	/*
+	 	$.ajax({
 			url: 'lista_marcacoes_cadastradas',
 			type: 'POST',
 			dataType: 'json',
@@ -247,6 +266,7 @@
 			}
 	
 		});
+		*/
 	}
 	  
 	//google.maps.event.addDomListener(window, 'load', initialize);
