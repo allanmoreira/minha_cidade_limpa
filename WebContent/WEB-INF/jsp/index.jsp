@@ -1,12 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<!--################# ESTA DANDO ERRO  #########################
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-
--->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -120,6 +117,56 @@
 		class="navbar navbar-fixed-top" role="navigation">
 	</div>
 	        
+	<div id="divCadastro"
+		class="abseed_conteudo_sub abseed_Div_Casastro navbar navbar-fixed-top"
+		style="max-width: 560px; width: 100%; min-height: 350px; position: fixed; top: 25%; margin-left: 10px; margin-top: 0px; margin: 0px auto; z-index: 9999; padding: 0px; border-radius: 5px; display: none;"
+		role="navigation">
+		<div class="abseed_conteudo_borda"
+			style="text-align: center; line-height: 8px; font-size =14px; color: #ffffff; padding: 10px;">
+			Cadastro de Voluntários</div>
+		<div style="padding: 10px;">
+			<!-- INCLUIR CAMPOS  -->
+			<div class="col-sm-5 col-sm-offset-1">
+				<div class="form-group">
+					<label><b>Endereço:</b></label><br /> <label type="text"
+						id="txtEndereco"></label>
+				</div>
+				<div class="form-group">
+					<div style="float:left; width:45%;margin:5px;">
+						<div>
+						<label><b>Motivo da Denúncia:</b></label>
+						<select class="cad_drop cad_borda " id="dpMotivo">
+							<option value="Estátua">Estátua</option>
+							<option value="Parede">Parede</option>
+							<option value="Lago">Lago</option>
+							<option value="Banco">Banco</option>
+						</select>
+						</div>
+						
+						<label><b>Informativo:</b></label>
+				<div class="form-group">
+					<textarea name="comentário" id="txtComentario"
+						class="cad_comentario cad_borda" rows="5" cols="40"></textarea>
+				</div>
+			
+					</div>
+					<div style="float:right; width:45%;margin:5px;">
+						<div class="cad_borda" style=" width:100%; height:99%; min-height:183px;">
+						AQUI FICARA A IMAGEM DO VINICIUS
+						</div>
+					</div>
+				</div>
+			
+			</div>
+		</div>
+		<div style="float: right; padding: 0px 10px 10px;">
+			<!-- INCLUIR BOTOES  -->
+			<button class="btn btn-warning" id="btnUploadImagem">Img Upload</button>
+			<button class="btn btn-danger" id="btnFechar">Fechar</button>
+			<button class="btn btn-success" id="btnSalvar">Salvar</button>
+		</div>
+	</div>
+	
         
     <!-- modal editar PF -->
     <div class="portfolio-modal modal fade" id="modal_editar_cadastro_pessoa_fisica" tabindex="-1" role="dialog" aria-hidden="true">
@@ -218,6 +265,16 @@
 
 															</div>
 														</div>
+
+														<div class="row control-group">
+															<div
+																class="form-group col-xs-12 floating-label-form-group controls">
+																<label>Senha</label> <input type="password" id="senha_editar_pf1"
+																 class="form-control" 	name="senha_editar_pf1"  value="${pessoaFisica.senha }">
+
+															</div>
+														</div>
+
 
 														<br>
 														<div id="success"></div>
@@ -340,6 +397,16 @@
 
 															</div>
 														</div>
+														<div class="row control-group">
+															<div
+																class="form-group col-xs-12 floating-label-form-group controls">
+																<label>Senha</label> <input type="password"
+																	class="form-control" placeholder="Senha" id="senha_editar_pj1"
+																	name="senha_editar_pj1" value="${pessoaJuridica.senha }">
+
+															</div>
+														</div>
+
 
 														<br>
 														<div id="success"></div>
@@ -477,6 +544,13 @@
 						                                
 						                            </div>
 						                        </div>
+						                        <div class="row control-group">
+						                            <div class="form-group col-xs-12 floating-label-form-group controls">
+						                                <label>Senha</label>
+						                                <input type="password" class="form-control" placeholder="Senha" id="senha1" name="senha1" >
+						                                
+						                            </div>
+						                        </div>
 						                        
 						                        <br>
 						                        <div id="success"></div>
@@ -544,7 +618,13 @@
 						                                
 						                            </div>
 						                        </div>
-						                        
+						                    	<div class="row control-group">
+						                            <div class="form-group col-xs-12 floating-label-form-group controls">
+						                                <label>Senha</label>
+						                                <input type="password" class="form-control" placeholder="Senha" id="senha1" name="senha1" >
+						                                
+						                            </div>
+						                        </div>
 						                        <br>
 						                        <div id="success"></div>
 						                        <div class="row">
@@ -954,12 +1034,6 @@
 	<script src="<c:url value="static/js/submit_com_form.js"/>"></script>
 	<script src="<c:url value="static/js/montagemMap.js"/>"></script>
 	<script src="<c:url value="static/js/bootstrap_growl.js"/>"></script>
-
-		<script type="text/javascript">
-			$(document).ready(function() {
-				//buscaListaMarcacoesCadastradas();
-			});
-	</script>
 	
 
 </body>

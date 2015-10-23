@@ -5,7 +5,9 @@
 	var markerClick;
 	var dadosDigitados;
 	var titulo;
-
+	var latLongSave;
+	var resultJsonDenuncias;
+	
 	initMap();
 	//Inicialização do map
 	function initMap() {
@@ -20,7 +22,13 @@
 	  mapTypeId: google.maps.MapTypeId.ROADMAP
 	});
 	//Leitura do json DATAPOA
-	if (DadosPoa.DadosPoa.length > 0) {
+	if(resultJsonDenuncias != undefined && resultJsonDenuncias.result.length > 0){
+		for (i=0; i<resultJsonDenuncias.result.length; i++) {
+            var location = resultJsonDenuncias.result.length[i];
+	            AdicionaMarcacao(location); 
+        }
+	}
+	else if(DadosPoa.DadosPoa.length > 0) {
 	        for (i=0; i<DadosPoa.DadosPoa.length; i++) {
 	            var location = DadosPoa.DadosPoa[i];
 		            AdicionaMarcacao(location); 
@@ -98,23 +106,24 @@
 
 	function geocodeLatLng(geocoder, map, infowindow, latitude) { 
 	  var latlng = {lat: parseFloat(latitude.lat), lng: parseFloat(latitude.lng)};
+	  latLongSave = {lat: parseFloat(latitude.lat), lng: parseFloat(latitude.lng)};
 	  geocoder.geocode({'location': latlng}, function(results, status) {
 	    if (status === google.maps.GeocoderStatus.OK) {
 	      if (results[1]) {
 	        map.setZoom(11);
+	        
+/*
 	        markerClick = new google.maps.Marker({
 	          position: latlng,
 	          icon: 'static/img/icones/vermelho.png',
 	          map: map
 	        });
-
-	       street = results[0].formatted_address.toString();
+	        */
+	        
+	        street = results[0].formatted_address.toString();
 			$('label[id*="txtEndereco"]').text(street);
 			HabilitaDivCadastro(true);
-
-	 		//infowindow.setContent(results[0].formatted_address);
-			//infowindow.open(map, markerClick);
-			
+	      
 	      } else {
 	        window.alert('No results found');
 	      }
@@ -127,6 +136,7 @@
 	 marker.addListener('click', function() {
 	  infowindow.open(map, markerClick); 
 	});
+	 
 	  map.addListener('click', function(event) {
 		$('img[id*="gifLoader"]').css('display','block');
 		latitude.lat =event.latLng.A;
@@ -170,7 +180,6 @@
 		objDenuncia["lon"] = ""+ latitude.lng + "";
 		objDenuncia["title"] = "" + titulo + "";
 		objDenuncia["html"] = "" + contentString + "";
-		objDenuncia["id"] = DadosPoa.DadosPoa.length + 1;
 		
 		//VINICIUS COLOCAR OS DADOS DO CAMINHO AQUI
 		objDenuncia["caminho"] ="";
@@ -183,6 +192,7 @@
 	//Função que salva a marcação no banco de dados
 	function salvarMarkBD(objDenuncia){
 		$.ajax({
+	        contentType: 'application/x-www-form-urlencoded; charset=ISO-8859-1', 
 			url: 'salvar_marcacao?cam='+ objDenuncia.caminho +'&cat='+ objDenuncia.categoria +'&lat='+objDenuncia.lat+'&lon='+objDenuncia.lon+'&tit='+objDenuncia.title+'&html='+objDenuncia.html+'&id='+objDenuncia.id,
 			type: 'POST',
 			dataType: 'json',
@@ -196,9 +206,18 @@
 						width: 'auto',
 						allow_dismiss: false
 					});					
-					//DadosPoa.DadosPoa.push(objDenuncia); 
+					
+				    	markerClick = new google.maps.Marker({
+				          position: latLongSave,
+				          icon: 'static/img/icones/vermelho.png',
+				          map: map
+				        });
+				    	
+				    latLongSave ="";
+				    $('textarea[id*="txtComentario"]').val("");
 					marker.setMap(map);
-			    	AdicionaInfoMarker(markerClick, map, infowindow, contentString);					
+			    	AdicionaInfoMarker(markerClick, map, infowindow, objDenuncia.html);
+			    	buscaListaMarcacoesCadastradas(objDenuncia);
 					return true;				
 				}
 				else {
@@ -240,8 +259,8 @@
 		}  
 	  }
 	
-	function buscaListaMarcacoesCadastradas(){
-	/*
+	function buscaListaMarcacoesCadastradas(objDenuncia){
+
 	 	$.ajax({
 			url: 'lista_marcacoes_cadastradas',
 			type: 'POST',
@@ -251,12 +270,45 @@
 			success: function(data){
 				if(data.isValid) {
 					var listaMarcacoes = data.listaMarcacoesCadastradas;
-					$.each(listaMarcacoes, function(i){
-						
-						aletrt(listaMarcacoes[i].idMarcacao);
-						
-					});
-				
+					 resultJsonDenuncias = '{ "result" : [';
+					 for (var i = 0; i < listaMarcacoes.length; i++) {
+						 resultJsonDenuncias += '{';
+		                    try {
+		                    	resultJsonDenuncias += '"title":"' + listaMarcacoes[i].tipoDepredacao + "";
+		                    } catch (err) {
+		                    	resultJsonDenuncias += '", "title":"';
+		                    }
+		                    try {
+		                       	resultJsonDenuncias += '", "categoria":"' + listaMarcacoes[i].descricao + "";
+		                    } catch (err) {
+		                    	resultJsonDenuncias += '", "categoria":"';
+		                    }
+		                    try {
+		                    	resultJsonDenuncias += '", "lat":"' + listaMarcacoes[i].posLat + "";
+		                    } catch (err) {
+		                    	resultJsonDenuncias += '", "lat":"';
+		                    }
+		                    try {
+		                    	resultJsonDenuncias += '", "lon":"' + listaMarcacoes[i].posLon + "";
+		                    } catch (err) {
+		                    	resultJsonDenuncias += '", "lon":"';
+		                    }
+		                    try {
+		                    	resultJsonDenuncias += '", "icon":"' + RetornaIconeStatus(listaMarcacoes[i].status) + "";
+		                    } catch (err) {                     
+		                    	resultJsonDenuncias += '", "icon":"';
+		                    }
+		                    try {
+		                    	resultJsonDenuncias += '", "html":"' + listaMarcacoes[i].html + "";
+		                    } catch (err) {
+		                    	resultJsonDenuncias += '", "html":"';
+		                    }
+		                  
+		                    resultJsonDenuncias += '" }';
+		                    resultJsonDenuncias += i < listaMarcacoes - 1 ? ',' : '';
+		                }
+					 resultJsonDenuncias += ' ]}';
+							
 				}
 				else {
 					alert("Usuário não está logado! Faça login ou cadastre-se!");
@@ -266,7 +318,22 @@
 			}
 	
 		});
-		*/
+		
+	}
+	
+	function RetornaIconeStatus(status){
+		switch(status) {
+	    case 1:
+	        return 'static/img/icones/vermelho.png';
+	    case 2:
+	        return 'static/img/icones/azul.png';
+	    case 3:
+	    	return 'static/img/icones/cinza.png'
+	    case 4:
+	        return  'static/img/icones/verde.png'
+	    default:
+	        return "";
+		}		  
 	}
 	  
 	//google.maps.event.addDomListener(window, 'load', initialize);

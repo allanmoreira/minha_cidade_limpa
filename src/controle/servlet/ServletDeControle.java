@@ -361,9 +361,7 @@ public class ServletDeControle {
 	}
 
 	@RequestMapping("salvar_marcacao")
-	public void salvarMarcacao(HttpServletRequest request,
-			HttpServletResponse response, HttpSession session)
-			throws IOException {
+	public void salvarMarcacao(HttpServletRequest request,HttpServletResponse response, HttpSession session) throws IOException {
 		BancoDados bancoDados = new BancoDados();
 		Map<String, Object> map = new HashMap<String, Object>();
 		MarcacaoDepredacao oMarcacao = new MarcacaoDepredacao();

@@ -8,42 +8,41 @@
 			<attribute name="owner.project.facets" value="jst.web"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java-7-oracle">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre7">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/gson-2.3.1.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/joda-money-0.10.0.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/joda-time-2.8.1.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/jxl.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/log4j-1.2.17.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/mysql-connector-java-5.1.23-bin.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/spring_3.2.7/spring-aop-3.2.7.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/spring_3.2.7/spring-aspects-3.2.7.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/spring_3.2.7/spring-beans-3.2.7.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/spring_3.2.7/spring-build-src-3.2.7.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/spring_3.2.7/spring-context-3.2.7.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/spring_3.2.7/spring-context-support-3.2.7.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/spring_3.2.7/spring-core-3.2.7.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/spring_3.2.7/spring-expression-3.2.7.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/spring_3.2.7/spring-framework-bom-3.2.7.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/spring_3.2.7/spring-instrument-3.2.7.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/spring_3.2.7/spring-instrument-tomcat-3.2.7.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/spring_3.2.7/spring-jdbc-3.2.7.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/spring_3.2.7/spring-jms-3.2.7.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/spring_3.2.7/spring-orm-3.2.7.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/spring_3.2.7/spring-oxm-3.2.7.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/spring_3.2.7/spring-struts-3.2.7.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/spring_3.2.7/spring-test-3.2.7.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/spring_3.2.7/spring-tx-3.2.7.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/spring_3.2.7/spring-web-3.2.7.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/spring_3.2.7/spring-webmvc-3.2.7.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/spring_3.2.7/spring-webmvc-portlet-3.2.7.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/outros/cglib-2.2.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/outros/org-apache-commons-logging.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/jstl/jstl-api.jar"/>
-	<classpathentry kind="lib" path="/home/allan/Dropbox/Projetos/LAWEG Engenharia/LIB-BKP/jstl/jstl-impl.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/cglib-2.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/gson-2.3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/joda-money-0.10.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/joda-time-2.8.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/jstl-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/jstl-impl.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/mysql-connector-java-5.1.23-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/org-apache-commons-logging.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/spring-aop-3.2.7.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/spring-aspects-3.2.7.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/spring-beans-3.2.7.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/spring-build-src-3.2.7.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/spring-context-3.2.7.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/spring-context-support-3.2.7.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/spring-core-3.2.7.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/spring-expression-3.2.7.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/spring-framework-bom-3.2.7.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/spring-instrument-3.2.7.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/spring-instrument-tomcat-3.2.7.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/spring-jdbc-3.2.7.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/spring-jms-3.2.7.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/spring-orm-3.2.7.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/spring-oxm-3.2.7.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/spring-struts-3.2.7.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/spring-test-3.2.7.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/spring-tx-3.2.7.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/spring-web-3.2.7.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/spring-webmvc-3.2.7.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Renan/Desktop/Renan/PUCRS/Lib_Java/spring-webmvc-portlet-3.2.7.RELEASE.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
