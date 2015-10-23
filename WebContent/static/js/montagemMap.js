@@ -162,11 +162,11 @@
 		titulo = "";
 		dadosDigitados = $('textarea[id*="txtComentario"]').val();
 		titulo = $('select[id*="dpMotivo"]').val();
-		var contentString = '<div id="content">'+
-	      '<div id="siteNotice">'+
+		var contentString = '<div id=\'content\'>'+
+	      '<div id=\'siteNotice\'>'+
 	      '</div>'+
-	      '<h1 id="firstHeading" class="firstHeading">'+ titulo +'</h1>'+
-	      '<div id="bodyContent">'+
+	      '<h1 id=\'firstHeading\' class=\'firstHeading\'>'+ titulo +'</h1>'+
+	      '<div id=\'bodyContent\'>'+
 	      '<p>'+ dadosDigitados +'</p>'+
 	      '</div>'+
 	      '</div>';
@@ -308,10 +308,18 @@
 		                    resultJsonDenuncias += i < listaMarcacoes - 1 ? ',' : '';
 		                }
 					 resultJsonDenuncias += ' ]}';
-							
+					 
+					 if(listaMarcacoes.length > 0){
+					 for (i=0; i<resultJsonDenuncias.result.length; i++) {
+				            var location = resultJsonDenuncias.result.length[i];
+					            AdicionaMarcacao(location); 
+				        }
+					 }
+					 
+					return true;
 				}
 				else {
-					alert("Usuário não está logado! Faça login ou cadastre-se!");
+					alert("Nenhum registro encontrado!");
 					
 					return false;
 				}
@@ -323,13 +331,13 @@
 	
 	function RetornaIconeStatus(status){
 		switch(status) {
-	    case 1:
+	    case "1":
 	        return 'static/img/icones/vermelho.png';
-	    case 2:
+	    case "2":
 	        return 'static/img/icones/azul.png';
-	    case 3:
+	    case "3":
 	    	return 'static/img/icones/cinza.png'
-	    case 4:
+	    case "4":
 	        return  'static/img/icones/verde.png'
 	    default:
 	        return "";

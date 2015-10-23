@@ -59,6 +59,7 @@ public class ServletDeControle {
 		try {
 			bancoDados.conectarAoBco();
 			listaMarcacoesCadastradas = bancoDados.listaMarcacoesCadastradas();
+			isValid = true;
 			bancoDados.encerrarConexao();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
