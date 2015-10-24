@@ -9,7 +9,7 @@ public class MarcacaoDepredacao {
 	private String dataMarcacao;
 	private boolean cadidatoResolverProblema;
 	private int idPessoaFisicaFezMarcacao, idMarcacaoDepredacao;
-	private String posLon, posLat, html;
+	private String posLon, posLat, html, ImgDenunciaIni,ImgDenunciaFinal;
 	
 	
 	
@@ -79,6 +79,18 @@ public class MarcacaoDepredacao {
 	}
 	public String getDataMarcacaoString() {
 		return dataMarcacaoString;
+	}
+	public String getImgDenunciaIni() {
+		return ImgDenunciaIni;
+	}
+	public void setImgDenunciaIni(String ImgDenunciaIni) {
+		this.ImgDenunciaIni = ImgDenunciaIni;
+	}
+	public String getImgDenunciaFinal() {
+		return ImgDenunciaFinal;
+	}
+	public void setImgDenunciaFinal(String ImgDenunciaFinal) {
+		this.ImgDenunciaFinal = ImgDenunciaFinal;
 	}
 
 	

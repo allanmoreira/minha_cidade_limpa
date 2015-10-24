@@ -360,81 +360,6 @@ public class ServletDeControle {
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(new Gson().toJson(map));
 	}
-
-	@RequestMapping("salvar_marcacao")
-	public void salvarMarcacao(HttpServletRequest request,HttpServletResponse response, HttpSession session) throws IOException {
-		BancoDados bancoDados = new BancoDados();
-		Map<String, Object> map = new HashMap<String, Object>();
-		MarcacaoDepredacao oMarcacao = new MarcacaoDepredacao();
-		// Data data = new Data();
-		boolean isValid = false;
-		boolean pfOuPj = true;
-		boolean usuarioLogado = false;
-		boolean denunciaAnonima = false; // precisa criar campo no html dando
-											// op��o de den�ncia
-											// an�nima!!!!
-
-		Login usuarioSessao = (Login) session.getAttribute("usuarioLogado");
-
-		if (usuarioSessao != null) {
-			usuarioLogado = true;
-
-			String sCat = request.getParameter("cat");
-			String sCaminho = request.getParameter("cam");
-			String sTipo = request.getParameter("tit");
-			String sLat = request.getParameter("lat");
-			String sLong = request.getParameter("lon");
-			String sHtml = request.getParameter("html");
-			String sData = DateTime.now().toString("yyyyMMdd");
-
-			oMarcacao.setDescricao(sCat);
-			oMarcacao.setStatus("1");
-			oMarcacao.setTipoDepredacao(sTipo);
-			oMarcacao.setPosLat(sLat);
-			oMarcacao.setPosLon(sLong);
-			oMarcacao.setHtml(sHtml);
-			oMarcacao.setCadidatoResolverProblema(false);
-			oMarcacao.setDataMarcacao(sData);
-			oMarcacao.setIdPessoaFisicaFezMarcacao(usuarioSessao.getIdLogin());
-			
-			//COLOCAR O CAMPO QUE CONTEM O CAMINHO DA IMAGEM
-
-			try {
-				bancoDados.conectarAoBco();
-				bancoDados.cadastrarMarcacao(oMarcacao);
-				bancoDados.encerrarConexao();
-
-				isValid = true;
-			} catch (ClassNotFoundException e) {
-				// Erro ao concetar ao banco de dados
-				// Levanta página Erro 500 (não existe)
-				String erro = "CLASSE = ";
-				erro += e.getMessage();
-				erro += " \n ";
-				erro += e.getStackTrace();
-
-			} catch (SQLException e) {
-
-				String erro = "SQL = ";
-				erro += e.getMessage();
-				erro += " \n ";
-				erro += e.getStackTrace();
-				// Erro ao executar a instrução
-				// Levanta página Erro 500 (não existe)
-			}
-		} else {
-			isValid = false;
-		}
-
-		map.put("isValid", isValid);
-		map.put("usuarioLogado", usuarioLogado);
-
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(new Gson().toJson(map));
-
-	}
-	
 	
 	
 	@RequestMapping("alterar_cadastro_pj")
@@ -629,6 +554,91 @@ public class ServletDeControle {
 	}
 	
 			
+	
+
+	@RequestMapping("salvar_marcacao")
+	public void salvarMarcacao(HttpServletRequest request,HttpServletResponse response, HttpSession session) throws IOException {
+		BancoDados bancoDados = new BancoDados();
+		Map<String, Object> map = new HashMap<String, Object>();
+		MarcacaoDepredacao oMarcacao = new MarcacaoDepredacao();
+		// Data data = new Data();
+		boolean isValid = false;
+		boolean pfOuPj = true;
+		boolean usuarioLogado = false;
+		boolean denunciaAnonima = false; // precisa criar campo no html dando
+											// op��o de den�ncia
+											// an�nima!!!!
+
+		Login usuarioSessao = (Login) session.getAttribute("usuarioLogado");
+
+		if (usuarioSessao != null) {
+			usuarioLogado = true;
+
+			String sCat = request.getParameter("cat");
+			String sCaminho = request.getParameter("cam");
+			String sTipo = request.getParameter("tit");
+			String sLat = request.getParameter("lat");
+			String sLong = request.getParameter("lon");
+			String sHtml = request.getParameter("html");
+			String sData = DateTime.now().toString("yyyyMMdd");
+
+			oMarcacao.setDescricao(sCat);
+			oMarcacao.setStatus("1");
+			oMarcacao.setTipoDepredacao(sTipo);
+			oMarcacao.setPosLat(sLat);
+			oMarcacao.setPosLon(sLong);
+			oMarcacao.setHtml(sHtml);
+			oMarcacao.setCadidatoResolverProblema(false);
+			oMarcacao.setDataMarcacao(sData);
+			oMarcacao.setIdPessoaFisicaFezMarcacao(usuarioSessao.getIdLogin());
+			oMarcacao.setImgDenunciaIni(sCaminho);
+			oMarcacao.setImgDenunciaFinal("");
+			
+			
+			//COLOCAR O CAMPO QUE CONTEM O CAMINHO DA IMAGEM
+
+			try {
+				bancoDados.conectarAoBco();
+				bancoDados.cadastrarMarcacao(oMarcacao);
+				bancoDados.encerrarConexao();
+				
+								
+
+				isValid = true;
+			} catch (ClassNotFoundException e) {
+				// Erro ao concetar ao banco de dados
+				// Levanta página Erro 500 (não existe)
+				String erro = "CLASSE = ";
+				erro += e.getMessage();
+				erro += " \n ";
+				erro += e.getStackTrace();
+
+			} catch (SQLException e) {
+
+				String erro = "SQL = ";
+				erro += e.getMessage();
+				erro += " \n ";
+				erro += e.getStackTrace();
+				// Erro ao executar a instrução
+				// Levanta página Erro 500 (não existe)
+			}
+		} else {
+			isValid = false;
+		}
+
+		map.put("isValid", isValid);
+		map.put("usuarioLogado", usuarioLogado);
+
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(new Gson().toJson(map));
+
+	}
+	
+
+	
+	
+
 			
 			
 }

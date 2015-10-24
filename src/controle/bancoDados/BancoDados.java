@@ -101,8 +101,10 @@ public class BancoDados {
 				+ "html_depredacao, "
 				+ "lat, "
 				+ "lon,"
-				+ "status) "				
-				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "status,"
+				+ "img_denuncia,"
+				+ "img_denuncia_final) "				
+				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1, oMarcacao.getIdMarcacaoDepredacao());
@@ -115,7 +117,11 @@ public class BancoDados {
         preparedStatement.setString(8,oMarcacao.getPosLat());
         preparedStatement.setString(9,oMarcacao.getPosLon());
         preparedStatement.setString(10,oMarcacao.getStatus());
+        preparedStatement.setString(11,oMarcacao.getImgDenunciaIni());
+        preparedStatement.setString(12,oMarcacao.getImgDenunciaFinal());
 
+        String dados = preparedStatement.toString();
+     
         preparedStatement.executeUpdate();
 	}
 	
@@ -329,8 +335,37 @@ public class BancoDados {
 			md.setPosLon(resultSet.getString("lon"));
 			md.setStatus(resultSet.getString("status"));
 			
+			md.setImgDenunciaFinal(resultSet.getString("img_denuncia_final"));
+			md.setImgDenunciaIni(resultSet.getString("img_denuncia"));
+			
 			listaMarcacoesCadastradas.add(md);
 		}
 		return listaMarcacoesCadastradas;
 	}
+	
+	
+	public Integer buscarIDPorLatLog(String lat, String lng) throws SQLException {
+		int idMarcacao= 0;
+		
+		String sql = "select id_marcacao_depredacao from marcacao_depredacao "
+				+ "where "
+				+ "lat = ? and "
+				+ "lon = ? ";
+		
+		preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, lat);
+        preparedStatement.setString(2, lng);
+        
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        idMarcacao = resultSet.getInt("id_marcacao_depredacao");
+        resultSet.close();
+        
+        return idMarcacao;
+	}
+
+	
+	
+	
+	
 }
