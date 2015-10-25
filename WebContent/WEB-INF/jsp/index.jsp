@@ -120,30 +120,34 @@
 	
 	<div id="divDenuncia"
 		class="abseed_conteudo_sub abseed_Div_Casastro navbar navbar-fixed-top"
-		style="max-width: 560px; width: 100%; min-height: 350px; position: fixed; top: 25%; margin-left: 10px; margin-top: 0px; margin: 0px auto; z-index: 9999; padding: 0px; border-radius: 5px; display: none;"
+		style="max-width: 560px; width: 100%; min-height: auto; position: fixed; top: 25%; margin-left: 10px; margin-top: 0px; margin: 0px auto; z-index: 9999; padding: 0px; border-radius: 5px; display: none;"
 		role="navigation">
 		<div class="abseed_conteudo_borda"
 			style="text-align: center; line-height: 8px; font-size:14px; color: #ffffff; padding: 10px;">
 			Dados da Denúncia</div>
-		<div style="padding: 10px;">
+		<div style="padding: 2px;">
 			<!-- INCLUIR CAMPOS  -->
 			<div class="col-sm-5 col-sm-offset-1">
 				<div class="form-group">
-					<label><b>Endereço:</b></label><br /> <label type="text"
-						id="txtEndDenuncia"></label>
-				</div>
-				<div class="form-group">
 					<div style="float:left; width:45%;margin:5px;">
-						<div>
-							<label><b>Motivo da Denúncia:</b></label>
-							<br /> <label type="text" id="txtMotivoDenuncia"></label>
-							<br /><br />
-							<label><b>Informativo:</b></label>
-							<br /> <label type="text" id="txtDescricaoMark"></label>
+						<div >
+						<label><u>Endereço:</u></label><br /> 
+						<label type="text" id="txtEndDenuncia"></label>
+						<br />
+						<label><u>Motivo da Denúncia:</u></label>
+						<br /> 
+						<label type="text" id="txtMotivoDenuncia"></label>
+						<br />
+						<label><u>Informativo:</u></label>
+						<br /> 
+						<label type="text" id="txtDescricaoMark"></label>
+						<label ><u>Benefício:</u></label>
+						<br /> 
+						<label type="text" id="txtBeneficioDenuncia">O prof. de Gerência de Projeto, disponibilizará 1 ponto na média.</label>
 						</div>
 					</div>
 					<div style="float:right; width:45%;margin:5px;">
-						<div class="cad_borda" style=" width:100%; height:99%; min-height:183px;">
+						<div class="cad_borda" style=" width:100%; height:99%; min-height:220px;">
 								 <label type="text" id="txtImagemDenuncia"></label>						
 						</div>
 					</div>
@@ -155,7 +159,7 @@
 			<!-- INCLUIR BOTOES  -->
 			<button class="btn btn-warning" id="btnUploadImagem">Img Resolvida Caso</button>
 			<button class="btn btn-danger" id="btnFecharInfoDenuncia">Fechar</button>
-			<button class="btn btn-success" id="btnSalvarCandidato">Salvar</button>
+			<button class="btn btn-success" id="btnSalvarCandidato">Candidatar-me</button>
 		</div>
 	</div>
 	

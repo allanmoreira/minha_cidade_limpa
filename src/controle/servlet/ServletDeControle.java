@@ -561,6 +561,7 @@ public class ServletDeControle {
 		BancoDados bancoDados = new BancoDados();
 		Map<String, Object> map = new HashMap<String, Object>();
 		MarcacaoDepredacao oMarcacao = new MarcacaoDepredacao();
+		PessoaFisica pf = new PessoaFisica();
 		// Data data = new Data();
 		boolean isValid = false;
 		boolean pfOuPj = true;
@@ -590,7 +591,7 @@ public class ServletDeControle {
 			oMarcacao.setHtml(sHtml);
 			oMarcacao.setCadidatoResolverProblema(false);
 			oMarcacao.setDataMarcacao(sData);
-			oMarcacao.setIdPessoaFisicaFezMarcacao(usuarioSessao.getIdLogin());
+
 			oMarcacao.setImgDenunciaIni(sCaminho);
 			oMarcacao.setImgDenunciaFinal("");
 			
@@ -598,7 +599,14 @@ public class ServletDeControle {
 			//COLOCAR O CAMPO QUE CONTEM O CAMINHO DA IMAGEM
 
 			try {
+				
 				bancoDados.conectarAoBco();
+				pf = bancoDados.buscarPessoaFisica(usuarioSessao.getIdLogin());
+			//	bancoDados.encerrarConexao();
+
+				oMarcacao.setIdPessoaFisicaFezMarcacao(pf.getIdPessoaFisica());				
+				
+			//	bancoDados.conectarAoBco();
 				bancoDados.cadastrarMarcacao(oMarcacao);
 				bancoDados.encerrarConexao();
 				

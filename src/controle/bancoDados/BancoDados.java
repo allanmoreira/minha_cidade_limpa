@@ -79,6 +79,7 @@ public class BancoDados {
         pf.setTelefone(resultSet.getString("telefone"));
         pf.setIdLogin(resultSet.getInt("id_login"));
         pf.setUsername(resultSet.getString("username"));
+        pf.setIdPessoaFisica(resultSet.getInt("id_pessoa_fisica"));
         
         resultSet.close();
         
@@ -101,7 +102,7 @@ public class BancoDados {
 				+ "html_depredacao, "
 				+ "lat, "
 				+ "lon,"
-				+ "status,"
+				+ "status_marcacao,"
 				+ "img_denuncia,"
 				+ "img_denuncia_final) "				
 				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -112,7 +113,7 @@ public class BancoDados {
         preparedStatement.setString(3, oMarcacao.getDescricao());
         preparedStatement.setString(4, oMarcacao.getDataMarcacao());
         preparedStatement.setBoolean(5, oMarcacao.isCadidatoResolverProblema());
-        preparedStatement.setInt(6, 0);
+        preparedStatement.setInt(6, oMarcacao.getIdPessoaFisicaFezMarcacao());
         preparedStatement.setString(7, oMarcacao.getHtml());
         preparedStatement.setString(8,oMarcacao.getPosLat());
         preparedStatement.setString(9,oMarcacao.getPosLon());
@@ -333,7 +334,7 @@ public class BancoDados {
 			md.setHtml(resultSet.getString("html_depredacao"));
 			md.setPosLat(resultSet.getString("lat"));
 			md.setPosLon(resultSet.getString("lon"));
-			md.setStatus(resultSet.getString("status"));
+			md.setStatus(resultSet.getString("status_marcacao"));
 			
 			md.setImgDenunciaFinal(resultSet.getString("img_denuncia_final"));
 			md.setImgDenunciaIni(resultSet.getString("img_denuncia"));

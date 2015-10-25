@@ -305,7 +305,7 @@
 	                     AdicionaMarcacao(location);
 	                 }
 	             }
-	         }, 4000);
+	         }, 5000);
 	     }
 
 	     //Função que salva a marcação no banco de dados
@@ -376,7 +376,7 @@
 	             if (data.isValid) {
 	                 var listaMarcacoes = data.listaMarcacoesCadastradas;
 	                 resultJsonDenuncias = '{ "result" : [';
-	                 for (var i = 30; i < listaMarcacoes.length; i++) {
+	                 for (var i = 0; i < listaMarcacoes.length; i++) {
 
 	                     resultJsonDenuncias += '{';
 	                     try {
