@@ -574,7 +574,9 @@ public class ServletDeControle {
 
 		if (usuarioSessao != null) {
 			usuarioLogado = true;
-
+		
+			//request.setCharacterEncoding("charset=UTF-8");
+			
 			String sCat = request.getParameter("cat");
 			String sCaminho = request.getParameter("cam");
 			String sTipo = request.getParameter("tit");

@@ -53,3 +53,14 @@ border: 2px solid #b8ed7c;
 	text-align: justify;
     font-size: 16px;
 }
+.estiloPrin{
+	font-weight: bold;
+}
+.sublinhado{
+	    font-weight: normal;
+}
+.textoDivDenuncia{
+	    font-size: 8pt;
+    line-height: 15px;
+    text-align: justify;
+}

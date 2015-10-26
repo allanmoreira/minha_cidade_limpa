@@ -311,13 +311,13 @@
 	     //Função que salva a marcação no banco de dados
 	     function salvarMarkBD(objDenuncia) {
 	         $.ajax({
-	             contentType: 'application/x-www-form-urlencoded; charset=ISO-8859-1',
 	             url: 'salvar_marcacao?cam=' + objDenuncia.caminho + '&cat=' + objDenuncia.categoria + '&lat=' + objDenuncia.lat + '&lon=' + objDenuncia.lon + '&tit=' + objDenuncia.title + '&html=' + objDenuncia.html + '&id=' + objDenuncia.id,
 	             type: 'POST',
 	             dataType: 'json',
 	             //			data: {'submit':true},
 	             data: objDenuncia,
-	             success: function(data) {
+	        	 contentType: 'application/json; charset=utf-8',
+	              success: function(data) {
 	                 if (data.isValid) {
 	                     $.bootstrapGrowl("contribuição registrada com sucesso!", {
 	                         type: 'success',
@@ -370,6 +370,7 @@
 	         url: 'lista_marcacoes_cadastradas',
 	         type: 'POST',
 	         dataType: 'json',
+	         contentType: 'application/json; charset=utf-8',           
 	         //			data: {'submit':true},
 	         data: objDenuncia,
 	         success: function(data) {

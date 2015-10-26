@@ -129,21 +129,22 @@
 			<!-- INCLUIR CAMPOS  -->
 			<div class="col-sm-5 col-sm-offset-1">
 				<div class="form-group">
-					<div style="float:left; width:45%;margin:5px;">
+					<div style="float:left; width:45%;margin:5px;" class="textoDivDenuncia">
 						<div >
-						<label><u>Endereço:</u></label><br /> 
-						<label type="text" id="txtEndDenuncia"></label>
+						<label class="sublinhado"><u>Endereço:</u></label><br /> 
+						<label type="text" id="txtEndDenuncia" class="estiloPrin"></label>
 						<br />
-						<label><u>Motivo da Denúncia:</u></label>
+						<label class="sublinhado"><u>Motivo da Denúncia:</u></label>
 						<br /> 
-						<label type="text" id="txtMotivoDenuncia"></label>
+						<label type="text" id="txtMotivoDenuncia" class="estiloPrin"></label>
 						<br />
-						<label><u>Informativo:</u></label>
+						<label class="sublinhado"><u>Informativo:</u></label>
 						<br /> 
-						<label type="text" id="txtDescricaoMark"></label>
-						<label ><u>Benefício:</u></label>
+						<label type="text" id="txtDescricaoMark" class="estiloPrin"></label>
+						<br />
+						<label class="sublinhado" ><u>Benefício:</u></label>
 						<br /> 
-						<label type="text" id="txtBeneficioDenuncia">O prof. de Gerência de Projeto, disponibilizará 1 ponto na média.</label>
+						<label type="text" id="txtBeneficioDenuncia" class="estiloPrin">O prof. de Gerência de Projeto, disponibilizará 1 ponto na média.</label>
 						</div>
 					</div>
 					<div style="float:right; width:45%;margin:5px;">
@@ -152,15 +153,15 @@
 						</div>
 					</div>
 				</div>
-			
 			</div>
-		</div>
-		<div style="float: right; padding: 0px 10px 10px;">
+				<div style="float: right; padding: 0px 10px 10px;">
 			<!-- INCLUIR BOTOES  -->
 			<button class="btn btn-warning" id="btnUploadImagem">Img Resolvida Caso</button>
 			<button class="btn btn-danger" id="btnFecharInfoDenuncia">Fechar</button>
 			<button class="btn btn-success" id="btnSalvarCandidato">Candidatar-me</button>
 		</div>
+		</div>
+	
 	</div>
 	
 	<div id="divCadastro"
