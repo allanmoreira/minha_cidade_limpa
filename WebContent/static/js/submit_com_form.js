@@ -744,5 +744,37 @@ function abre_modal_editar_cadastro_pessoa_fisica() {
 	$('#modal_editar_cadastro_pessoa_fisica').modal('show');
 }
 
+function readURL(input) {
+    if (input != "" && input.files[0]) {
+        var reader = new FileReader();
+       
+        reader.onload = function (e) {
+        $("#div_imagem_upload").attr('src', e.target.result)
+    };
+    reader.readAsDataURL(input.files[0]);
+    }
+} 
+
+function verificaMostraBotao(){
+	$('input[type=file]').each(function(index){
+        if ($('input[type=file]').eq(index).val() != ""){
+
+        	//alert($('#caminho_imagem_upload').val());
+            readURL(this);
+            //$('.hide').show();
+        }
+	});
+}
+
+$('#caminho_imagem_upload').on("change", function(){
+  verificaMostraBotao();
+});
+
+$('#caminho_imagem_upload').on("click", function(){
+    $('#caminho_imagem_upload').change(verificaMostraBotao);
+	//verificaMostraBotao();
+    //$("#container_img").append($('<img />'));
+});
+
 
 

@@ -174,9 +174,10 @@
 		<div style="padding: 10px;">
 			<!-- INCLUIR CAMPOS  -->
 			<div class="col-sm-5 col-sm-offset-1">
+				<!-- <input type="file" id="input_escolher_arquivo" name="input_escolher_arquivo"> -->
+			
 				<div class="form-group">
-					<label><b>Endereço:</b></label><br /> <label type="text"
-						id="txtEndereco"></label>
+					<label><b>Endereço:</b></label><br /> <label type="text" id="txtEndereco"></label>
 				</div>
 				<div class="form-group">
 					<div style="float:left; width:45%;margin:5px;">
@@ -198,17 +199,20 @@
 			
 					</div>
 					<div style="float:right; width:45%;margin:5px;">
-						<div class="cad_borda" style=" width:100%; height:99%; min-height:183px;">
-						AQUI FICARA A IMAGEM DO VINICIUS
+						<div id="container_img" class="cad_borda" style=" width:100%; height:99%; min-height:183px;">
+							<img id="div_imagem_upload" alt="" />
 						</div>
 					</div>
 				</div>
 			
 			</div>
 		</div>
+		<div style="float: center; padding: 0px 10px 10px;">
+			<input type="file" class="btn btn-warning" id="caminho_imagem_upload" src=""></input>
+		</div>
 		<div style="float: right; padding: 0px 10px 10px;">
 			<!-- INCLUIR BOTOES  -->
-			<button class="btn btn-warning" id="btnUploadImagem">Img Upload</button>
+			
 			<button class="btn btn-danger" id="btnFechar">Fechar</button>
 			<button class="btn btn-success" id="btnSalvar">Salvar</button>
 		</div>
