@@ -1,6 +1,11 @@
 package controle.servlet;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,10 +18,14 @@ import controle.bancoDados.*;
 import controle.conversaoDados.*;
 import modelos.*;
 
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.IOUtils;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +35,7 @@ import com.google.gson.Gson;
 import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 @Controller
+@MultipartConfig
 public class ServletDeControle {
 
 	/**
@@ -104,7 +114,7 @@ public class ServletDeControle {
 				login = bancoDados.dadosUsuarioLogado(login);
 				bancoDados.encerrarConexao();
 				
-				if (autorizaLogar) {
+//				if (autorizaLogar) {
 					
 					if(login.isPF()){
 						bancoDados.conectarAoBco();
@@ -128,17 +138,19 @@ public class ServletDeControle {
 					// utilizado para peencher o campo caso a pagina seja atualizada
 					session.setAttribute("nomeUsuarioLogado", nomeUsuarioLogado);
 					isValid = true;
-				}
+//				}
 				
 			}
 
 		} catch (ClassNotFoundException e) {
 			// Erro ao concetar ao banco de dados
 			// Levanta p�gina Erro 500 (n�o existe)
+			System.out.println(e.getMessage());
 
 		} catch (SQLException e) {
 			// Erro ao executar a instru��o
 			// Levanta p�gina Erro 500 (n�o existe)
+			System.out.println(e.getMessage());
 		}
 		
 		map.put("dtNascimento", dataNascimento);
@@ -148,7 +160,7 @@ public class ServletDeControle {
 		map.put("login", login);
 		map.put("dadosInvalidos", dadosCadastroInvalidos);
 		map.put("usernameInvalido", usernameInvalido);
-
+		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(new Gson().toJson(map));
@@ -419,7 +431,6 @@ public class ServletDeControle {
 				int idLogin = bancoDados.geraLoginUsuario(pessoaJuridica.getUsername(), pessoaJuridica.getSenha(), pessoaJuridica.isPF());
 				pessoaJuridica.setIdLogin(idLogin);
 				bancoDados.cadastrarPessoaJuridica(pessoaJuridica);
-
 				isValid = true;
 				
 				// Pega os dados do usuario logado. Ta meio gambiarra, pode ser melhor.
@@ -427,7 +438,6 @@ public class ServletDeControle {
 				login.setUsername(pessoaJuridica.getUsername());
 				login.setSenha(pessoaJuridica.getSenha());
 				login = bancoDados.dadosUsuarioLogado(login);
-				
 				pessoaJuridica = bancoDados.buscarPessoaJuridica(login.getIdLogin());
 				nomeUsuarioLogado = pessoaJuridica.getNome();
 				
@@ -645,7 +655,40 @@ public class ServletDeControle {
 
 	}
 	
+	@RequestMapping("upload_imagem")
+	public void uploadImagem(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		System.out.println("meu debug");
+		
+		PrintWriter out = response.getWriter();
+        
+        boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 
+        if (isMultipart) {
+            try {
+            	File path = new File(System.getProperty("user.dir") + "/pasta_fotos/");
+                if (!path.exists()) {
+                    path.mkdir();
+                }    	
+            	Part file = request.getPart("file"); // Retrieves <input type="file" name="file">
+            	InputStream input = file.getInputStream();
+            	OutputStream output = new FileOutputStream(new File(System.getProperty("user.dir") + "/pasta_fotos/", file.getName() + "xxxxx.png"));
+            	
+            	System.out.println(System.getProperty("user.dir"));
+            	
+            	try {
+                    IOUtils.copy(input, output);
+                } finally {
+                    IOUtils.closeQuietly(input);
+                    IOUtils.closeQuietly(output);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+        	System.out.println("meu debug = não é multpart!");
+        }
+	}
 	
 	
 

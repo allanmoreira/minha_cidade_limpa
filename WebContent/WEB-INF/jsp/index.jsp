@@ -117,7 +117,7 @@
 		class="navbar navbar-fixed-top" role="navigation">
 	</div>
 	        
-	
+	<!-- modal denúncia depredação -->
 	<div id="divDenuncia"
 		class="abseed_conteudo_sub abseed_Div_Casastro navbar navbar-fixed-top"
 		style="max-width: 560px; width: 100%; min-height: auto; position: fixed; top: 25%; margin-left: 10px; margin-top: 0px; margin: 0px auto; z-index: 9999; padding: 0px; border-radius: 5px; display: none;"
@@ -127,33 +127,40 @@
 			Dados da Denúncia</div>
 		<div style="padding: 2px;">
 			<!-- INCLUIR CAMPOS  -->
-			<div class="col-sm-5 col-sm-offset-1">
-				<div class="form-group">
-					<div style="float:left; width:45%;margin:5px;" class="textoDivDenuncia">
-						<div >
-						<label class="sublinhado"><u>Endereço:</u></label><br /> 
-						<label type="text" id="txtEndDenuncia" class="estiloPrin"></label>
-						<br />
-						<label class="sublinhado"><u>Motivo da Denúncia:</u></label>
-						<br /> 
-						<label type="text" id="txtMotivoDenuncia" class="estiloPrin"></label>
-						<br />
-						<label class="sublinhado"><u>Informativo:</u></label>
-						<br /> 
-						<label type="text" id="txtDescricaoMark" class="estiloPrin"></label>
-						<br />
-						<label class="sublinhado" ><u>Benefício:</u></label>
-						<br /> 
-						<label type="text" id="txtBeneficioDenuncia" class="estiloPrin">O prof. de Gerência de Projeto, disponibilizará 1 ponto na média.</label>
+			<form 
+				name=""
+				id=""
+				accept-charset="iso-8859-1,utf-8"
+				encType="multipart/form-data">
+			
+				<div class="col-sm-5 col-sm-offset-1">
+					<div class="form-group">
+						<div style="float:left; width:45%;margin:5px;" class="textoDivDenuncia">
+							<div >
+							<label class="sublinhado"><u>Endereço:</u></label><br /> 
+							<label type="text" id="txtEndDenuncia" class="estiloPrin"></label>
+							<br />
+							<label class="sublinhado"><u>Motivo da Denúncia:</u></label>
+							<br /> 
+							<label type="text" id="txtMotivoDenuncia" class="estiloPrin"></label>
+							<br />
+							<label class="sublinhado"><u>Informativo:</u></label>
+							<br /> 
+							<label type="text" id="txtDescricaoMark" class="estiloPrin"></label>
+							<br />
+							<label class="sublinhado" ><u>Benefício:</u></label>
+							<br /> 
+							<label type="text" id="txtBeneficioDenuncia" class="estiloPrin">O prof. de Gerência de Projeto, disponibilizará 1 ponto na média.</label>
+							</div>
 						</div>
-					</div>
-					<div style="float:right; width:45%;margin:5px;">
-						<div class="cad_borda" style=" width:100%; height:99%; min-height:220px;">
-								 <label type="text" id="txtImagemDenuncia"></label>						
+						<div style="float:right; width:45%;margin:5px;">
+							<div class="cad_borda" style=" width:100%; height:99%; min-height:220px;">
+									 <label type="text" id="txtImagemDenuncia"></label>						
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</form>
 				<div style="float: right; padding: 0px 10px 10px;">
 			<!-- INCLUIR BOTOES  -->
 			<button class="btn btn-warning" id="btnUploadImagem">Img Resolvida Caso</button>
@@ -163,7 +170,9 @@
 		</div>
 	
 	</div>
+	<!-- fim modal denúncia depredação -->
 	
+	<!-- div cadastrar denúncia -->
 	<div id="divCadastro"
 		class="abseed_conteudo_sub abseed_Div_Casastro navbar navbar-fixed-top"
 		style="max-width: 560px; width: 100%; min-height: 350px; position: fixed; top: 25%; margin-left: 10px; margin-top: 0px; margin: 0px auto; z-index: 9999; padding: 0px; border-radius: 5px; display: none;"
@@ -173,40 +182,53 @@
 			Cadastro de Voluntários</div>
 		<div style="padding: 10px;">
 			<!-- INCLUIR CAMPOS  -->
-			<div class="col-sm-5 col-sm-offset-1">
-				<!-- <input type="file" id="input_escolher_arquivo" name="input_escolher_arquivo"> -->
-			
-				<div class="form-group">
-					<label><b>Endereço:</b></label><br /> <label type="text" id="txtEndereco"></label>
-				</div>
-				<div class="form-group">
-					<div style="float:left; width:45%;margin:5px;">
-						<div>
-						<label><b>Motivo da Denúncia:</b></label>
-						<select class="cad_drop cad_borda " id="dpMotivo">
-							<option value="Estátua">Estátua</option>
-							<option value="Parede">Parede</option>
-							<option value="Lago">Lago</option>
-							<option value="Banco">Banco</option>
-						</select>
-						</div>
-						
-						<label><b>Informativo:</b></label>
-				<div class="form-group">
-					<textarea name="comentário" id="txtComentario"
-						class="cad_comentario cad_borda" rows="5" cols="40"></textarea>
-				</div>
-			
+
+			<form 
+				action="upload_imagem"
+				name="form_upload_imagem"
+				id="form_upload_imagem"
+				accept-charset="iso-8859-1,utf-8"
+				encType="multipart/form-data">
+				
+				<div class="col-sm-5 col-sm-offset-1">
+					
+					<!-- <input type="file" id="input_escolher_arquivo" name="input_escolher_arquivo"> -->
+
+					<div class="form-group">
+						<label><b>Endereço:</b></label><br /> 
+						<label type="text" id="txtEndereco"></label>
 					</div>
-					<div style="float:right; width:45%;margin:5px;">
-						<div id="container_img" class="cad_borda" style=" width:100%; height:99%; min-height:183px;">
-							<img id="div_imagem_upload" alt="" />
+					<div class="form-group">
+						<div style="float: left; width: 45%; margin: 5px;">
+							<div>
+								<label><b>Motivo da Denúncia:</b></label> <select
+									class="cad_drop cad_borda " id="dpMotivo">
+									<option value="Estátua">Estátua</option>
+									<option value="Parede">Parede</option>
+									<option value="Lago">Lago</option>
+									<option value="Banco">Banco</option>
+								</select>
+							</div>
+
+							<label><b>Informativo:</b></label>
+							<div class="form-group">
+								<textarea name="comentário" id="txtComentario"
+									class="cad_comentario cad_borda" rows="5" cols="40"></textarea>
+							</div>
+
+						</div>
+						<div style="float: right; width: 45%; margin: 5px;">
+							<div id="container_img" class="cad_borda"
+								style="width: 100%; height: 99%; min-height: 183px;">
+								<img id="div_imagem_upload" alt="" />
+							</div>
 						</div>
 					</div>
+
 				</div>
-			
-			</div>
+			</form>
 		</div>
+		
 		<div style="float: center; padding: 0px 10px 10px;">
 			<input type="file" class="btn btn-warning" id="caminho_imagem_upload" src=""></input>
 		</div>
@@ -214,10 +236,10 @@
 			<!-- INCLUIR BOTOES  -->
 			
 			<button class="btn btn-danger" id="btnFechar">Fechar</button>
-			<button class="btn btn-success" id="btnSalvar">Salvar</button>
+			<button class="btn btn-success" onclick="teste_upload()">Salvar</button>
 		</div>
 	</div>
-	
+	<!-- fim div cadastrar denúncia -->
         
     <!-- modal editar PF -->
     <div class="portfolio-modal modal fade" id="modal_editar_cadastro_pessoa_fisica" tabindex="-1" role="dialog" aria-hidden="true">
@@ -1059,7 +1081,7 @@
 
     <!-- Contact Form JavaScript -->
     <script src="<c:url value="static_startbootstrap-freelancer-1.0.3/js/jqBootstrapValidation.js"/>"></script>
-    <script src="<c:url value="static_startbootstrap-freelancer-1.0.3/js/contact_me.js"/>"></script>
+    <%-- <script src="<c:url value="static_startbootstrap-freelancer-1.0.3/js/contact_me.js"/>"></script> --%>
 
     <!-- Custom Theme JavaScript -->
     <script src="<c:url value="static_startbootstrap-freelancer-1.0.3/js/freelancer.js"/>"></script>

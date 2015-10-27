@@ -309,15 +309,20 @@
 	     }
 
 	     //Função que salva a marcação no banco de dados
-	     function salvarMarkBD(objDenuncia) {
-	         $.ajax({
-	             url: 'salvar_marcacao?cam=' + objDenuncia.caminho + '&cat=' + objDenuncia.categoria + '&lat=' + objDenuncia.lat + '&lon=' + objDenuncia.lon + '&tit=' + objDenuncia.title + '&html=' + objDenuncia.html + '&id=' + objDenuncia.id,
+//	     function salvarMarkBD(objDenuncia) {
+    	 function salvarMarkBD() {
+	    	 
+	         /*
+	    	 $.ajax({
+//	             url: 'salvar_marcacao?cam=' + objDenuncia.caminho + '&cat=' + objDenuncia.categoria + '&lat=' + objDenuncia.lat + '&lon=' + objDenuncia.lon + '&tit=' + objDenuncia.title + '&html=' + objDenuncia.html + '&id=' + objDenuncia.id,
+	             url: 'upload_imagem',
 	             type: 'POST',
 	             dataType: 'json',
 	             //			data: {'submit':true},
-	             data: objDenuncia,
-	        	 contentType: 'application/json; charset=utf-8',
-	              success: function(data) {
+//	             data: objDenuncia,
+//	        	 contentType: 'application/json; charset=utf-8',
+	             data: $('#form_upload_imagem').serialize(),
+	             success: function(data) {
 	                 if (data.isValid) {
 	                     $.bootstrapGrowl("contribuição registrada com sucesso!", {
 	                         type: 'success',
@@ -359,8 +364,8 @@
 	                     return false;
 	                 }
 	             }
-
 	         });
+	         */
 	     }	     
 	 }
 
@@ -445,6 +450,11 @@
 		 }
 	 
 	 }
+	 
+	 function teste_upload() {
+		 $('#form_upload_imagem').submit();
+	 }
+	 
 	 
 
 	
