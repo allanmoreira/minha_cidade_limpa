@@ -177,23 +177,25 @@
 		class="abseed_conteudo_sub abseed_Div_Casastro navbar navbar-fixed-top"
 		style="max-width: 560px; width: 100%; min-height: 350px; position: fixed; top: 25%; margin-left: 10px; margin-top: 0px; margin: 0px auto; z-index: 9999; padding: 0px; border-radius: 5px; display: none;"
 		role="navigation">
-		<div class="abseed_conteudo_borda"
-			style="text-align: center; line-height: 8px; font-size =14px; color: #ffffff; padding: 10px;">
-			Cadastro de Voluntários</div>
-		<div style="padding: 10px;">
-			<!-- INCLUIR CAMPOS  -->
-
-			<form 
-				action="upload_imagem"
-				name="form_upload_imagem"
-				id="form_upload_imagem"
-				accept-charset="iso-8859-1,utf-8"
-				encType="multipart/form-data">
+		<form 
+			action="upload_imagem"
+			name="form_upload_imagem"
+			id="form_upload_imagem"
+			accept-charset="iso-8859-1,utf-8"
+			encType="multipart/form-data">
 				
+			<div class="abseed_conteudo_borda"
+				style="text-align: center; line-height: 8px; font-size =14px; color: #ffffff; padding: 10px;">
+				Cadastro de Voluntários</div>
+			<div style="padding: 10px;">
+				<!-- INCLUIR CAMPOS  -->
+	
+				
+					
 				<div class="col-sm-5 col-sm-offset-1">
 					
 					<!-- <input type="file" id="input_escolher_arquivo" name="input_escolher_arquivo"> -->
-
+	
 					<div class="form-group">
 						<label><b>Endereço:</b></label><br /> 
 						<label type="text" id="txtEndereco"></label>
@@ -209,13 +211,13 @@
 									<option value="Banco">Banco</option>
 								</select>
 							</div>
-
+	
 							<label><b>Informativo:</b></label>
 							<div class="form-group">
 								<textarea name="comentário" id="txtComentario"
 									class="cad_comentario cad_borda" rows="5" cols="40"></textarea>
 							</div>
-
+	
 						</div>
 						<div style="float: right; width: 45%; margin: 5px;">
 							<div id="container_img" class="cad_borda"
@@ -224,21 +226,22 @@
 							</div>
 						</div>
 					</div>
-
+	
 				</div>
-			</form>
-		</div>
-		
-		<div style="float: center; padding: 0px 10px 10px;">
-			<input type="file" class="btn btn-warning" id="caminho_imagem_upload" src=""></input>
-		</div>
-		<div style="float: right; padding: 0px 10px 10px;">
-			<!-- INCLUIR BOTOES  -->
+			</div>
 			
-			<button class="btn btn-danger" id="btnFechar">Fechar</button>
-			<button class="btn btn-success" onclick="teste_upload()">Salvar</button>
-		</div>
+			<div style="float: center; padding: 0px 10px 10px;">
+				<input type="file" name="file" class="btn btn-warning" id="caminho_imagem_upload" src=""></input>
+			</div>
+			<div style="float: right; padding: 0px 10px 10px;">
+				<!-- INCLUIR BOTOES  -->
+				
+				<button class="btn btn-danger" id="btnFechar">Fechar</button>
+				<button class="btn btn-success" onclick="teste_upload()">Salvar</button>
+			</div>
+		</form>
 	</div>
+	
 	<!-- fim div cadastrar denúncia -->
         
     <!-- modal editar PF -->
@@ -1108,7 +1111,6 @@
 	<script src="<c:url value="static/js/montagemMap.js"/>"></script>
 	<script src="<c:url value="static/js/bootstrap_growl.js"/>"></script>
 	
-
 </body>
 
 </html>

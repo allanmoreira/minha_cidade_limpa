@@ -18,14 +18,15 @@ import controle.bancoDados.*;
 import controle.conversaoDados.*;
 import modelos.*;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.io.IOUtils;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -656,22 +657,26 @@ public class ServletDeControle {
 	}
 	
 	@RequestMapping("upload_imagem")
-	public void uploadImagem(HttpServletRequest request, HttpServletResponse response) throws IOException{
+	protected void uploadImagem(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("meu debug");
 		
-		PrintWriter out = response.getWriter();
+		final String DIRETORIO = System.getProperty("user.dir") + "/upload_imagens/";
+		 
+	    // Se quiser limitar o tamanho da imagem:
+	    final int TAMANHO_MAX   = 1024 * 1024 * 10;  // 10MB
         
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-
+        
         if (isMultipart) {
             try {
-            	File path = new File(System.getProperty("user.dir") + "/pasta_fotos/");
+            	// Cria diretório se nao existir (.../upload_imagens/)
+                File path = new File(DIRETORIO);
                 if (!path.exists()) {
-                    path.mkdir();
-                }    	
+                	path.mkdir();
+                }
             	Part file = request.getPart("file"); // Retrieves <input type="file" name="file">
             	InputStream input = file.getInputStream();
-            	OutputStream output = new FileOutputStream(new File(System.getProperty("user.dir") + "/pasta_fotos/", file.getName() + "xxxxx.png"));
+            	OutputStream output = new FileOutputStream(new File(DIRETORIO, file.getName() + "111.png"));
             	
             	System.out.println(System.getProperty("user.dir"));
             	
@@ -686,12 +691,7 @@ public class ServletDeControle {
             }
         }
         else {
-        	System.out.println("meu debug = nÃ£o Ã© multpart!");
+        	System.out.println("meu debuguinho = não é multpart!");
         }
 	}
-	
-	
-
-			
-			
 }
