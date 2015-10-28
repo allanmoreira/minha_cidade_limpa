@@ -366,6 +366,52 @@ public class BancoDados {
         
         return idMarcacao;
 	}
+	
+	
+	/* Aqui verifica se esse usuario nao esta cadastrado para outra depredacao*/
+	public boolean verificaRelacaoCandidatura(int idPessoa, int idMarcacao) throws SQLException 
+	{
+
+		String sql = "select * "
+	        		+ "from candidatura_resolucao_problema "
+	                + "where id_pessoa_fisica = idPessoa";
+
+	        preparedStatement = connection.prepareStatement(sql);
+
+	        ResultSet resultSet = preparedStatement.executeQuery();
+	        if(resultSet.next()){
+	        	return false;
+	        }
+	        
+			return true;
+
+
+	}
+
+
+	/* aqui cadastra no banco a relacao usuario x problema */
+	public boolean setCandidatura(int idPessoa, int idMarcacao) throws SQLException {
+
+		boolean podeCadastrar = verificaRelacaoCandidatura(idPessoa, idMarcacao);
+		
+		if(podeCadastrar)
+		{
+		
+		String sql = "insert into candidatura_resolucao_problema "
+					+ "(id_pessoa_fisica, "
+					+ "id_marcacao_depredacao) "
+					
+					+ "values (idPessoa, idMarcacao)";
+
+	        preparedStatement = connection.prepareStatement(sql);
+	        preparedStatement.executeQuery();
+
+			return true;
+		}
+
+	return false;
+
+	}
 
 	
 	
