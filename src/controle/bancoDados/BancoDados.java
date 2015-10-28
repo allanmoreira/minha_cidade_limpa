@@ -30,6 +30,8 @@ public class BancoDados {
         String senha = "cidadelimpa20152";
         
         connection = DriverManager.getConnection(url, usuario, senha);
+    
+    //teste para commit
     }
 
     public void encerrarConexao() throws SQLException {
