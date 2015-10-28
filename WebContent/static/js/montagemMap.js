@@ -85,6 +85,7 @@
 		         $('label[id*="txtMotivoDenuncia"]').text(idMotivo);
 		         $('label[id$="txtDescricaoMark"]').text(idDescricao);
 		         $('label[id*="txtImagemDenuncia"]').text(idImagemCaminho);
+		         $('button[id*="btnSalvarCandidato"]').text(idMark);
 	            // PreecheCampos();
 
 	         });
@@ -101,6 +102,8 @@
 	         $('label[id*="txtMotivoDenuncia"]').text(idMotivo);
 	         $('label[id$="txtDescricaoMark"]').text(idDescricao);
 	         $('label[id*="txtImagemDenuncia"]').text(idImagemCaminho);
+	         $('button[id*="btnSalvarCandidato"]').text(idMark);
+
 	     }
 	     
 	    
@@ -245,13 +248,20 @@
 	     
 	     
 	     
-	     function SalvarCandidato() {
+	     function SalvarCandidato(idMarcacao) {
 	         //GIOVANNE AQUI VC FAZ I CONTATO POR AJAX COM PARA CADASTRAR A PESSOA NA DENUNCIA
 	         // * Tem que ver como a pessoa irá fazer para se cadastrar.
 	         // * idMark    <--- Esta variável ja contém o ID da marcação;
 	         // * Tem que alocar um espaço na div junto com o da pessoa, para a empresa se candidatar a
 	         //colocar o beneficio que irá disponibilizar para o cidadão
 
+	    	//RENAN o idmark está vindo como undefined
+	    	 //fiz como tu disse e fiz passando ele pro botao na hora 
+	    	 alert(idMarcacao);
+	    	 
+	    	 
+	    	 
+	    	 
 	     }
 
 	     //Função que as informações da denúncia
@@ -455,6 +465,7 @@
 		 $('#form_upload_imagem').submit();
 	 }
 	 
+	
 	 
 
 	

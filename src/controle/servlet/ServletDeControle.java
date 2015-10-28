@@ -694,4 +694,72 @@ public class ServletDeControle {
         	System.out.println("meu debuguinho = n�o � multpart!");
         }
 	}
+	
+	@RequestMapping("candidatarse")
+	public void candidatarse(HttpServletRequest request,HttpServletResponse response, HttpSession session) throws IOException {
+		BancoDados bancoDados = new BancoDados();
+		Map<String, Object> map = new HashMap<String, Object>();
+		PessoaFisica pf = new PessoaFisica();
+		// Data data = new Data();
+		boolean isValid = false;
+		boolean pfOuPj = true;
+		boolean usuarioLogado = false;
+
+		Login usuarioSessao = (Login) session.getAttribute("usuarioLogado");
+		int idMarcacao = (int) session.getAttribute("idMark");
+
+		if (usuarioSessao != null) {
+			usuarioLogado = true;
+		
+			//request.setCharacterEncoding("charset=UTF-8");
+			
+			//COLOCAR O CAMPO QUE CONTEM O CAMINHO DA IMAGEM
+
+			try {
+				
+				bancoDados.conectarAoBco();
+				pf = bancoDados.buscarPessoaFisica(usuarioSessao.getIdLogin());
+			//	bancoDados.encerrarConexao();
+
+				bancoDados.setCandidatura(pf.getIdPessoaFisica(), idMarcacao);
+
+				bancoDados.encerrarConexao();
+				
+								
+
+				isValid = true;
+			} catch (ClassNotFoundException e) {
+				// Erro ao concetar ao banco de dados
+				// Levanta página Erro 500 (não existe)
+				String erro = "CLASSE = ";
+				erro += e.getMessage();
+				erro += " \n ";
+				erro += e.getStackTrace();
+
+			} catch (SQLException e) {
+
+				String erro = "SQL = ";
+				erro += e.getMessage();
+				erro += " \n ";
+				erro += e.getStackTrace();
+				// Erro ao executar a instrução
+				// Levanta página Erro 500 (não existe)
+			}
+		} else {
+			isValid = false;
+		}
+
+		map.put("isValid", isValid);
+		map.put("usuarioLogado", usuarioLogado);
+
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(new Gson().toJson(map));
+
+	}
+	
+	
+	
+	
+	
 }
