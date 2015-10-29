@@ -663,7 +663,7 @@ public class ServletDeControle {
 	@RequestMapping(value = { "upload_imagem"}, method = RequestMethod.POST)
 	@ResponseBody
 	protected void uploadImagem(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("meu debug");
+		System.out.println("NAO USAR O SYSOUT PARA DEBUG E SIM O PRÃ“PRIO DEBUG");
 		
 		final String DIRETORIO = System.getProperty("user.dir") + "/upload_imagens/";
 		 
@@ -675,7 +675,7 @@ public class ServletDeControle {
         if (isMultipart) {
             try {
             	
-            	// Cria diretório se nao existir (.../upload_imagens/)
+            	// Cria diretï¿½rio se nao existir (.../upload_imagens/)
                 File path = new File(DIRETORIO);
                 if (!path.exists()) {
                 	path.mkdir();
@@ -703,7 +703,7 @@ public class ServletDeControle {
             }
         }
         else {
-        	System.out.println("meu debug = não é multpart!");
+        	System.out.println("meu debug = nï¿½o ï¿½ multpart!");
         }
 	}
 	

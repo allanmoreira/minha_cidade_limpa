@@ -127,12 +127,7 @@
 			Dados da Denúncia</div>
 		<div style="padding: 2px;">
 			<!-- INCLUIR CAMPOS  -->
-			<form 
-				name=""
-				id=""
-				accept-charset="iso-8859-1,utf-8"
-				encType="multipart/form-data">
-			
+		
 				<div class="col-sm-5 col-sm-offset-1">
 					<div class="form-group">
 						<div style="float:left; width:45%;margin:5px;" class="textoDivDenuncia">
@@ -160,7 +155,7 @@
 						</div>
 					</div>
 				</div>
-			</form>
+		
 				<div style="float: right; padding: 0px 10px 10px;">
 			<!-- INCLUIR BOTOES  -->
 			<button class="btn btn-warning" id="btnUploadImagem">Img Resolvida Caso</button>
@@ -177,13 +172,7 @@
 		class="abseed_conteudo_sub abseed_Div_Casastro navbar navbar-fixed-top"
 		style="max-width: 560px; width: 100%; min-height: 350px; position: fixed; top: 25%; margin-left: 10px; margin-top: 0px; margin: 0px auto; z-index: 9999; padding: 0px; border-radius: 5px; display: none;"
 		role="navigation">
-		<form 
-			action="upload_imagem"
-			name="form_upload_imagem"
-			id="form_upload_imagem"
-			accept-charset="iso-8859-1,utf-8"
-			encType="multipart/form-data">
-				
+	
 			<div class="abseed_conteudo_borda"
 				style="text-align: center; line-height: 8px; font-size =14px; color: #ffffff; padding: 10px;">
 				Cadastro de Voluntários</div>
@@ -237,9 +226,9 @@
 				<!-- INCLUIR BOTOES  -->
 				
 				<button class="btn btn-danger" id="btnFechar">Fechar</button>
-				<button class="btn btn-success" onclick="teste_upload()">Salvar</button>
+				<button class="btn btn-success" id="btnSalvar">Salvar</button>
 			</div>
-		</form>
+		
 	</div>
 	
 	<!-- fim div cadastrar denúncia -->

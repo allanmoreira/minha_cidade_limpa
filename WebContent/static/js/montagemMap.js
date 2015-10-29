@@ -28,17 +28,24 @@
 	         mapTypeId: google.maps.MapTypeId.ROADMAP
 	     });
 	     //Leitura do json DATAPOA
-	     if (resultJsonDenuncias != undefined && resultJsonDenuncias.result.length > 0) {
-	         for (i = 0; i < resultJsonDenuncias.result.length; i++) {
-	             var location = resultJsonDenuncias.result.length[i];
-	             AdicionaMarcacao(location);
-	         }
-	     } else if (DadosPoa.DadosPoa.length > 0) {
+	     if (DadosPoa.DadosPoa.length > 0) {
 	         for (i = 0; i < DadosPoa.DadosPoa.length; i++) {
 	             var location = DadosPoa.DadosPoa[i];
 	             AdicionaMarcacao(location);
 	         }
 	     }
+	     
+	     buscaListaMarcacoesCadastradas();
+	     setTimeout(function() {
+             //Retorna a lista do banco e adiciona os dados novos
+             if (resultJsonDenuncias != undefined) {
+                 var parsed = JSON.parse(resultJsonDenuncias);
+                 for (i = 0; i < parsed.result.length; i++) {
+                     var location = parsed.result[i];
+                     AdicionaMarcacao(location);
+                 }
+             }
+         }, 5000);
 	     
 
 	     marker.addListener('click', function() {
@@ -74,20 +81,7 @@
 	             HabilitaDivVisuDenuncia(true);
 	             infowindow.setContent(strDescricao);
 	             infowindow.open(map, marker);
-	             
-	             idMark = $('input[id$="ipDenuncia"]').val();
-		         var idMotivo = $('input[id$="ipTitulo"]').val();
-		         var idEndereco = $('input[id*="ipEndereco"]').val();
-		         var idDescricao = $('input[id*="ipDadosDigitados"]').val();
-		         var idImagemCaminho = $('input[id*="ipCaminho"]').val();
-
-		         $('label[id*="txtEndDenuncia"]').text(idEndereco);
-		         $('label[id*="txtMotivoDenuncia"]').text(idMotivo);
-		         $('label[id$="txtDescricaoMark"]').text(idDescricao);
-		         $('label[id*="txtImagemDenuncia"]').text(idImagemCaminho);
-		         $('button[id*="btnSalvarCandidato"]').text(idMark);
-	            // PreecheCampos();
-
+	            PreecheCampos();
 	         });
 	     }
 
@@ -103,9 +97,42 @@
 	         $('label[id$="txtDescricaoMark"]').text(idDescricao);
 	         $('label[id*="txtImagemDenuncia"]').text(idImagemCaminho);
 	         $('button[id*="btnSalvarCandidato"]').text(idMark);
-
 	     }
 	     
+	     //UTILIZAR O AJAX POR AQUI PARA GRAVAR OS DADOS NO BANCO DA PESSOA QUE SE 
+		 //CANDIDATOU
+		 $('button[id*="btnSalvarCandidato"]').click(function() {
+			 SalvarCandidato();
+		 });
+
+	     function SalvarCandidato() {
+	    	 if(idMark != "" && idMark != undefined){
+	    		 //GIOVANNE AQUI VC FAZ I CONTATO POR AJAX COM PARA CADASTRAR A PESSOA NA DENUNCIA
+		         // * Tem que ver como a pessoa irá fazer para se cadastrar.
+		         // * idMark    <--- Esta variável ja contém o ID da marcação;
+		         // * Tem que alocar um espaço na div junto com o da pessoa, para a empresa se candidatar a
+		         //colocar o beneficio que irá disponibilizar para o cidadão
+	    		 
+	    		 //CHAMAR O MÉTODO AJAX
+	    		 
+	    		 //APÓS O RETORNO DE SE CANDIDATAR VERIFICAR SE O STATUS ESTÀ TROCADO.
+	    		 //1ºDAR UM UPDATE NA TABELA (marcacao_depredacao) - mudar o STATUS p/ (status_marcacao = 3) VERIFICAR COM WILLEN
+	    		 //2º APÓS OK chamar esta function (buscaListaMarcacoesCadastradas())
+	    		 //3º Executar este script abaixo
+	    		/*
+	    		 setTimeout(function() {
+		             //Retorna a lista do banco e adiciona os dados novos
+		             if (resultJsonDenuncias != undefined) {
+		                 var parsed = JSON.parse(resultJsonDenuncias);
+		                 for (i = 0; i < parsed.result.length; i++) {
+		                     var location = parsed.result[i];
+		                     AdicionaMarcacao(location);
+		                 }
+		             }
+		         }, 5000);
+		         */
+	       	 }	     
+	     }
 	    
 	     
 
@@ -185,8 +212,9 @@
 	             }
 	         });
 	     }
+	
+		 
 	     
-
 
 		 //Click para fechar a div de cadastro
 		 $('button[id*="btnFechar"]').click(function() {
@@ -212,7 +240,6 @@
 		 });
 
 	   
-
 		 
 		//Função que mostra e esconde a div fundo e cadastro
 	     function HabilitaDivCadastro(bMostraDiv) {
@@ -248,21 +275,7 @@
 	     
 	     
 	     
-	     function SalvarCandidato(idMarcacao) {
-	         //GIOVANNE AQUI VC FAZ I CONTATO POR AJAX COM PARA CADASTRAR A PESSOA NA DENUNCIA
-	         // * Tem que ver como a pessoa irá fazer para se cadastrar.
-	         // * idMark    <--- Esta variável ja contém o ID da marcação;
-	         // * Tem que alocar um espaço na div junto com o da pessoa, para a empresa se candidatar a
-	         //colocar o beneficio que irá disponibilizar para o cidadão
 
-	    	//RENAN o idmark está vindo como undefined
-	    	 //fiz como tu disse e fiz passando ele pro botao na hora 
-	    	 alert(idMarcacao);
-	    	 
-	    	 
-	    	 
-	    	 
-	     }
 
 	     //Função que as informações da denúncia
 	     function SalvaDados() {
@@ -319,19 +332,12 @@
 	     }
 
 	     //Função que salva a marcação no banco de dados
-//	     function salvarMarkBD(objDenuncia) {
-    	 function salvarMarkBD() {
-	    	 
-	         /*
-	    	 $.ajax({
-//	             url: 'salvar_marcacao?cam=' + objDenuncia.caminho + '&cat=' + objDenuncia.categoria + '&lat=' + objDenuncia.lat + '&lon=' + objDenuncia.lon + '&tit=' + objDenuncia.title + '&html=' + objDenuncia.html + '&id=' + objDenuncia.id,
-	             url: 'upload_imagem',
+         function salvarMarkBD(objDenuncia) {
+	    	   	 $.ajax({
+	             url: 'salvar_marcacao?cam=' + objDenuncia.caminho + '&cat=' + objDenuncia.categoria + '&lat=' + objDenuncia.lat + '&lon=' + objDenuncia.lon + '&tit=' + objDenuncia.title + '&html=' + objDenuncia.html + '&id=' + objDenuncia.id,
 	             type: 'POST',
 	             dataType: 'json',
-	             //			data: {'submit':true},
-//	             data: objDenuncia,
-//	        	 contentType: 'application/json; charset=utf-8',
-	             data: $('#form_upload_imagem').serialize(),
+	             data: objDenuncia,
 	             success: function(data) {
 	                 if (data.isValid) {
 	                     $.bootstrapGrowl("contribuição registrada com sucesso!", {
@@ -346,12 +352,13 @@
 	                         icon: 'static/img/icones/vermelho.png',
 	                         map: map
 	                     });
-
+	                     buscaListaMarcacoesCadastradas();
+	                     
 	                     latLongSave = "";
 	                     $('textarea[id*="txtComentario"]').val("");
-	                     marker.setMap(map);
-	                     AdicionaInfoMarker(markerClick, map, infowindow, objDenuncia.html);
-	                     buscaListaMarcacoesCadastradas(objDenuncia);
+	                    // marker.setMap(map);
+	                   //  AdicionaInfoMarker(markerClick, map, infowindow, objDenuncia.html);
+	                    // buscaListaMarcacoesCadastradas(objDenuncia);
 	                     return true;
 	                 } else {
 	                     if (!data.usuarioLogado) {
@@ -375,20 +382,17 @@
 	                 }
 	             }
 	         });
-	         */
+	         
 	     }	     
 	 }
 
-	 function buscaListaMarcacoesCadastradas(objDenuncia) {
-
+	 function buscaListaMarcacoesCadastradas() {}
 	     $.ajax({
 	         url: 'lista_marcacoes_cadastradas',
 	         type: 'POST',
 	         dataType: 'json',
 	         contentType: 'application/json; charset=utf-8',           
-	         //			data: {'submit':true},
-	         data: objDenuncia,
-	         success: function(data) {
+	          success: function(data) {
 	             if (data.isValid) {
 	                 var listaMarcacoes = data.listaMarcacoesCadastradas;
 	                 resultJsonDenuncias = '{ "result" : [';
@@ -426,9 +430,7 @@
 	                     } catch (err) {
 	                         resultJsonDenuncias += '", "html":"';
 	                     }
-
-
-	                     
+                     
 	                     resultJsonDenuncias += '" }';
 	                     resultJsonDenuncias += i < listaMarcacoes.length - 1 ? ',' : '';
 
@@ -436,9 +438,7 @@
 	                 resultJsonDenuncias += ' ]}';
 	                 return true;
 	             } else {
-	                 alert("Nenhum registro encontrado!");
-
-	                 return false;
+	                return false;
 	             }
 	         }
 
@@ -458,15 +458,6 @@
 		             return "";
 		     }
 		 }
-	 
-	 }
-	 
-	 function teste_upload() {
-		 $('#form_upload_imagem').submit();
-	 }
-	 
-	
-	 
-
-	
-	 //google.maps.event.addDomListener(window, 'load', initialize);s
+		 
+		 
+		 //google.maps.event.addDomListener(window, 'load', initialize);s
