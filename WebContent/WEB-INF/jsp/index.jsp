@@ -160,7 +160,7 @@
 			<!-- INCLUIR BOTOES  -->
 			<button class="btn btn-warning" id="btnUploadImagem">Img Resolvida Caso</button>
 			<button class="btn btn-danger" id="btnFecharInfoDenuncia">Fechar</button>
-			<button class="btn btn-success" id="btnSalvarCandidato" onclick="salvaCandidato(this.value)">Candidatar-me</button>
+			<button class="btn btn-success" id="btnSalvarCandidato" onclick="SalvarCandidato()">Candidatar-me</button>
 		</div>
 		</div>
 	

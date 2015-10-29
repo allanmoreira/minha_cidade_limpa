@@ -27,6 +27,9 @@
 	         zoom: 12,
 	         mapTypeId: google.maps.MapTypeId.ROADMAP
 	     });
+	     
+	     buscaListaMarcacoesCadastradas();
+	     
 	     //Leitura do json DATAPOA
 	     if (DadosPoa.DadosPoa.length > 0) {
 	         for (i = 0; i < DadosPoa.DadosPoa.length; i++) {
@@ -35,7 +38,7 @@
 	         }
 	     }
 	     
-	     buscaListaMarcacoesCadastradas();
+	   
 	     setTimeout(function() {
              //Retorna a lista do banco e adiciona os dados novos
              if (resultJsonDenuncias != undefined) {
@@ -45,7 +48,7 @@
                      AdicionaMarcacao(location);
                  }
              }
-         }, 5000);
+         }, 10000);
 	     
 
 	     marker.addListener('click', function() {
@@ -81,7 +84,7 @@
 	             HabilitaDivVisuDenuncia(true);
 	             infowindow.setContent(strDescricao);
 	             infowindow.open(map, marker);
-	            PreecheCampos();
+	             PreencheCampos();
 	         });
 	     }
 
@@ -96,17 +99,20 @@
 	         $('label[id*="txtMotivoDenuncia"]').text(idMotivo);
 	         $('label[id$="txtDescricaoMark"]').text(idDescricao);
 	         $('label[id*="txtImagemDenuncia"]').text(idImagemCaminho);
-	         $('button[id*="btnSalvarCandidato"]').text(idMark);
+	         //$('button[id*="btnSalvarCandidato"]').text(idMark);
 	     }
 	     
 	     //UTILIZAR O AJAX POR AQUI PARA GRAVAR OS DADOS NO BANCO DA PESSOA QUE SE 
 		 //CANDIDATOU
 		 $('button[id*="btnSalvarCandidato"]').click(function() {
 			 SalvarCandidato();
+
 		 });
 
 	     function SalvarCandidato() {
+	    	 var idMark = document.getElementById('ipDenuncia').value;
 	    	 if(idMark != "" && idMark != undefined){
+	    		 
 	    		 //GIOVANNE AQUI VC FAZ I CONTATO POR AJAX COM PARA CADASTRAR A PESSOA NA DENUNCIA
 		         // * Tem que ver como a pessoa irá fazer para se cadastrar.
 		         // * idMark    <--- Esta variável ja contém o ID da marcação;
@@ -115,11 +121,39 @@
 	    		 
 	    		 //CHAMAR O MÉTODO AJAX
 	    		 
+	    		 $.ajax({
+		             	url: 'candidatarse?idmarcacao=' + idMark,
+		             	type: 'POST',
+		             	success: function(data) 
+		             		{
+		             		if (data.isValid)
+		             			{
+		             				$.bootstrapGrowl
+		             				("contribuição registrada com sucesso!", 
+		             					{
+		             					type: 'success',
+		             					align: 'center',
+		             					width: 'auto',
+		             					allow_dismiss: false
+		             					}
+		             				);
+	    		                }
+		             		}
+	    		 });
+	    		 	  		 
+	    		 
 	    		 //APÓS O RETORNO DE SE CANDIDATAR VERIFICAR SE O STATUS ESTÀ TROCADO.
 	    		 //1ºDAR UM UPDATE NA TABELA (marcacao_depredacao) - mudar o STATUS p/ (status_marcacao = 3) VERIFICAR COM WILLEN
-	    		 //2º APÓS OK chamar esta function (buscaListaMarcacoesCadastradas())
+	    		 
+	    		 
+	    		 
+	    		 
+	    		 //2º APÓS OK chamar esta function (buscaListaMarcacoesCadastradas())	 
+	    		 buscaListaMarcacoesCadastradas();
+	    		 
 	    		 //3º Executar este script abaixo
-	    		/*
+	    		
+	    		 
 	    		 setTimeout(function() {
 		             //Retorna a lista do banco e adiciona os dados novos
 		             if (resultJsonDenuncias != undefined) {
@@ -129,11 +163,11 @@
 		                     AdicionaMarcacao(location);
 		                 }
 		             }
-		         }, 5000);
-		         */
+		         }, 10000);
+		         
 	       	 }	     
 	     }
-	    
+	     
 	     
 
 
@@ -328,7 +362,7 @@
 	                     AdicionaMarcacao(location);
 	                 }
 	             }
-	         }, 5000);
+	         }, 10000);
 	     }
 
 	     //Função que salva a marcação no banco de dados

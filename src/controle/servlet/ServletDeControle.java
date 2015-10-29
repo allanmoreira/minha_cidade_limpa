@@ -695,8 +695,8 @@ public class ServletDeControle {
             	try {
                     IOUtils.copy(input, output);
                 } finally {
-                    IOUtils.closeQuietly(input);
-                    IOUtils.closeQuietly(output);
+                   // IOUtils.closeQuietly(input);
+                    //IOUtils.closeQuietly(output);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -718,22 +718,20 @@ public class ServletDeControle {
 		boolean usuarioLogado = false;
 
 		Login usuarioSessao = (Login) session.getAttribute("usuarioLogado");
-		int idMarcacao = (int) session.getAttribute("idMark");
+		String idMark = request.getParameter("idmarcacao");
+		int idMarkInt = Integer.parseInt(idMark);
 
 		if (usuarioSessao != null) {
 			usuarioLogado = true;
 		
 			//request.setCharacterEncoding("charset=UTF-8");
 			
-			//COLOCAR O CAMPO QUE CONTEM O CAMINHO DA IMAGEM
-
 			try {
 				
 				bancoDados.conectarAoBco();
 				pf = bancoDados.buscarPessoaFisica(usuarioSessao.getIdLogin());
-			//	bancoDados.encerrarConexao();
 
-				bancoDados.setCandidatura(pf.getIdPessoaFisica(), idMarcacao);
+				bancoDados.setCandidatura(pf.getIdPessoaFisica(), idMarkInt);
 
 				bancoDados.encerrarConexao();
 				
