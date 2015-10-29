@@ -1113,4 +1113,9 @@
 	
 </body>
 
+<!-- <form method="post" action="upload_imagem" encType="multipart/form-data">
+<input type="file" name="file" value="select images..."/>
+<input type="submit" value="start upload"/>
+</form> -->
+
 </html>

@@ -22,14 +22,18 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+import javax.servlet.http.HttpSession;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -656,7 +660,8 @@ public class ServletDeControle {
 
 	}
 	
-	@RequestMapping("upload_imagem")
+	@RequestMapping(value = { "upload_imagem"}, method = RequestMethod.POST)
+	@ResponseBody
 	protected void uploadImagem(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("meu debug");
 		
@@ -669,13 +674,20 @@ public class ServletDeControle {
         
         if (isMultipart) {
             try {
+            	
             	// Cria diretório se nao existir (.../upload_imagens/)
                 File path = new File(DIRETORIO);
                 if (!path.exists()) {
                 	path.mkdir();
                 }
+                System.out.println("1");
             	Part file = request.getPart("file"); // Retrieves <input type="file" name="file">
-            	InputStream input = file.getInputStream();
+                System.out.println("2");
+            	InputStream input;
+            	
+            	System.out.println("2,5");
+            	input = file.getInputStream();
+                System.out.println("3");
             	OutputStream output = new FileOutputStream(new File(DIRETORIO, file.getName() + "111.png"));
             	
             	System.out.println(System.getProperty("user.dir"));
@@ -691,7 +703,7 @@ public class ServletDeControle {
             }
         }
         else {
-        	System.out.println("meu debuguinho = não é multpart!");
+        	System.out.println("meu debug = não é multpart!");
         }
 	}
 	
