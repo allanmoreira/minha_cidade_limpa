@@ -172,28 +172,29 @@
 		class="abseed_conteudo_sub abseed_Div_Casastro navbar navbar-fixed-top"
 		style="max-width: 560px; width: 100%; min-height: 350px; position: fixed; top: 25%; margin-left: 10px; margin-top: 0px; margin: 0px auto; z-index: 9999; padding: 0px; border-radius: 5px; display: none;"
 		role="navigation">
-	
+		
+		
+		<form method="POST" id="form_upload_imagem" enctype="multipart/form-data" action="upload_imagem">
+		
 			<div class="abseed_conteudo_borda"
 				style="text-align: center; line-height: 8px; font-size =14px; color: #ffffff; padding: 10px;">
 				Cadastro de Voluntários</div>
 			<div style="padding: 10px;">
 				<!-- INCLUIR CAMPOS  -->
-	
 				
-					
 				<div class="col-sm-5 col-sm-offset-1">
 					
 					<!-- <input type="file" id="input_escolher_arquivo" name="input_escolher_arquivo"> -->
 	
 					<div class="form-group">
 						<label><b>Endereço:</b></label><br /> 
-						<label type="text" id="txtEndereco"></label>
+						<input type="text" id="txtEndereco" name="txtEndereco"></input>
 					</div>
 					<div class="form-group">
 						<div style="float: left; width: 45%; margin: 5px;">
 							<div>
 								<label><b>Motivo da Denúncia:</b></label> <select
-									class="cad_drop cad_borda " id="dpMotivo">
+									class="cad_drop cad_borda " id="dpMotivo" name="dpMotivo">
 									<option value="Estátua">Estátua</option>
 									<option value="Parede">Parede</option>
 									<option value="Lago">Lago</option>
@@ -203,7 +204,7 @@
 	
 							<label><b>Informativo:</b></label>
 							<div class="form-group">
-								<textarea name="comentário" id="txtComentario"
+								<textarea id="txtComentario" name="txtComentario"
 									class="cad_comentario cad_borda" rows="5" cols="40"></textarea>
 							</div>
 	
@@ -220,7 +221,7 @@
 			</div>
 			
 			<!-- form upload imagem -->
-			<form method="POST" id="form_upload_imagem" enctype="multipart/form-data" action="upload_imagem">
+			
 				
 				<!-- campo name > COLAR O ID DA DENUNCIA AQUI PARA NOMEAR A FOTO EX: "1514" -->
 				<input type="text" name="upload_imagem_name"><br /> <br />

@@ -81,11 +81,12 @@ function submeter_form_cadastro_pessoa_fisica(){
 		});
 		
 		$.ajax({
-			url: 'cadastrar_pessoa_fisica',
+			url: 'upload_imagem',
+//			url: 'cadastrar_pessoa_fisica',
 			async: true,
 			type: 'POST',
 			dataType: 'json',
-			data: $('#form_cadastrar_pessoa_fisica').serialize(),
+			data: $('#form_upload_imagem').serialize(),
 			success: function(data){
 				if(data.isValid) {
 					
