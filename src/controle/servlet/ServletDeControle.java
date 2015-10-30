@@ -39,6 +39,17 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
 @Controller
 @MultipartConfig
 public class ServletDeControle {
@@ -660,52 +671,34 @@ public class ServletDeControle {
 
 	}
 	
-	@RequestMapping(value = { "upload_imagem"}, method = RequestMethod.POST)
-	@ResponseBody
-	protected void uploadImagem(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("NAO USAR O SYSOUT PARA DEBUG E SIM O PRÓPRIO DEBUG");
-		
-		final String DIRETORIO = System.getProperty("user.dir") + "/upload_imagens/";
-		 
-	    // Se quiser limitar o tamanho da imagem:
-	    final int TAMANHO_MAX   = 1024 * 1024 * 10;  // 10MB
-        
-        boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-        
-        if (isMultipart) {
+    @RequestMapping(value="upload_imagem", method=RequestMethod.GET)
+    public @ResponseBody String provideUploadInfo() {
+        return "You can upload a file by posting to this same URL.";
+    }
+    
+    @RequestMapping(value="upload_imagem", method=RequestMethod.POST)
+    public @ResponseBody void handleFileUpload(@RequestParam("upload_imagem_name") String name, 
+            @RequestParam("upload_imagem_file") MultipartFile file){
+        if (!file.isEmpty()) {
             try {
-            	
-            	// Cria diret�rio se nao existir (.../upload_imagens/)
-                File path = new File(DIRETORIO);
+            	File path = new File(System.getProperty("user.dir") + "/upload_imagens/");
                 if (!path.exists()) {
                 	path.mkdir();
+                	System.out.println("Diretorio criado: " + path);
                 }
-                System.out.println("1");
-            	Part file = request.getPart("file"); // Retrieves <input type="file" name="file">
-                System.out.println("2");
-            	InputStream input;
-            	
-            	System.out.println("2,5");
-            	input = file.getInputStream();
-                System.out.println("3");
-            	OutputStream output = new FileOutputStream(new File(DIRETORIO, file.getName() + "111.png"));
-            	
-            	System.out.println(System.getProperty("user.dir"));
-            	
-            	try {
-                    IOUtils.copy(input, output);
-                } finally {
-                   // IOUtils.closeQuietly(input);
-                    //IOUtils.closeQuietly(output);
-                }
+                byte[] bytes = file.getBytes();
+                BufferedOutputStream stream = 
+                        new BufferedOutputStream(new FileOutputStream(new File("upload_imagens/" + name + ".png")));
+                stream.write(bytes);
+                stream.close();
+                System.out.println("You successfully uploaded " + name + "!");
             } catch (Exception e) {
-                e.printStackTrace();
+            	System.out.println("You failed to upload " + name + " => " + e.getMessage());
             }
+        } else {
+        	System.out.println("You failed to upload " + name + " because the file was empty.");
         }
-        else {
-        	System.out.println("meu debug = n�o � multpart!");
-        }
-	}
+    }
 	
 	@RequestMapping("candidatarse")
 	public void candidatarse(HttpServletRequest request,HttpServletResponse response, HttpSession session) throws IOException {

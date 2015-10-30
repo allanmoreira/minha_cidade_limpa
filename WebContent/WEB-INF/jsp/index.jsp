@@ -219,9 +219,20 @@
 				</div>
 			</div>
 			
-			<div style="float: center; padding: 0px 10px 10px;">
-				<input type="file" name="file" class="btn btn-warning" id="caminho_imagem_upload" src=""></input>
-			</div>
+			<!-- form upload imagem -->
+			<form method="POST" id="form_upload_imagem" enctype="multipart/form-data" action="upload_imagem">
+				
+				<!-- campo name > COLAR O ID DA DENUNCIA AQUI PARA NOMEAR A FOTO EX: "1514" -->
+				<input type="text" name="upload_imagem_name"><br /> <br />
+			
+				<div style="float: center; padding: 0px 10px 10px;">
+					<input type="file" name="upload_imagem_file" class="btn btn-warning" id="caminho_imagem_upload" src=""></input>
+					 
+					<input type="submit" class="btn btn-warning" value="Upload">
+				</div>
+			</form>
+			<!-- fim form upload imagem -->
+			
 			<div style="float: right; padding: 0px 10px 10px;">
 				<!-- INCLUIR BOTOES  -->
 				
@@ -1101,10 +1112,4 @@
 	<script src="<c:url value="static/js/bootstrap_growl.js"/>"></script>
 	
 </body>
-
-<!-- <form method="post" action="upload_imagem" encType="multipart/form-data">
-<input type="file" name="file" value="select images..."/>
-<input type="submit" value="start upload"/>
-</form> -->
-
 </html>
