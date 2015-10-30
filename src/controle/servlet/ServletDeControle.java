@@ -18,8 +18,11 @@ import controle.bancoDados.*;
 import controle.conversaoDados.*;
 import modelos.*;
 
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
@@ -28,6 +31,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -53,7 +57,18 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @MultipartConfig
 public class ServletDeControle {
-
+	
+//	private static final long serialVersionUID = 1298516959968350334L;
+	@Autowired
+    ServletContext context; 
+	/*
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		System.out.println("Entra no INIT");
+		super.init(config); //added this line then it worked
+		System.out.println(config.getServletContext());
+	}
+	*/
 	/**
 	 * Monta a p�gina home. Sua url � vazia para que somente o endere�o do
 	 * site apare�a
@@ -679,18 +694,20 @@ public class ServletDeControle {
     @RequestMapping(value="upload_imagem", method=RequestMethod.POST)
     public @ResponseBody void handleFileUpload(@RequestParam("upload_imagem_name") String name, 
             @RequestParam("upload_imagem_file") MultipartFile file){
+    	
         if (!file.isEmpty()) {
             try {
-            	File path = new File(System.getProperty("user.dir") + "/upload_imagens/");
+            	File path = new File(context.getRealPath("") + File.separator + "upload_imagens" + File.separator);
                 if (!path.exists()) {
                 	path.mkdir();
                 	System.out.println("Diretorio criado: " + path);
                 }
                 byte[] bytes = file.getBytes();
                 BufferedOutputStream stream = 
-                        new BufferedOutputStream(new FileOutputStream(new File("upload_imagens/" + name + ".png")));
+                        new BufferedOutputStream(new FileOutputStream(new File(path + name + ".png")));
                 stream.write(bytes);
                 stream.close();
+//                System.out.println(stream.);
                 System.out.println("You successfully uploaded " + name + "!");
             } catch (Exception e) {
             	System.out.println("You failed to upload " + name + " => " + e.getMessage());

@@ -26,6 +26,13 @@ a.active {
 
 }
 
+img-limite-tamanho{
+  width: 100%;
+  max-width: 100px;
+  float: left;
+  clear: both;
+}
+
 h1,
 h2,
 h3,
