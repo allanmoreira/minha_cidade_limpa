@@ -48,7 +48,7 @@
                      AdicionaMarcacao(location);
                  }
              }
-         }, 10000);
+         }, 7000);
 	     
 
 	     marker.addListener('click', function() {
@@ -104,11 +104,11 @@
 	     
 	     //UTILIZAR O AJAX POR AQUI PARA GRAVAR OS DADOS NO BANCO DA PESSOA QUE SE 
 		 //CANDIDATOU
-		 $('button[id*="btnSalvarCandidato"]').click(function() {
+		/* $('button[id*="btnSalvarCandidato"]').click(function() {
 			 SalvarCandidato();
 
 		 });
-
+*/
 	     function SalvarCandidato() {
 	    	 var idMark = document.getElementById('ipDenuncia').value;
 	    	 if(idMark != "" && idMark != undefined){
@@ -129,7 +129,7 @@
 		             		if (data.isValid)
 		             			{
 		             				$.bootstrapGrowl
-		             				("contribuição registrada com sucesso!", 
+		             				("Registro incluído com sucesso!", 
 		             					{
 		             					type: 'success',
 		             					align: 'center',
@@ -138,22 +138,49 @@
 		             					}
 		             				);
 	    		                }
+		             		else{
+		             			if (!data.usuarioLogado) {
+			                         $.bootstrapGrowl("Usuário não está logado! Faça login ou cadastre-se!", {
+			                             type: 'success',
+			                             align: 'center',
+			                             width: 'auto',
+			                             allow_dismiss: false
+			                         });
+
+			                     }else if (data.jaTemCandidato){
+			                    	  $.bootstrapGrowl("Esta depredação já tem um candidato!", {
+				                             type: 'danger',
+				                             align: 'center',
+				                             width: 'auto',
+				                             allow_dismiss: false
+				                         });
+			                    }else if (data.jaSeCadastrou){
+		                    	  $.bootstrapGrowl("Candidato cadastrado para outra denúncia!", {
+			                             type: 'danger',
+			                             align: 'center',
+			                             width: 'auto',
+			                             allow_dismiss: false
+			                         });
+		                         }
+		             			else {
+			                         $.bootstrapGrowl("Erro ao se candidatar, entre em contato conosco!", {
+			                             type: 'danger',
+			                             align: 'center',
+			                             width: 'auto',
+			                             allow_dismiss: false
+			                         });
+			                     }
+		             			
+		             			
 		             		}
+		             }
 	    		 });
 	    		 	  		 
 	    		 
 	    		 //APÓS O RETORNO DE SE CANDIDATAR VERIFICAR SE O STATUS ESTÀ TROCADO.
-	    		 //1ºDAR UM UPDATE NA TABELA (marcacao_depredacao) - mudar o STATUS p/ (status_marcacao = 3) VERIFICAR COM WILLEN
-	    		 
-	    		 
-	    		 
-	    		 
-	    		 //2º APÓS OK chamar esta function (buscaListaMarcacoesCadastradas())	 
+	      		 //2º APÓS OK chamar esta function (buscaListaMarcacoesCadastradas())	 
 	    		 buscaListaMarcacoesCadastradas();
-	    		 
-	    		 //3º Executar este script abaixo
-	    		
-	    		 
+	    		 //3º Executar este script abaixo    		 
 	    		 setTimeout(function() {
 		             //Retorna a lista do banco e adiciona os dados novos
 		             if (resultJsonDenuncias != undefined) {
@@ -163,7 +190,7 @@
 		                     AdicionaMarcacao(location);
 		                 }
 		             }
-		         }, 10000);
+		         }, 7000);
 		         
 	       	 }	     
 	     }
@@ -362,7 +389,7 @@
 	                     AdicionaMarcacao(location);
 	                 }
 	             }
-	         }, 10000);
+	         }, 7000);
 	     }
 
 	     //Função que salva a marcação no banco de dados
@@ -390,9 +417,6 @@
 	                     
 	                     latLongSave = "";
 	                     $('textarea[id*="txtComentario"]').val("");
-	                    // marker.setMap(map);
-	                   //  AdicionaInfoMarker(markerClick, map, infowindow, objDenuncia.html);
-	                    // buscaListaMarcacoesCadastradas(objDenuncia);
 	                     return true;
 	                 } else {
 	                     if (!data.usuarioLogado) {

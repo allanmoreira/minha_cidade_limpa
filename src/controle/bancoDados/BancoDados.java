@@ -15,7 +15,7 @@ import modelos.MarcacaoDepredacao;
 import modelos.PessoaFisica;
 import modelos.PessoaJuridica;
 
-public class BancoDados {
+ public class BancoDados {
 	private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
@@ -367,50 +367,63 @@ public class BancoDados {
         return idMarcacao;
 	}
 	
+
+	/* Aqui verifica se esse usuario nao esta cadastrado para outra depredacao*/
+	public boolean VerificaSeTemCandidato(int idMarcacao) throws SQLException 
+	{
+
+		String sql = "select id_pessoa_fisica "
+	        		+ "from cadidatura_resolucao_problema "
+	                + "where id_marcacao_depredacao = ?";
+
+  
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, idMarcacao);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if(resultSet.next()){
+	       	return true;
+	    }
+	    return false;
+	}
 	
 	/* Aqui verifica se esse usuario nao esta cadastrado para outra depredacao*/
 	public boolean verificaRelacaoCandidatura(int idPessoa, int idMarcacao) throws SQLException 
 	{
 
 		String sql = "select * "
-	        		+ "from candidatura_resolucao_problema "
-	                + "where id_pessoa_fisica = idPessoa";
+	        		+ "from cadidatura_resolucao_problema "
+	                + "where id_pessoa_fisica = ? and "
+	        		+ "id_marcacao_depredacao <> ? ";
 
-	        preparedStatement = connection.prepareStatement(sql);
+  
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, idPessoa);
+        preparedStatement.setInt(2, idMarcacao);
+        ResultSet resultSet = preparedStatement.executeQuery();
 
-	        ResultSet resultSet = preparedStatement.executeQuery();
-	        if(resultSet.next()){
-	        	return false;
-	        }
-	        
-			return true;
-
-
+        if(resultSet.next()){
+	       	return true;
+	    }
+	    return false;
 	}
 
 
 	/* aqui cadastra no banco a relacao usuario x problema */
 	public boolean setCandidatura(int idPessoa, int idMarcacao) throws SQLException {
 
-		boolean podeCadastrar = verificaRelacaoCandidatura(idPessoa, idMarcacao);
-		
-		if(podeCadastrar)
-		{
-		
-		String sql = "insert into candidatura_resolucao_problema "
+	
+		String sql = "insert into cadidatura_resolucao_problema "
 					+ "(id_pessoa_fisica, "
 					+ "id_marcacao_depredacao) "
 					
-					+ "values (idPessoa, idMarcacao)";
-
-	        preparedStatement = connection.prepareStatement(sql);
-	        preparedStatement.executeQuery();
-
-			return true;
-		}
-
-	return false;
-
+					+ "values (?, ?)";
+	    preparedStatement = connection.prepareStatement(sql);
+	    preparedStatement.setInt(1, idPessoa);
+        preparedStatement.setInt(2, idMarcacao);
+        preparedStatement.executeUpdate();
+		return true;
+	
 	}
 
 	

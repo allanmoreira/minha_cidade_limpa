@@ -709,28 +709,33 @@ public class ServletDeControle {
 		boolean isValid = false;
 		boolean pfOuPj = true;
 		boolean usuarioLogado = false;
-
+		boolean jaTemCandidato = true;
+		boolean jaSeCadastrou = true;
 		Login usuarioSessao = (Login) session.getAttribute("usuarioLogado");
 		String idMark = request.getParameter("idmarcacao");
 		int idMarkInt = Integer.parseInt(idMark);
+		
 
 		if (usuarioSessao != null) {
 			usuarioLogado = true;
-		
-			//request.setCharacterEncoding("charset=UTF-8");
-			
+	
 			try {
 				
 				bancoDados.conectarAoBco();
-				pf = bancoDados.buscarPessoaFisica(usuarioSessao.getIdLogin());
 
-				bancoDados.setCandidatura(pf.getIdPessoaFisica(), idMarkInt);
+				if(!bancoDados.VerificaSeTemCandidato(idMarkInt)){
+					jaTemCandidato= false;
+					pf = bancoDados.buscarPessoaFisica(usuarioSessao.getIdLogin());
+					if(!bancoDados.verificaRelacaoCandidatura(pf.getIdPessoaFisica(),idMarkInt)){
+						jaSeCadastrou = false;				
+						bancoDados.setCandidatura(pf.getIdPessoaFisica(), idMarkInt);			
+						bancoDados.encerrarConexao();
+						isValid = true;
+					}				
+				}
+			
+	
 
-				bancoDados.encerrarConexao();
-				
-								
-
-				isValid = true;
 			} catch (ClassNotFoundException e) {
 				// Erro ao concetar ao banco de dados
 				// Levanta página Erro 500 (não existe)
@@ -754,6 +759,10 @@ public class ServletDeControle {
 
 		map.put("isValid", isValid);
 		map.put("usuarioLogado", usuarioLogado);
+		map.put("jaTemCandidato", jaTemCandidato);
+		map.put("jaSeCadastrou", jaSeCadastrou);
+		
+		
 
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
