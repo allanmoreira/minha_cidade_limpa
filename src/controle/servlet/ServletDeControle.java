@@ -727,6 +727,7 @@ public class ServletDeControle {
 					jaTemCandidato= false;
 					pf = bancoDados.buscarPessoaFisica(usuarioSessao.getIdLogin());
 					if(!bancoDados.verificaRelacaoCandidatura(pf.getIdPessoaFisica(),idMarkInt)){
+						bancoDados.UpdateStatus(idMarkInt,3);
 						jaSeCadastrou = false;				
 						bancoDados.setCandidatura(pf.getIdPessoaFisica(), idMarkInt);			
 						bancoDados.encerrarConexao();

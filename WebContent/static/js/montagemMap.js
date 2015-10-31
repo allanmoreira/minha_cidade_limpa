@@ -283,7 +283,7 @@
 		 });
 
 		 //Click para fechar a div de cadastro
-		 $('button[id*="btnSalvar"]').click(function() {
+		 $('button[id$="btnSalvar"]').click(function() {
 		     SalvaDados();
 		     HabilitaDivCadastro(false);
 		 });
@@ -295,7 +295,7 @@
 		 });
 
 		 //Click para fechar a div de cadastro
-		 $('button[id*="btnSalvarCandidato"]').click(function() {
+		 $('button[id$="btnSalvarCandidato"]').click(function() {
 		     SalvarCandidato();
 		     HabilitaDivVisuDenuncia(false);
 		 });
@@ -340,57 +340,80 @@
 
 	     //Função que as informações da denúncia
 	     function SalvaDados() {
-	         dadosDigitados = "";
-	         titulo = "";
-	         dadosDigitados = $('textarea[id*="txtComentario"]').val();
-	         titulo = $('select[id*="dpMotivo"]').val();
+	    	 var img = $('#div_imagem_upload').attr('src');
+	         
+	    	 if(img != undefined &&  img.indexOf("data:image") > -1){
+	   
+	    		 dadosDigitados = "";
+		         titulo = "";
+		         dadosDigitados = $('textarea[id*="txtComentario"]').val();
+		         titulo = $('select[id*="dpMotivo"]').val();
+		         
+		         //Cria o nome do arquivo
+		         var d = new Date();
+		         var nameImage =  d.getFullYear();
+		         nameImage +=("00" + (d.getMonth() + 1)).slice(-2);
+		         nameImage +=("00" + d.getDate()).slice(-2);
+		         nameImage +=("00" + d.getHours()).slice(-2);
+		         nameImage +=("00" + d.getMinutes()).slice(-2);
+		         nameImage +=("00" + d.getSeconds()).slice(-2);
+		         //Seta o nome do arquivo 
+		         $('input[name$="upload_imagem_name"]').val(nameImage);
+		         //Seta o nome com o tipo jpeg, png....
+		         var formato = img.substring(img.indexOf("/")+1 ,img.indexOf(";"));
+		         var caminho = "../upload_imagens/" + nameImage + "." + formato;
+		         
+		         var endereco = $('label[id*="txtEndereco"]').text();
+		         var contentString = '<div id=\'content\'>' +
+		             '<div id=\'siteNotice\'>' +
+		             '</div>' +
+		             '<input id=\'ipTitulo\' type=\'hidden\' name=\'ipTitulo\' value=\'' + titulo + '\'>' +
+		             '<input id=\'ipDenuncia\' type=\'hidden\' name=\'idDenuncia\' value=\'§§§§\'>' +
+		             '<input id=\'ipEndereco\' type=\'hidden\' name=\'ipEndereco\' value=\'' + endereco + '\'>' +
+		             '<input id=\'ipCaminho\' type=\'hidden\' name=\'ipCaminho\' value=\'' + caminho + '\'>' +
+		             '<input id=\'ipCaminhoFotoNova\' type=\'hidden\' name=\'ipCaminhoFotoNova\' value=\'FFDDNN\'>' +
+		             '<input id=\'ipDadosDigitados\' type=\'hidden\' name=\'ipDadosDigitados\' value=\'' + dadosDigitados + '\'>' +
+		             '<div id=\'bodyContent\'>' +
+		             '<p>' + dadosDigitados + '</p>' +
+		             '</div>' +
+		             '</div>';
 
-	         //VINICIUS COLOCAR OS DADOS DO CAMINHO AQUI
-	         var caminho = "";
 
-	         var endereco = $('label[id*="txtEndereco"]').text();
-	         var contentString = '<div id=\'content\'>' +
-	             '<div id=\'siteNotice\'>' +
-	             '</div>' +
-	             '<input id=\'ipTitulo\' type=\'hidden\' name=\'ipTitulo\' value=\'' + titulo + '\'>' +
-	             '<input id=\'ipDenuncia\' type=\'hidden\' name=\'idDenuncia\' value=\'§§§§\'>' +
-	             '<input id=\'ipEndereco\' type=\'hidden\' name=\'ipEndereco\' value=\'' + endereco + '\'>' +
-	             '<input id=\'ipCaminho\' type=\'hidden\' name=\'ipCaminho\' value=\'' + caminho + '\'>' +
-	             '<input id=\'ipCaminhoFotoNova\' type=\'hidden\' name=\'ipCaminhoFotoNova\' value=\'FFDDNN\'>' +
-	             '<input id=\'ipDadosDigitados\' type=\'hidden\' name=\'ipDadosDigitados\' value=\'' + dadosDigitados + '\'>' +
-	             '<div id=\'bodyContent\'>' +
-	             '<p>' + dadosDigitados + '</p>' +
-	             '</div>' +
-	             '</div>';
+		         //Cria o objeto e adiciona no JSON
+		         var objDenuncia = {}
+		         objDenuncia["categoria"] = 'Denuncia';
+		         objDenuncia["icon"] = 'static/img/icones/vermelho.png';
+		         objDenuncia["lat"] = "" + latitude.lat + "";
+		         objDenuncia["lon"] = "" + latitude.lng + "";
+		         objDenuncia["title"] = "" + titulo + "";
+		         objDenuncia["html"] = "" + contentString + "";
 
 
-	         //Cria o objeto e adiciona no JSON
-	         var objDenuncia = {}
-	         objDenuncia["categoria"] = 'Denuncia';
-	         objDenuncia["icon"] = 'static/img/icones/vermelho.png';
-	         objDenuncia["lat"] = "" + latitude.lat + "";
-	         objDenuncia["lon"] = "" + latitude.lng + "";
-	         objDenuncia["title"] = "" + titulo + "";
-	         objDenuncia["html"] = "" + contentString + "";
+		         objDenuncia["caminho"] = caminho;
 
+		         //Chama a função que salva a denuncia no banco
+		         salvarMarkBD(objDenuncia);
 
-	         objDenuncia["caminho"] = caminho;
-
-	         //Chama a função que salva a denuncia no banco
-	         salvarMarkBD(objDenuncia);
-
-
-	         setTimeout(function() {
-	             //Retorna a lista do banco e adiciona os dados novos
-	             if (resultJsonDenuncias != undefined) {
-	                 var parsed = JSON.parse(resultJsonDenuncias);
-	                 for (i = 0; i < parsed.result.length; i++) {
-	                     var location = parsed.result[i];
-	                     AdicionaMarcacao(location);
-	                 }
-	             }
-	         }, 7000);
-	     }
+	         
+		         setTimeout(function() {
+		             //Retorna a lista do banco e adiciona os dados novos
+		             if (resultJsonDenuncias != undefined) {
+		                 var parsed = JSON.parse(resultJsonDenuncias);
+		                 for (i = 0; i < parsed.result.length; i++) {
+		                     var location = parsed.result[i];
+		                     AdicionaMarcacao(location);
+		                 }
+		             }
+		         }, 7000);	    		 
+	    	 }else{
+	    		 $.bootstrapGrowl("Adicione um imagem, para comprovar!", {
+                     type: 'danger',
+                     align: 'center',
+                     width: 'auto',
+                     allow_dismiss: false
+                 });
+	    	 }
+	      }
 
 	     //Função que salva a marcação no banco de dados
          function salvarMarkBD(objDenuncia) {
@@ -413,7 +436,11 @@
 	                         icon: 'static/img/icones/vermelho.png',
 	                         map: map
 	                     });
-	                     buscaListaMarcacoesCadastradas();
+	                     
+	                     //Simula o click do button upload
+	                     $('#form_upload_imagem [type="submit"]').click();
+	                     //buscaListaMarcacoesCadastradas();
+
 	                     
 	                     latLongSave = "";
 	                     $('textarea[id*="txtComentario"]').val("");

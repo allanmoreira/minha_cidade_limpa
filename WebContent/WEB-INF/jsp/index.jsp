@@ -219,19 +219,22 @@
 				</div>
 			</div>
 			
+			<div style="width: 50%; float: right;">
 			<!-- form upload imagem -->
-			<form method="POST" id="form_upload_imagem" enctype="multipart/form-data" action="upload_imagem">
+			<form method="POST" id="form_upload_imagem" enctype="multipart/form-data" action="upload_imagem" >
 				
-				<!-- campo name > COLAR O ID DA DENUNCIA AQUI PARA NOMEAR A FOTO EX: "1514" -->
-				<input type="text" name="upload_imagem_name"><br /> <br />
-			
-				<div style="float: center; padding: 0px 10px 10px;">
-					<input type="file" name="upload_imagem_file" class="btn btn-warning" id="caminho_imagem_upload" src=""></input>
-					 
+				<div style="display:none">
+					<!-- campo name > COLAR O ID DA DENUNCIA AQUI PARA NOMEAR A FOTO EX: "1514" -->
+					<input type="text" name="upload_imagem_name"><br /> <br />
 					<input type="submit" class="btn btn-warning" value="Upload">
 				</div>
+					<div style="float: center; padding: 0px 10px 10px;">
+						<input type="file" name="upload_imagem_file" class="btn btn-warning" id="caminho_imagem_upload" src="" style="width: 100%;"></input>
+					</div>
 			</form>
 			<!-- fim form upload imagem -->
+			
+			</div>
 			
 			<div style="float: right; padding: 0px 10px 10px;">
 				<!-- INCLUIR BOTOES  -->

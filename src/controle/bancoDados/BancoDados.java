@@ -425,7 +425,22 @@ import modelos.PessoaJuridica;
 		return true;
 	
 	}
+	
+	/* aqui cadastra no banco a relacao usuario x problema */
+	public boolean UpdateStatus(int idMarcacao, int status) throws SQLException {
 
+	
+		String sql = "update marcacao_depredacao set "
+					+ " status_marcacao = ? "
+					+ " where id_marcacao_depredacao = ? ";
+					
+	    preparedStatement = connection.prepareStatement(sql);
+	    preparedStatement.setInt(1, status);
+        preparedStatement.setInt(2, idMarcacao);
+        preparedStatement.executeUpdate();
+		return true;
+	
+	}
 	
 	
 	
