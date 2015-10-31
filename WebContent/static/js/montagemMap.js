@@ -418,10 +418,12 @@
 	     //Função que salva a marcação no banco de dados
          function salvarMarkBD(objDenuncia) {
 	    	   	 $.ajax({
-	             url: 'salvar_marcacao?cam=' + objDenuncia.caminho + '&cat=' + objDenuncia.categoria + '&lat=' + objDenuncia.lat + '&lon=' + objDenuncia.lon + '&tit=' + objDenuncia.title + '&html=' + objDenuncia.html + '&id=' + objDenuncia.id,
+//	             url: 'salvar_marcacao?cam=' + objDenuncia.caminho + '&cat=' + objDenuncia.categoria + '&lat=' + objDenuncia.lat + '&lon=' + objDenuncia.lon + '&tit=' + objDenuncia.title + '&html=' + objDenuncia.html + '&id=' + objDenuncia.id,
+	             url: 'upload_imagem',
 	             type: 'POST',
 	             dataType: 'json',
-	             data: objDenuncia,
+//	             data: objDenuncia,
+	             data: $('#form_upload_imagem').serialize(),
 	             success: function(data) {
 	                 if (data.isValid) {
 	                     $.bootstrapGrowl("contribuição registrada com sucesso!", {
