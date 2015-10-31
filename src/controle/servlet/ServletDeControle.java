@@ -19,6 +19,7 @@ import controle.bancoDados.*;
 import controle.conversaoDados.*;
 import modelos.*;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -28,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import javax.servlet.http.HttpSession;
+import javax.servlet.jsp.jstl.core.Config;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
@@ -685,7 +687,143 @@ public class ServletDeControle {
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(new Gson().toJson(map));
 
+	}    @RequestMapping(value="upload_imagem", method=RequestMethod.GET)
+    public @ResponseBody String provideUploadInfo() {
+        return "You can upload a file by posting to this same URL.";
+    }
+    
+           
+    	
+	@RequestMapping("candidatarse")
+	public void candidatarse(HttpServletRequest request,HttpServletResponse response, HttpSession session) throws IOException {
+		BancoDados bancoDados = new BancoDados();
+		Map<String, Object> map = new HashMap<String, Object>();
+		PessoaFisica pf = new PessoaFisica();
+		// Data data = new Data();
+		boolean isValid = false;
+		boolean pfOuPj = true;
+		boolean usuarioLogado = false;
+		boolean jaTemCandidato = true;
+		boolean jaSeCadastrou = true;
+		Login usuarioSessao = (Login) session.getAttribute("usuarioLogado");
+		String idMark = request.getParameter("idmarcacao");
+		int idMarkInt = Integer.parseInt(idMark);
+		
+		if (usuarioSessao != null) {
+			usuarioLogado = true;
+	
+			try {
+				
+				bancoDados.conectarAoBco();
+
+				if(!bancoDados.VerificaSeTemCandidato(idMarkInt)){
+					jaTemCandidato= false;
+					pf = bancoDados.buscarPessoaFisica(usuarioSessao.getIdLogin());
+					if(!bancoDados.verificaRelacaoCandidatura(pf.getIdPessoaFisica(),idMarkInt)){
+						bancoDados.UpdateStatus(idMarkInt,2);
+						jaSeCadastrou = false;				
+						bancoDados.setCandidatura(pf.getIdPessoaFisica(), idMarkInt);			
+						bancoDados.encerrarConexao();
+						isValid = true;
+					}				
+				}
+	
+			} catch (ClassNotFoundException e) {
+				// Erro ao concetar ao banco de dados
+				// Levanta página Erro 500 (não existe)
+				String erro = "CLASSE = ";
+				erro += e.getMessage();
+				erro += " \n ";
+				erro += e.getStackTrace();
+
+			} catch (SQLException e) {
+
+				String erro = "SQL = ";
+				erro += e.getMessage();
+				erro += " \n ";
+				erro += e.getStackTrace();
+				// Erro ao executar a instrução
+				// Levanta página Erro 500 (não existe)
+			}
+		} else {
+			isValid = false;
+		}
+
+		map.put("isValid", isValid);
+		map.put("usuarioLogado", usuarioLogado);
+		map.put("jaTemCandidato", jaTemCandidato);
+		map.put("jaSeCadastrou", jaSeCadastrou);
+
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(new Gson().toJson(map));
 	}
+
+	
+	  @RequestMapping(value="upload_imagem", method=RequestMethod.POST)
+	  public @ResponseBody void handleFileUpload(@RequestParam("upload_imagem_name") String name, 
+		            							 @RequestParam("upload_imagem_file") MultipartFile file,
+		            							 HttpServletResponse response, 
+	        									 HttpServletRequest request, 
+	        									 HttpSession session) throws IOException, ServletException{
+	    	      							 		  
+			Map<String, Object> map = new HashMap<String, Object>();
+			boolean isValid = false;
+			boolean usuarioLogado = false;
+	       if (!file.isEmpty()) {
+	            try {
+	            	
+	            	
+	            	//File path = new File(System.getProperty("user.dir") + "/upload_imagens/");
+           	
+	            	File path = new File(  context.getRealPath("") + File.separator + "upload_imagens");
+	                if (!path.exists()) {
+	                	path.mkdir();
+	                	System.out.println("Diretorio criado: " + path);
+	                }
+	                            	
+	            	String extension=file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+	                
+	                byte[] bytes = file.getBytes();
+	                BufferedOutputStream stream = 
+	                        new BufferedOutputStream(new FileOutputStream(new File(path + File.separator + name + extension)));
+	                
+	                		//new BufferedOutputStream(new FileOutputStream(new File("upload_imagens/" + name + extension)));
+	                stream.write(bytes);
+	                stream.close();
+	                System.out.println("You successfully uploaded " + name + "!");
+	            } catch (Exception e) {
+	            	System.out.println("You failed to upload " + name + " => " + e.getMessage());
+	            }
+	        } else {
+	        	System.out.println("You failed to upload " + name + " because the file was empty.");
+	        }
+	       
+	   	map.put("isValid", isValid);
+		map.put("usuarioLogado", usuarioLogado);
+		
+		//RequestDispatcher dispatcher = request.getRequestDispatcher("index");  
+		//dispatcher.forward(request, response); 
+		
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(new Gson().toJson(map));
+		
+	    }
+	  
+	  
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 	/*
 	@RequestMapping("upload_imagem")
     protected void processRequest(HttpServletRequest request,
@@ -750,12 +888,10 @@ public class ServletDeControle {
     }
 	*/
 	
-    @RequestMapping(value="upload_imagem", method=RequestMethod.GET)
-    public @ResponseBody String provideUploadInfo() {
-        return "You can upload a file by posting to this same URL.";
-    }
-    
-    
+
+	
+	
+    /*
 //    @RequestMapping(value="upload_imagem", method=RequestMethod.POST)
     public @ResponseBody void uploadImagem(@RequestParam("upload_imagem_file") MultipartFile multipartFile, 
         									   @RequestParam("dpMotivo") String motivo,
@@ -861,13 +997,13 @@ public class ServletDeControle {
     	
         if (!multipartFile.isEmpty()) {
             try {
-            	/*
-            	File path = new File(context.getRealPath("") + File.separator + "upload_imagens");
-                if (!path.exists()) {
-                	path.mkdir();
-                	System.out.println("Diretorio criado: " + path);
-                }
-                */
+            	
+            	//File path = new File(context.getRealPath("") + File.separator + "upload_imagens");
+                //if (!path.exists()) {
+                //	path.mkdir();
+                //	System.out.println("Diretorio criado: " + path);
+                //}
+                
             	
             	String path = context.getRealPath("") + File.separator + "upload_imagens";
                 System.out.println(path);
@@ -889,7 +1025,11 @@ public class ServletDeControle {
         	System.out.println("You failed to upload " + name + " because the file was empty.");
         }
     }
-    
+    */
+
+	
+
+    /*
     @RequestMapping(value="upload_imagem", method=RequestMethod.POST)
     public @ResponseBody void testeUpload(@RequestParam("upload_imagem_file") MultipartFile multipartFile, 
         									   @RequestParam("dpMotivo") String motivo,
@@ -907,13 +1047,13 @@ public class ServletDeControle {
     	
         if (!multipartFile.isEmpty()) {
             try {
-            	/*
-            	File path = new File(context.getRealPath("") + File.separator + "upload_imagens");
-                if (!path.exists()) {
-                	path.mkdir();
-                	System.out.println("Diretorio criado: " + path);
-                }
-                */
+            	
+            	//File path = new File(context.getRealPath("") + File.separator + "upload_imagens");
+                //if (!path.exists()) {
+                //	path.mkdir();
+                //	System.out.println("Diretorio criado: " + path);
+                //}
+                
             	
             	String path = context.getRealPath("") + File.separator + "upload_imagens";
                 System.out.println(path);
@@ -937,80 +1077,7 @@ public class ServletDeControle {
     	
     	
     }
-	
-	@RequestMapping("candidatarse")
-	public void candidatarse(HttpServletRequest request,HttpServletResponse response, HttpSession session) throws IOException {
-		BancoDados bancoDados = new BancoDados();
-		Map<String, Object> map = new HashMap<String, Object>();
-		PessoaFisica pf = new PessoaFisica();
-		// Data data = new Data();
-		boolean isValid = false;
-		boolean pfOuPj = true;
-		boolean usuarioLogado = false;
-		boolean jaTemCandidato = true;
-		boolean jaSeCadastrou = true;
-		Login usuarioSessao = (Login) session.getAttribute("usuarioLogado");
-		String idMark = request.getParameter("idmarcacao");
-		int idMarkInt = Integer.parseInt(idMark);
-		
+    */
 
-		if (usuarioSessao != null) {
-			usuarioLogado = true;
-	
-			try {
-				
-				bancoDados.conectarAoBco();
-
-				if(!bancoDados.VerificaSeTemCandidato(idMarkInt)){
-					jaTemCandidato= false;
-					pf = bancoDados.buscarPessoaFisica(usuarioSessao.getIdLogin());
-					if(!bancoDados.verificaRelacaoCandidatura(pf.getIdPessoaFisica(),idMarkInt)){
-						bancoDados.UpdateStatus(idMarkInt,3);
-						jaSeCadastrou = false;				
-						bancoDados.setCandidatura(pf.getIdPessoaFisica(), idMarkInt);			
-						bancoDados.encerrarConexao();
-						isValid = true;
-					}				
-				}
-			
-	
-
-			} catch (ClassNotFoundException e) {
-				// Erro ao concetar ao banco de dados
-				// Levanta página Erro 500 (não existe)
-				String erro = "CLASSE = ";
-				erro += e.getMessage();
-				erro += " \n ";
-				erro += e.getStackTrace();
-
-			} catch (SQLException e) {
-
-				String erro = "SQL = ";
-				erro += e.getMessage();
-				erro += " \n ";
-				erro += e.getStackTrace();
-				// Erro ao executar a instrução
-				// Levanta página Erro 500 (não existe)
-			}
-		} else {
-			isValid = false;
-		}
-
-		map.put("isValid", isValid);
-		map.put("usuarioLogado", usuarioLogado);
-		map.put("jaTemCandidato", jaTemCandidato);
-		map.put("jaSeCadastrou", jaSeCadastrou);
-		
-		
-
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(new Gson().toJson(map));
-
-	}
-	
-	
-	
-	
 	
 }

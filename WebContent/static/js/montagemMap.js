@@ -48,7 +48,7 @@
                      AdicionaMarcacao(location);
                  }
              }
-         }, 7000);
+         }, 5000);
 	     
 
 	     marker.addListener('click', function() {
@@ -98,17 +98,12 @@
 	         $('label[id*="txtEndDenuncia"]').text(idEndereco);
 	         $('label[id*="txtMotivoDenuncia"]').text(idMotivo);
 	         $('label[id$="txtDescricaoMark"]').text(idDescricao);
-	         $('label[id*="txtImagemDenuncia"]').text(idImagemCaminho);
+	         $('img[id$="txtImagemDenuncia"]').attr(idImagemCaminho);
+	        
 	         //$('button[id*="btnSalvarCandidato"]').text(idMark);
 	     }
 	     
-	     //UTILIZAR O AJAX POR AQUI PARA GRAVAR OS DADOS NO BANCO DA PESSOA QUE SE 
-		 //CANDIDATOU
-		/* $('button[id*="btnSalvarCandidato"]').click(function() {
-			 SalvarCandidato();
 
-		 });
-*/
 	     function SalvarCandidato() {
 	    	 var idMark = document.getElementById('ipDenuncia').value;
 	    	 if(idMark != "" && idMark != undefined){
@@ -137,6 +132,9 @@
 		             					allow_dismiss: false
 		             					}
 		             				);
+		             			
+		             				window.setTimeout('location.reload()', 3000);
+		   	                     
 	    		                }
 		             		else{
 		             			if (!data.usuarioLogado) {
@@ -190,7 +188,7 @@
 		                     AdicionaMarcacao(location);
 		                 }
 		             }
-		         }, 7000);
+		         }, 5000);
 		         
 	       	 }	     
 	     }
@@ -332,12 +330,6 @@
 		     }
 		 }
 	 
-	 
-	     
-	     
-	     
-
-
 	     //Função que as informações da denúncia
 	     function SalvaDados() {
 	    	 var img = $('#div_imagem_upload').attr('src');
@@ -359,6 +351,7 @@
 		         nameImage +=("00" + d.getSeconds()).slice(-2);
 		         //Seta o nome do arquivo 
 		         $('input[name$="upload_imagem_name"]').val(nameImage);
+		         
 		         //Seta o nome com o tipo jpeg, png....
 		         var formato = img.substring(img.indexOf("/")+1 ,img.indexOf(";"));
 		         var caminho = "../upload_imagens/" + nameImage + "." + formato;
@@ -378,7 +371,13 @@
 		             '</div>' +
 		             '</div>';
 
-
+		         $('#latitudeEsc').val( latitude.lat);
+		         $('#longitudeEsc').val( latitude.lng);
+		         $('#htmlEsc').val(contentString);
+		         
+		         
+		         
+		         
 		         //Cria o objeto e adiciona no JSON
 		         var objDenuncia = {}
 		         objDenuncia["categoria"] = 'Denuncia';
@@ -418,12 +417,12 @@
 	     //Função que salva a marcação no banco de dados
          function salvarMarkBD(objDenuncia) {
 	    	   	 $.ajax({
-//	             url: 'salvar_marcacao?cam=' + objDenuncia.caminho + '&cat=' + objDenuncia.categoria + '&lat=' + objDenuncia.lat + '&lon=' + objDenuncia.lon + '&tit=' + objDenuncia.title + '&html=' + objDenuncia.html + '&id=' + objDenuncia.id,
-	             url: 'upload_imagem',
+	             url: 'salvar_marcacao?cam=' + objDenuncia.caminho + '&cat=' + objDenuncia.categoria + '&lat=' + objDenuncia.lat + '&lon=' + objDenuncia.lon + '&tit=' + objDenuncia.title + '&html=' + objDenuncia.html + '&id=' + objDenuncia.id,
+//	             url: 'upload_imagem',
 	             type: 'POST',
 	             dataType: 'json',
-//	             data: objDenuncia,
-	             data: $('#form_upload_imagem').serialize(),
+	             data: objDenuncia,
+//	             data: $('#form_upload_imagem').serialize(),
 	             success: function(data) {
 	                 if (data.isValid) {
 	                     $.bootstrapGrowl("contribuição registrada com sucesso!", {
@@ -440,9 +439,10 @@
 	                     });
 	                     
 	                     //Simula o click do button upload
-	                     $('#form_upload_imagem [type="submit"]').click();
+	                     // $('#form_upload_imagem [type="submit"]').click();
 	                     //buscaListaMarcacoesCadastradas();
 
+	                     window.setTimeout('location.reload()', 3000);
 	                     
 	                     latLongSave = "";
 	                     $('textarea[id*="txtComentario"]').val("");

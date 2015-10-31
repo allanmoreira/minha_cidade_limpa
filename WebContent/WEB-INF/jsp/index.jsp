@@ -150,7 +150,8 @@
 						</div>
 						<div style="float:right; width:45%;margin:5px;">
 							<div class="cad_borda" style=" width:100%; height:99%; min-height:220px;">
-									 <label type="text" id="txtImagemDenuncia"></label>						
+								<img id="txtImagemDenuncia" alt="" style="width: 100%; height: 100%; min-height: 183px;" />
+		
 							</div>
 						</div>
 					</div>
@@ -188,7 +189,8 @@
 	
 					<div class="form-group">
 						<label><b>Endereço:</b></label><br /> 
-						<input type="text" id="txtEndereco" name="txtEndereco"></input>
+						<label  id="txtEndereco" name="txtEndereco"></label> 								
+				   <!-- 		<input type="text" id="txtEndereco" name="txtEndereco"></input>  -->
 					</div>
 					<div class="form-group">
 						<div style="float: left; width: 45%; margin: 5px;">
@@ -212,7 +214,7 @@
 						<div style="float: right; width: 45%; margin: 5px;">
 							<div id="container_img" class="cad_borda"
 								style="width: 100%; height: 99%; min-height: 183px;">
-								<img id="div_imagem_upload" alt="" />
+								<img id="div_imagem_upload" alt="" style="width: 100%; height: 100%; min-height: 183px;" />
 							</div>
 						</div>
 					</div>
@@ -223,19 +225,24 @@
 			<div style="width: 50%; float: right;">
 			<!-- form upload imagem -->
 
-			<form method="POST" id="form_upload_imagem" enctype="multipart/form-data" action="upload_imagem" >
+			<form method="POST" id="form_upload_imagem" enctype="multipart/form-data" action="index" >
 
-				
 				<div style="display:none">
 					<!-- campo name > COLAR O ID DA DENUNCIA AQUI PARA NOMEAR A FOTO EX: "1514" -->
 					<input type="text" name="upload_imagem_name"><br /> <br />
 					<input type="submit" class="btn btn-warning" value="Upload">
+						
+				   		<input type="text" id="longitudeEsc" name="longitudeEsc"></input> 				   	
+				   		<input type="text" id="latitudeEsc" name="latitudeEsc"></input>
+				   		<input type="text" id="htmlEsc" name="htmlEsc"></input>
+				
+					
 				</div>
-					<div style="float: center; padding: 0px 10px 10px;">
-						<input type="file" name="upload_imagem_file" class="btn btn-warning" id="caminho_imagem_upload" src="" style="width: 100%;"></input>
+					<div style="float: center; padding: 7px 10px 10px 20px;">
+						<input type="file" name="upload_imagem_file" class="btn btn-warning" id="caminho_imagem_upload" src="" style="width: 92%;"></input>
 					</div>
 					
-					<button class="btn btn-warning" type="submit">SALVAR</button>
+					<!-- <button class="btn btn-warning" type="submit">SALVAR</button>  -->
 			</form>
 			<!-- fim form upload imagem -->
 			
