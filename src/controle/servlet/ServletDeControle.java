@@ -756,7 +756,7 @@ public class ServletDeControle {
     }
     
     
-    @RequestMapping(value="upload_imagem", method=RequestMethod.POST)
+//    @RequestMapping(value="upload_imagem", method=RequestMethod.POST)
     public @ResponseBody void uploadImagem(@RequestParam("upload_imagem_file") MultipartFile multipartFile, 
         									   @RequestParam("dpMotivo") String motivo,
         									   @RequestParam("txtComentario") String comentario,
@@ -888,6 +888,54 @@ public class ServletDeControle {
         } else {
         	System.out.println("You failed to upload " + name + " because the file was empty.");
         }
+    }
+    
+    @RequestMapping(value="upload_imagem", method=RequestMethod.POST)
+    public @ResponseBody void testeUpload(@RequestParam("upload_imagem_file") MultipartFile multipartFile, 
+        									   @RequestParam("dpMotivo") String motivo,
+        									   @RequestParam("txtComentario") String comentario,
+        									   @RequestParam("txtEndereco") String endereco, 
+        									   HttpServletResponse response, 
+        									   HttpServletRequest request, 
+        									   HttpSession session) throws IOException{
+
+    	String name = "novo_arquivo";
+    	
+    	System.out.println(motivo + " - " +  
+    			comentario + 
+    			" - " + endereco);
+    	
+        if (!multipartFile.isEmpty()) {
+            try {
+            	/*
+            	File path = new File(context.getRealPath("") + File.separator + "upload_imagens");
+                if (!path.exists()) {
+                	path.mkdir();
+                	System.out.println("Diretorio criado: " + path);
+                }
+                */
+            	
+            	String path = context.getRealPath("") + File.separator + "upload_imagens";
+                System.out.println(path);
+                String extension=multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
+                
+                System.out.println(extension);
+                
+                byte[] bytes = multipartFile.getBytes();
+                BufferedOutputStream stream = 
+                        new BufferedOutputStream(new FileOutputStream(new File(path + File.separator + name + extension)));
+                stream.write(bytes);
+                stream.close();
+//                System.out.println(stream.);
+                System.out.println("You successfully uploaded " + name + "!");
+            } catch (Exception e) {
+            	System.out.println("You failed to upload " + name + " => " + e.getMessage());
+            }
+        } else {
+        	System.out.println("You failed to upload " + name + " because the file was empty.");
+        }
+    	
+    	
     }
 	
 	@RequestMapping("candidatarse")
