@@ -252,7 +252,7 @@
 				<!-- INCLUIR BOTOES  -->
 				
 				<button class="btn btn-danger" id="btnFechar">Fechar</button>
-				<button class="btn btn-success" id="btnSalvar">Salvar</button>
+				<button class="btn btn-success" id="btnSalvar" >Salvar</button>
 			</div>
 		
 	</div>

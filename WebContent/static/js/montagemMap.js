@@ -78,123 +78,6 @@
 	         AdicionaInfoMarker(marker, map, infowindow, location.html);
 	     };
 
-	     //Adicionando div com info de endereço
-	     function AdicionaInfoMarker(marker, map, infowindow, strDescricao) {
-	         google.maps.event.addListener(marker, 'click', function() {
-	             HabilitaDivVisuDenuncia(true);
-	             infowindow.setContent(strDescricao);
-	             infowindow.open(map, marker);
-	             PreencheCampos();
-	         });
-	     }
-
-	     function PreencheCampos() {
-	         idMark = $('input[id$="ipDenuncia"]').val();
-	         var idMotivo = $('input[id$="ipTitulo"]').val();
-	         var idEndereco = $('input[id*="ipEndereco"]').val();
-	         var idDescricao = $('input[id*="ipDadosDigitados"]').val();
-	         var idImagemCaminho = $('input[id*="ipCaminho"]').val();
-
-	         $('label[id*="txtEndDenuncia"]').text(idEndereco);
-	         $('label[id*="txtMotivoDenuncia"]').text(idMotivo);
-	         $('label[id$="txtDescricaoMark"]').text(idDescricao);
-	         $('img[id$="txtImagemDenuncia"]').attr(idImagemCaminho);
-	        
-	         //$('button[id*="btnSalvarCandidato"]').text(idMark);
-	     }
-	     
-
-	     function SalvarCandidato() {
-	    	 var idMark = document.getElementById('ipDenuncia').value;
-	    	 if(idMark != "" && idMark != undefined){
-	    		 
-	    		 //GIOVANNE AQUI VC FAZ I CONTATO POR AJAX COM PARA CADASTRAR A PESSOA NA DENUNCIA
-		         // * Tem que ver como a pessoa irá fazer para se cadastrar.
-		         // * idMark    <--- Esta variável ja contém o ID da marcação;
-		         // * Tem que alocar um espaço na div junto com o da pessoa, para a empresa se candidatar a
-		         //colocar o beneficio que irá disponibilizar para o cidadão
-	    		 
-	    		 //CHAMAR O MÉTODO AJAX
-	    		 
-	    		 $.ajax({
-		             	url: 'candidatarse?idmarcacao=' + idMark,
-		             	type: 'POST',
-		             	success: function(data) 
-		             		{
-		             		if (data.isValid)
-		             			{
-		             				$.bootstrapGrowl
-		             				("Registro incluído com sucesso!", 
-		             					{
-		             					type: 'success',
-		             					align: 'center',
-		             					width: 'auto',
-		             					allow_dismiss: false
-		             					}
-		             				);
-		             			
-		             				window.setTimeout('location.reload()', 3000);
-		   	                     
-	    		                }
-		             		else{
-		             			if (!data.usuarioLogado) {
-			                         $.bootstrapGrowl("Usuário não está logado! Faça login ou cadastre-se!", {
-			                             type: 'success',
-			                             align: 'center',
-			                             width: 'auto',
-			                             allow_dismiss: false
-			                         });
-
-			                     }else if (data.jaTemCandidato){
-			                    	  $.bootstrapGrowl("Esta depredação já tem um candidato!", {
-				                             type: 'danger',
-				                             align: 'center',
-				                             width: 'auto',
-				                             allow_dismiss: false
-				                         });
-			                    }else if (data.jaSeCadastrou){
-		                    	  $.bootstrapGrowl("Candidato cadastrado para outra denúncia!", {
-			                             type: 'danger',
-			                             align: 'center',
-			                             width: 'auto',
-			                             allow_dismiss: false
-			                         });
-		                         }
-		             			else {
-			                         $.bootstrapGrowl("Erro ao se candidatar, entre em contato conosco!", {
-			                             type: 'danger',
-			                             align: 'center',
-			                             width: 'auto',
-			                             allow_dismiss: false
-			                         });
-			                     }
-		             			
-		             			
-		             		}
-		             }
-	    		 });
-	    		 	  		 
-	    		 
-	    		 //APÓS O RETORNO DE SE CANDIDATAR VERIFICAR SE O STATUS ESTÀ TROCADO.
-	      		 //2º APÓS OK chamar esta function (buscaListaMarcacoesCadastradas())	 
-	    		 buscaListaMarcacoesCadastradas();
-	    		 //3º Executar este script abaixo    		 
-	    		 setTimeout(function() {
-		             //Retorna a lista do banco e adiciona os dados novos
-		             if (resultJsonDenuncias != undefined) {
-		                 var parsed = JSON.parse(resultJsonDenuncias);
-		                 for (i = 0; i < parsed.result.length; i++) {
-		                     var location = parsed.result[i];
-		                     AdicionaMarcacao(location);
-		                 }
-		             }
-		         }, 5000);
-		         
-	       	 }	     
-	     }
-	     
-	     
-
 
 	     //#################LEGENDA STATUS
 	     map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(
@@ -279,25 +162,14 @@
 		 $('button[id*="btnFechar"]').click(function() {
 		     HabilitaDivCadastro(false);
 		 });
-
-		 //Click para fechar a div de cadastro
-		 $('button[id$="btnSalvar"]').click(function() {
-		     SalvaDados();
-		     HabilitaDivCadastro(false);
-		 });
-
+	
 
 		 //Click para fechar a div de cadastro
 		 $('button[id*="btnFecharInfoDenuncia"]').click(function() {
 			 HabilitaDivVisuDenuncia(false);
 		 });
 
-		 //Click para fechar a div de cadastro
-		 $('button[id$="btnSalvarCandidato"]').click(function() {
-		     SalvarCandidato();
-		     HabilitaDivVisuDenuncia(false);
-		 });
-
+	
 	   
 		 
 		//Função que mostra e esconde a div fundo e cadastro
@@ -330,15 +202,159 @@
 		     }
 		 }
 	 
-	     //Função que as informações da denúncia
+		
+ //################################ DIV CANDIDATAR-SE PARA RESOLVER O PROBLEMA DA DENUNCIA
+	     
+		 //Evento do click do botão salvar candidato da  divDenuncia
+		 $('button[id$="btnSalvarCandidato"]').click(function() {
+			 //Chama a function q irá chamar a servlet candidatarse
+		     SalvarCandidato();
+		     HabilitaDivVisuDenuncia(false);
+		 });
+
+	     //Evento que ocorre quando clica na marcação do mapa
+	     function AdicionaInfoMarker(marker, map, infowindow, strDescricao) {
+	         google.maps.event.addListener(marker, 'click', function() {
+	             HabilitaDivVisuDenuncia(true);
+	             infowindow.setContent(strDescricao);
+	             infowindow.open(map, marker);
+	             PreencheCampos();
+	         });
+	     }
+	     
+	     //Preenche todos os campos necessário que irá aparecer na divDenuncia 
+	     //quando for clicado em alguma marcação do map
+	     
+	     function PreencheCampos() {
+	         idMark = $('input[id$="ipDenuncia"]').val();
+	         var idMotivo = $('input[id$="ipTitulo"]').val();
+	         var idEndereco = $('input[id*="ipEndereco"]').val();
+	         var idDescricao = $('input[id*="ipDadosDigitados"]').val();
+	         var idImagemCaminho = $('input[id*="ipCaminho"]').val();
+
+	         $('label[id*="txtEndDenuncia"]').text(idEndereco);
+	         $('label[id*="txtMotivoDenuncia"]').text(idMotivo);
+	         $('label[id$="txtDescricaoMark"]').text(idDescricao);
+	         $('img[id$="txtImagemDenuncia"]').attr(idImagemCaminho);
+
+	     }
+	     
+
+	     function SalvarCandidato() {
+	    	 var idMark = document.getElementById('ipDenuncia').value;
+	    	 if(idMark != "" && idMark != undefined){
+	    		 
+	    		 //GIOVANNE AQUI VC FAZ I CONTATO POR AJAX COM PARA CADASTRAR A PESSOA NA DENUNCIA
+		         // * Tem que ver como a pessoa irá fazer para se cadastrar.
+		         // * idMark    <--- Esta variável ja contém o ID da marcação;
+		         // * Tem que alocar um espaço na div junto com o da pessoa, para a empresa se candidatar a
+		         //colocar o beneficio que irá disponibilizar para o cidadão
+	    		 
+	    		 //CHAMAR O MÉTODO AJAX
+	    		 
+	    		 $.ajax({
+		             	url: 'candidatarse?idmarcacao=' + idMark,
+		             	type: 'POST',
+		             	success: function(data) 
+		             		{
+		             		if (data.isValid)
+		             			{
+		             				$.bootstrapGrowl
+		             				("Registro incluído com sucesso!", 
+		             					{
+		             					type: 'success',
+		             					align: 'center',
+		             					width: 'auto',
+		             					allow_dismiss: false
+		             					}
+		             				);
+		             			
+		             				window.setTimeout('location.reload()', 3000);
+		   	                     
+	    		                }
+		             		else{
+		             			if (!data.usuarioLogado) {
+			                         $.bootstrapGrowl("Usuário não está logado! Faça login ou cadastre-se!", {
+			                             type: 'success',
+			                             align: 'center',
+			                             width: 'auto',
+			                             allow_dismiss: false
+			                         });
+
+			                     }else if (data.jaTemCandidato){
+			                    	  $.bootstrapGrowl("Esta depredação já tem um candidato!", {
+				                             type: 'danger',
+				                             align: 'center',
+				                             width: 'auto',
+				                             allow_dismiss: false
+				                         });
+			                    }else if (data.jaSeCadastrou){
+		                    	  $.bootstrapGrowl("Candidato cadastrado para outra denúncia!", {
+			                             type: 'danger',
+			                             align: 'center',
+			                             width: 'auto',
+			                             allow_dismiss: false
+			                         });
+		                         }
+		             			else {
+			                         $.bootstrapGrowl("Erro ao se candidatar, entre em contato conosco!", {
+			                             type: 'danger',
+			                             align: 'center',
+			                             width: 'auto',
+			                             allow_dismiss: false
+			                         });
+			                     }
+		             			
+		             			
+		             		}
+		             }
+	    		 });
+	    		 	  		 
+	    		 window.setTimeout('location.reload()', 3000);
+	    		 
+	    		 //APÓS O RETORNO DE SE CANDIDATAR VERIFICAR SE O STATUS ESTÀ TROCADO.
+	      		 //2º APÓS OK chamar esta function (buscaListaMarcacoesCadastradas())	 
+	    		 buscaListaMarcacoesCadastradas();
+	    		 //3º Executar este script abaixo    		 
+	    		 setTimeout(function() {
+		             //Retorna a lista do banco e adiciona os dados novos
+		             if (resultJsonDenuncias != undefined) {
+		                 var parsed = JSON.parse(resultJsonDenuncias);
+		                 for (i = 0; i < parsed.result.length; i++) {
+		                     var location = parsed.result[i];
+		                     AdicionaMarcacao(location);
+		                 }
+		             }
+		         }, 5000);
+		         
+	       	 }	     
+	     }
+	     
+	     //#############################################################################################
+		 
+	
+	     
+//########################## FUNCOES E ACOES QUE IRÃO ACONTECER QUANDO HOUVER UMA DENUNCIA ######################	     
+		 //Evento do click que ocorre quando salva a marcação
+		 $('button[id$="btnSalvar"]').click(function() {
+			 //Chama a function que recolhe os dados 
+		     SalvaDados();
+		     //Esconde a div
+		     HabilitaDivCadastro(false);
+		 });
+		 
+	     //Função que recolhe as informações da denúncia
 	     function SalvaDados() {
+	    	 //Atribui o q tem na src da imagem
 	    	 var img = $('#div_imagem_upload').attr('src');
-	         
+	         //Verifica se foi informado alguma imagem
 	    	 if(img != undefined &&  img.indexOf("data:image") > -1){
 	   
 	    		 dadosDigitados = "";
 		         titulo = "";
+		         //Recupera o texto digitiado
 		         dadosDigitados = $('textarea[id*="txtComentario"]').val();
+		         //Recupera o motivo da denuncia
 		         titulo = $('select[id*="dpMotivo"]').val();
 		         
 		         //Cria o nome do arquivo
@@ -349,14 +365,17 @@
 		         nameImage +=("00" + d.getHours()).slice(-2);
 		         nameImage +=("00" + d.getMinutes()).slice(-2);
 		         nameImage +=("00" + d.getSeconds()).slice(-2);
+		         
 		         //Seta o nome do arquivo 
 		         $('input[name$="upload_imagem_name"]').val(nameImage);
 		         
 		         //Seta o nome com o tipo jpeg, png....
 		         var formato = img.substring(img.indexOf("/")+1 ,img.indexOf(";"));
+		         //colova o valor na variavel caminho
 		         var caminho = "../upload_imagens/" + nameImage + "." + formato;
-		         
+		         //Recupera o endereço que foi clicado no mapa
 		         var endereco = $('label[id*="txtEndereco"]').text();
+		         //Cria um "string" com todas as informações da denuncia
 		         var contentString = '<div id=\'content\'>' +
 		             '<div id=\'siteNotice\'>' +
 		             '</div>' +
@@ -370,13 +389,11 @@
 		             '<p>' + dadosDigitados + '</p>' +
 		             '</div>' +
 		             '</div>';
-
+		         //Seta os hidden que estão oculto na div divCadastro
+		         //Com a latitude, longitudo e a string HTML que terá que ser gravada no banco 
 		         $('#latitudeEsc').val( latitude.lat);
 		         $('#longitudeEsc').val( latitude.lng);
 		         $('#htmlEsc').val(contentString);
-		         
-		         
-		         
 		         
 		         //Cria o objeto e adiciona no JSON
 		         var objDenuncia = {}
@@ -386,14 +403,12 @@
 		         objDenuncia["lon"] = "" + latitude.lng + "";
 		         objDenuncia["title"] = "" + titulo + "";
 		         objDenuncia["html"] = "" + contentString + "";
-
-
+		         //Coloca o caminho da imagem ../upload_imagem/yyyyMMddHHmmss.jpg, png....
 		         objDenuncia["caminho"] = caminho;
-
+		         
 		         //Chama a função que salva a denuncia no banco
 		         salvarMarkBD(objDenuncia);
-
-	         
+		         //Segura por um tempo para poder recarregar as denuncias do banco 	         
 		         setTimeout(function() {
 		             //Retorna a lista do banco e adiciona os dados novos
 		             if (resultJsonDenuncias != undefined) {
@@ -441,7 +456,8 @@
 	                     //Simula o click do button upload
 	                     // $('#form_upload_imagem [type="submit"]').click();
 	                     //buscaListaMarcacoesCadastradas();
-
+	                     
+	                     //Segura por um tempo para fazer o reload da pagina
 	                     window.setTimeout('location.reload()', 3000);
 	                     
 	                     latLongSave = "";
@@ -472,6 +488,8 @@
 	         
 	     }	     
 	 }
+	 
+//###########################################################################################
 
 	 function buscaListaMarcacoesCadastradas() {}
 	     $.ajax({
