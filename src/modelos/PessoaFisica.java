@@ -1,10 +1,11 @@
 package modelos;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import controle.conversaoDados.Data;
 
-public class PessoaFisica extends Login{
+public class PessoaFisica extends  Login implements Serializable{
 	private String nome, cpf, email, dataNascimentoString, telefone;
 	private int idPessoaFisica;
 	private Date dataNascimento;

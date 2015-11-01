@@ -1,6 +1,8 @@
 package modelos;
 
-public class PessoaJuridica extends Login{
+import java.io.Serializable;
+
+public class PessoaJuridica extends Login implements Serializable{
 	private int idPessoaJuridica;
 	private String nome, cnpj, telefone, email, endereco;
 	public int getIdPessoaJuridica() {

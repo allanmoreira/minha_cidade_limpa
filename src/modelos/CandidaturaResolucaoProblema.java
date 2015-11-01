@@ -1,6 +1,8 @@
 package modelos;
 
-public class CandidaturaResolucaoProblema {
+import java.io.Serializable;
+
+public class CandidaturaResolucaoProblema implements Serializable {
 	private int idPessoaFisica, idMarcacaoDepredacao;
 
 	public int getIdPessoaFisica() {

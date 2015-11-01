@@ -1,6 +1,9 @@
 package modelos;
+
+import java.io.Serializable;
+
 //ESCREVI AQUI 
-public class BeneficioEmpresa extends PessoaJuridica{
+public class BeneficioEmpresa extends PessoaJuridica implements Serializable{
 	private int idMarcacaoDepredacao;
 	private String descricaoBeneficio;
 	private boolean aprovado;

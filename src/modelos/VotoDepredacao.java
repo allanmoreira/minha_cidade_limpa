@@ -1,6 +1,8 @@
 package modelos;
 
-public class VotoDepredacao {
+import java.io.Serializable;
+
+public class VotoDepredacao implements Serializable {
 	private int idPessoaFisica, idMarcacaoDepredacao;
 	private boolean like;
 	public int getIdPessoaFisica() {

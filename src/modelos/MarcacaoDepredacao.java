@@ -1,10 +1,11 @@
 package modelos;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import controle.conversaoDados.Data;
 
-public class MarcacaoDepredacao {
+public class MarcacaoDepredacao implements Serializable {
 	private String tipoDepredacao, descricao, status, dataMarcacaoString;
 	private String dataMarcacao;
 	private boolean cadidatoResolverProblema;

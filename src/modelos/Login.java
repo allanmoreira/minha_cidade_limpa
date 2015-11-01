@@ -1,6 +1,8 @@
 package modelos;
 
-public class Login {
+import java.io.Serializable;
+
+public class Login implements Serializable {
 	private String username, senha;
 	private boolean PF;
 	private int idLogin;
