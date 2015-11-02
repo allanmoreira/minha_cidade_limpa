@@ -760,55 +760,85 @@ public class ServletDeControle {
 	}
 
 	
-	  @RequestMapping(value="upload_imagem", method=RequestMethod.POST)
-	  public @ResponseBody void handleFileUpload(@RequestParam("upload_imagem_name") String name, 
-		            							 @RequestParam("upload_imagem_file") MultipartFile file,
+	  @RequestMapping(value="upload_imagem")
+	  public void handleFileUpload(@RequestParam("caminho_imagem_upload") MultipartFile multipartFile,
 		            							 HttpServletResponse response, 
 	        									 HttpServletRequest request, 
 	        									 HttpSession session) throws IOException, ServletException{
 	    	      							 		  
 			Map<String, Object> map = new HashMap<String, Object>();
+			BancoDados bancoDados = new BancoDados();
 			boolean isValid = false;
 			boolean usuarioLogado = false;
-	       if (!file.isEmpty()) {
+			int idMarcacao = 0;
+			
+			// pega os outros dados do form
+			String txtEndereco = request.getParameter("txtEndereco");
+			String dpMotivo = request.getParameter("dpMotivo");
+			String txtComentario = request.getParameter("txtComentario");
+			
+			System.out.println("Endereço: " + txtEndereco);
+			System.out.println("Motivo: " + dpMotivo);
+			System.out.println("Comentário: " + txtComentario);
+			
+			MarcacaoDepredacao marcacao = new MarcacaoDepredacao();
+			
+			marcacao.setTipoDepredacao(dpMotivo);
+			marcacao.setDescricao(txtComentario);
+			marcacao.setCadidatoResolverProblema(false);
+			marcacao.setIdPessoaFisicaFezMarcacao(6); // inseri o ID de uma pessoa física qualquer do banco de dados
+			
+			try {
+				bancoDados.conectarAoBco();
+				idMarcacao = bancoDados.cadastrarMarcacao(marcacao);
+				bancoDados.encerrarConexao();
+			} catch (ClassNotFoundException e) {
+				System.out.println("Erro de conexão ao banco de dados!");
+			} catch (SQLException e1) {
+				System.out.println("Erro ao salvar marcação no banco de dados:");
+				System.out.println(e1.getMessage());
+			} 
+			
+			// nome do arquivo = ID da marcacao + "A" de Antes de ser consertado
+			String name = idMarcacao + "_A";
+			
+	       if (!multipartFile.isEmpty()) {
 	            try {
 	            	
-	            	
-	            	//File path = new File(System.getProperty("user.dir") + "/upload_imagens/");
-           	
 	            	File path = new File(  context.getRealPath("") + File.separator + "upload_imagens");
+	            	
+	            	System.out.println("CAMINHO IMAGEM: " + path);
 	                if (!path.exists()) {
 	                	path.mkdir();
 	                	System.out.println("Diretorio criado: " + path);
 	                }
 	                            	
-	            	String extension=file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-	                
-	                byte[] bytes = file.getBytes();
+	            	String extensao = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
+	                System.out.println("EXTENSÃO: " + extensao);
+	                byte[] bytes = multipartFile.getBytes();
 	                BufferedOutputStream stream = 
-	                        new BufferedOutputStream(new FileOutputStream(new File(path + File.separator + name + extension)));
+	                        new BufferedOutputStream(new FileOutputStream(new File(path + File.separator + name + extensao)));
 	                
 	                		//new BufferedOutputStream(new FileOutputStream(new File("upload_imagens/" + name + extension)));
 	                stream.write(bytes);
 	                stream.close();
-	                System.out.println("You successfully uploaded " + name + "!");
+	                System.out.println("Upload do arquivo [" + name + "] efetuado com sucesso!");
 	            } catch (Exception e) {
-	            	System.out.println("You failed to upload " + name + " => " + e.getMessage());
+	            	System.out.println("Falha ao executar o upload do arquivo [" + name + "]. Motivo:");
+	            	System.out.println(e.getMessage());
 	            }
 	        } else {
-	        	System.out.println("You failed to upload " + name + " because the file was empty.");
+	        	System.out.println("Falha ao fazer upload porque o arquivo esta vazio!");
 	        }
-	       
-	   	map.put("isValid", isValid);
-		map.put("usuarioLogado", usuarioLogado);
-		
-		//RequestDispatcher dispatcher = request.getRequestDispatcher("index");  
-		//dispatcher.forward(request, response); 
-		
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(new Gson().toJson(map));
-		
+	    
+//	       	resposta a requisicao
+	   		map.put("isValid", isValid);
+			map.put("usuarioLogado", usuarioLogado);
+			
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(new Gson().toJson(map));
+			
 	    }
 	  
 	  

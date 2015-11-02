@@ -174,7 +174,7 @@
 		style="max-width: 560px; width: 100%; min-height: 350px; position: fixed; top: 25%; margin-left: 10px; margin-top: 0px; margin: 0px auto; z-index: 9999; padding: 0px; border-radius: 5px; display: none;"
 		role="navigation">
 		
-		
+		<!-- <form method="POST" id="form_upload_imagem" enctype="multipart/form-data" action="index" > -->
 		<form method="POST" id="form_upload_imagem" enctype="multipart/form-data" action="upload_imagem">
 		
 			<div class="abseed_conteudo_borda"
@@ -225,7 +225,6 @@
 			<div style="width: 50%; float: right;">
 			<!-- form upload imagem -->
 
-			<form method="POST" id="form_upload_imagem" enctype="multipart/form-data" action="index" >
 
 				<div style="display:none">
 					<!-- campo name > COLAR O ID DA DENUNCIA AQUI PARA NOMEAR A FOTO EX: "1514" -->
@@ -239,7 +238,7 @@
 					
 				</div>
 					<div style="float: center; padding: 7px 10px 10px 20px;">
-						<input type="file" name="upload_imagem_file" class="btn btn-warning" id="caminho_imagem_upload" src="" style="width: 92%;"></input>
+						<input type="file" name="caminho_imagem_upload" id="caminho_imagem_upload" class="btn btn-warning"  src="" style="width: 92%;"></input>
 					</div>
 					
 					<!-- <button class="btn btn-warning" type="submit">SALVAR</button>  -->
@@ -252,7 +251,8 @@
 				<!-- INCLUIR BOTOES  -->
 				
 				<button class="btn btn-danger" id="btnFechar">Fechar</button>
-				<button class="btn btn-success" id="btnSalvar" >Salvar</button>
+				<!-- <button class="btn btn-success" id="btnSalvar" >Salvar</button> -->
+				<button class="btn btn-success" onclick="submit_upload_com_ajax()" >Salvar</button>
 			</div>
 		
 	</div>

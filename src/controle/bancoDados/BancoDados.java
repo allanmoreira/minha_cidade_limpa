@@ -91,9 +91,10 @@ import modelos.PessoaJuridica;
 	/***
 	 * Cadastro de den�ncias feitas por pessoas
 	 * @param oMarcacao
+	 * @return 
 	 * @throws SQLException
 	 */
-	public void cadastrarMarcacao(MarcacaoDepredacao oMarcacao) throws SQLException {
+	public int cadastrarMarcacao(MarcacaoDepredacao oMarcacao) throws SQLException {
 		String sql = "insert into marcacao_depredacao "
 				+ "(id_marcacao_depredacao, "
 				+ "tipo_depredacao, "
@@ -109,7 +110,7 @@ import modelos.PessoaJuridica;
 				+ "img_denuncia_final) "				
 				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         preparedStatement.setInt(1, oMarcacao.getIdMarcacaoDepredacao());
         preparedStatement.setString(2, oMarcacao.getTipoDepredacao());
         preparedStatement.setString(3, oMarcacao.getDescricao());
@@ -122,10 +123,13 @@ import modelos.PessoaJuridica;
         preparedStatement.setString(10,oMarcacao.getStatus());
         preparedStatement.setString(11,oMarcacao.getImgDenunciaIni());
         preparedStatement.setString(12,oMarcacao.getImgDenunciaFinal());
-
-        String dados = preparedStatement.toString();
      
         preparedStatement.executeUpdate();
+        ResultSet resultSet = preparedStatement.getGeneratedKeys();
+        resultSet.next();
+        int idMarcacao = resultSet.getInt(1);
+        
+        return idMarcacao;
 	}
 	
 	

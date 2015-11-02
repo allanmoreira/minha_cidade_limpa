@@ -790,5 +790,34 @@ $('#caminho_imagem_upload').on("click", function(){
     //$("#container_img").append($('<img />'));
 });
 
+// faz a requisicao ajax utilizando o formdata, uma especie de hashmap do jquery
+function submit_upload_com_ajax(){
+	var txtEndereco = $("#txtEndereco").val();
+	var dpMotivo = $("#dpMotivo").val();
+	var txtComentario = $("#txtComentario").val();
+    var caminho_imagem_upload = document.getElementById("caminho_imagem_upload").files[0];
 
+    var formdata = new FormData();
+    formdata.append("txtEndereco", txtEndereco);
+    formdata.append("dpMotivo", dpMotivo);
+    formdata.append("txtComentario", txtComentario);
+    formdata.append("caminho_imagem_upload", caminho_imagem_upload);
+
+    var xhr = new XMLHttpRequest();       
+
+    xhr.open("POST","upload_imagem", true);
+
+    xhr.send(formdata);
+
+    xhr.onload = function(e) {
+
+        if (this.status == 200) {
+        	
+        	// imprime todas as informacoes que o servidor retornou
+           alert(this.responseText);
+
+        }
+
+    };  
+}
 
