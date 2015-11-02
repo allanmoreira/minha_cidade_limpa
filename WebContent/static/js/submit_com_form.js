@@ -80,25 +80,13 @@ function submeter_form_cadastro_pessoa_fisica(){
 			allow_dismiss: false
 		});
 		
-		$(function() {
-	        $('#form_upload_imagem').ajaxForm({
-	            success: function(msg) {
-	                alert("File has been uploaded successfully");
-	            },
-	            error: function(msg) {
-	                $("#upload-error").text("Couldn't upload file");
-	            }
-	        });
-	    });
 		
-		/*
 		$.ajax({
-			url: 'upload_imagem',
-//			url: 'cadastrar_pessoa_fisica',
+			url: 'cadastrar_pessoa_fisica',
 			async: true,
 			type: 'POST',
 			dataType: 'json',
-			data: $('#form_upload_imagem').serialize(),
+			data: $('#form_cadastrar_pessoa_fisica').serialize(),
 			success: function(data){
 				if(data.isValid) {
 					
@@ -147,7 +135,7 @@ function submeter_form_cadastro_pessoa_fisica(){
 		
 		});
 		return false;
-		*/
+		
 	}
 
 }

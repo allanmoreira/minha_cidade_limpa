@@ -269,7 +269,7 @@
 		             					}
 		             				);
 		             			
-		             				window.setTimeout('location.reload()', 3000);
+		             				//window.setTimeout('location.reload()', 3000);
 		   	                     
 	    		                }
 		             		else{
@@ -310,7 +310,7 @@
 		             }
 	    		 });
 	    		 	  		 
-	    		 window.setTimeout('location.reload()', 3000);
+	    		 //window.setTimeout('location.reload()', 3000);
 	    		 
 	    		 //APÓS O RETORNO DE SE CANDIDATAR VERIFICAR SE O STATUS ESTÀ TROCADO.
 	      		 //2º APÓS OK chamar esta function (buscaListaMarcacoesCadastradas())	 
@@ -455,10 +455,10 @@
 	                     
 	                     //Simula o click do button upload
 	                     // $('#form_upload_imagem [type="submit"]').click();
-	                     //buscaListaMarcacoesCadastradas();
+	                     buscaListaMarcacoesCadastradas();
 	                     
 	                     //Segura por um tempo para fazer o reload da pagina
-	                     window.setTimeout('location.reload()', 3000);
+	                     //window.setTimeout('location.reload()', 3000);
 	                     
 	                     latLongSave = "";
 	                     $('textarea[id*="txtComentario"]').val("");
