@@ -179,7 +179,7 @@
 		
 			<div class="abseed_conteudo_borda"
 				style="text-align: center; line-height: 8px; font-size =14px; color: #ffffff; padding: 10px;">
-				Cadastro de Voluntários</div>
+				Cadastro de Denúncia</div>
 			<div style="padding: 10px;">
 				<!-- INCLUIR CAMPOS  -->
 				
