@@ -23,8 +23,8 @@ import modelos.PessoaJuridica;
     public void conectarAoBco() throws ClassNotFoundException, SQLException {
     
     	Class.forName("com.mysql.jdbc.Driver");
- //     String url = "jdbc:mysql://localhost:3306/minha_cidade_limpa_bd?zeroDateTimeBehavior=convertToNull";
-		String url = "jdbc:mysql://104.131.19.51:3306/minha_cidade_limpa_bd?zeroDateTimeBehavior=convertToNull";
+      String url = "jdbc:mysql://localhost:3306/minha_cidade_limpa_bd?zeroDateTimeBehavior=convertToNull";
+//		String url = "jdbc:mysql://104.131.19.51:3306/minha_cidade_limpa_bd?zeroDateTimeBehavior=convertToNull";
 
         String usuario = "trab_ger_proj";
         String senha = "cidadelimpa20152";
@@ -444,6 +444,17 @@ import modelos.PessoaJuridica;
         preparedStatement.executeUpdate();
 		return true;
 	
+	}
+
+	public void atualizaHtmlMarcacao(MarcacaoDepredacao marcacao) throws SQLException {
+		String sql = "update marcacao_depredacao set "
+				+ " html_depredacao = ? "
+				+ " where id_marcacao_depredacao = ? ";
+				
+    preparedStatement = connection.prepareStatement(sql);
+    preparedStatement.setString(1, marcacao.getHtml());
+    preparedStatement.setInt(2, marcacao.getIdMarcacaoDepredacao());
+    preparedStatement.executeUpdate();
 	}
 	
 	

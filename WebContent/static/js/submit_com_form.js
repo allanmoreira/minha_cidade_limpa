@@ -780,6 +780,7 @@ $('#caminho_imagem_upload').on("click", function(){
 
 // faz a requisicao ajax utilizando o formdata, uma especie de hashmap do jquery
 function submit_upload_com_ajax(){
+	
 	var txtEndereco = $("#txtEndereco").val();
 	var dpMotivo = $("#dpMotivo").val();
 	var txtComentario = $("#txtComentario").val();

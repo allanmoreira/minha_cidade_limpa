@@ -764,11 +764,12 @@ public class ServletDeControle {
 
 	
 	  @RequestMapping(value="upload_imagem")
-	  public void handleFileUpload(@RequestParam("caminho_imagem_upload") MultipartFile multipartFile,
+	  public void cadastrarMarcacao(@RequestParam("caminho_imagem_upload") MultipartFile multipartFile,
 		            							 HttpServletResponse response, 
 	        									 HttpServletRequest request, 
 	        									 HttpSession session) throws IOException, ServletException{
 	    	      							 		  
+		  	MarcacaoDepredacao marcacao = new MarcacaoDepredacao();
 			Map<String, Object> map = new HashMap<String, Object>();
 			BancoDados bancoDados = new BancoDados();
 			boolean isValid = false;
@@ -777,106 +778,84 @@ public class ServletDeControle {
 			PessoaFisica pf = new PessoaFisica();
 			Login usuarioSessao = (Login) session.getAttribute("usuarioLogado");
 			
-	//Verifica se tem alguem logado
-	if (usuarioSessao != null) {
-			usuarioLogado = true;
+			//Verifica se tem alguem logado
+			if (usuarioSessao != null) {
+				usuarioLogado = true;
+				
+				//Tem que verificar se é pessoa física
+				//################ VER ESSA PARTE ################
+				
+				// pega os outros dados do form
+				String txtEndereco = request.getParameter("txtEndereco");
+				String dpMotivo = request.getParameter("dpMotivo");
+				String txtComentario = request.getParameter("txtComentario");
+				String txtlatitude = request.getParameter("latitude");
+				String txtlongitude = request.getParameter("longitude");
+				String txtIcon = request.getParameter("icon");
+				
+				marcacao.setTipoDepredacao(dpMotivo);
+				marcacao.setDescricao(txtComentario);
+				marcacao.setPosLat(txtlatitude);
+				marcacao.setPosLon(txtlongitude);
+				
+				marcacao.setCadidatoResolverProblema(false);
+				
+				System.out.println(usuarioSessao.getIdLogin());
 			
-			//Tem que verificar se é pessoa física
-			//################ VER ESSA PARTE ################
-			
-			// pega os outros dados do form
-			String txtEndereco = request.getParameter("txtEndereco");
-			String dpMotivo = request.getParameter("dpMotivo");
-			String txtComentario = request.getParameter("txtComentario");
-			String txtlatitude = request.getParameter("latitude");
-			String txtlongitude = request.getParameter("longitude");
-			String txtIcon = request.getParameter("icon");
-			
-			System.out.println("Endereço: " + txtEndereco);
-			System.out.println("Motivo: " + dpMotivo);
-			System.out.println("Comentário: " + txtComentario);
-			
-			//############### Não esquecer de com o nome na imagem ############
-			 String contentString = "'<div id=\'content\'>' ";
+				try {
+					
+					bancoDados.conectarAoBco();
+					
+					//Buscou a pessoa logada no banco
+					pf = bancoDados.buscarPessoaFisica(usuarioSessao.getIdLogin());
+					
+					//Colocou o ID da pessoa na marcação
+					marcacao.setIdPessoaFisicaFezMarcacao(pf.getIdPessoaFisica()); 
+					//Cadastra a maracação
+					idMarcacao = bancoDados.cadastrarMarcacao(marcacao);
+					
+					marcacao.setIdMarcacaoDepredacao(idMarcacao);
+					
+				} catch (ClassNotFoundException e) {
+					System.out.println("Erro de conexão ao banco de dados!" );
+				} catch (SQLException e1) {
+					System.out.println("Erro ao salvar marcação no banco de dados:");
+					System.out.println(e1.getMessage());
+				}
+				
+				String nomeArquivo = idMarcacao + "_A";
+				
+				String nomeCompletoArquivoComCaminho = uploadArquivo(multipartFile, nomeArquivo);
+
+				//############### Não esquecer de com o nome na imagem ############
+				String contentString = "'<div id=\'content\'>' ";
 				contentString +=  "           '<div id=\'siteNotice\'>'" ;
 				contentString += "            '</div>' ";
 				contentString +=  "            '<input id=\'ipTitulo\' type=\'hidden\' name=\'ipTitulo\' value=\'' "+ dpMotivo +" '\'>' ";
 				contentString +=  "            '<input id=\'ipDenuncia\' type=\'hidden\' name=\'idDenuncia\' value=\'§§§§\'>' ";
 				contentString +=  "             '<input id=\'ipEndereco\' type=\'hidden\' name=\'ipEndereco\' value=\'' "+ txtEndereco +" '\'>' ";
-				contentString +=  "             '<input id=\'ipCaminho\' type=\'hidden\' name=\'ipCaminho\' value=\'' "+ ################## COLOCAR O CAMINHO DA IMAGEM ##############  +" '\'>' ";
+				contentString +=  "             '<input id=\'ipCaminho\' type=\'hidden\' name=\'ipCaminho\' value=\' " +
+						
+													"<c:url value=\'"+ nomeCompletoArquivoComCaminho +"'/>" 
+												+ "\'>' ";
 				contentString +=  "             '<input id=\'ipCaminhoFotoNova\' type=\'hidden\' name=\'ipCaminhoFotoNova\' value=\'FFDDNN\'>' ";
 				contentString +=  "             '<input id=\'ipDadosDigitados\' type=\'hidden\' name=\'ipDadosDigitados\' value=\'' "+ txtComentario  +" '\'>' ";
 				contentString +=  "             '<div id=\'bodyContent\'>' ";
 				contentString +=  "             '<p>' "+ txtComentario  +" '</p>' ";
 				contentString +=  "            '</div>'";
 				contentString +=  "            '</div>'";
-			
-			
-			MarcacaoDepredacao marcacao = new MarcacaoDepredacao();
-			
-			marcacao.setTipoDepredacao(dpMotivo);
-			marcacao.setDescricao(txtComentario);
-			marcacao.setPosLat(txtlatitude);
-			marcacao.setPosLon(txtlongitude);
-			marcacao.setHtml(contentString);
-	
-		
-			marcacao.setCadidatoResolverProblema(false);
-			
-			try {
 				
-				bancoDados.conectarAoBco();
+				marcacao.setHtml(contentString);
 				
-				//Buscou a pessoa logada no banco
-				pf = bancoDados.buscarPessoaFisica(usuarioSessao.getIdLogin());
-				//Colocou o ID da pessoa na marcação
-				marcacao.setIdPessoaFisicaFezMarcacao(pf.getIdPessoaFisica()); 
-				//Cadastra a maracação
-				idMarcacao = bancoDados.cadastrarMarcacao(marcacao);
-				
-				
-				bancoDados.encerrarConexao();
-			} catch (ClassNotFoundException e) {
-				System.out.println("Erro de conexão ao banco de dados!");
-			} catch (SQLException e1) {
-				System.out.println("Erro ao salvar marcação no banco de dados:");
-				System.out.println(e1.getMessage());
-			} 
-			
-			// nome do arquivo = ID da marcacao + "A" de Antes de ser consertado
-			String name = idMarcacao + "_A";
-			
-	       if (!multipartFile.isEmpty()) {
-	            try {
-	            	
-	            	File path = new File(  context.getRealPath("") + File.separator + "upload_imagens");
-	            	
-	            	System.out.println("CAMINHO IMAGEM: " + path);
-	                if (!path.exists()) {
-	                	path.mkdir();
-	                	System.out.println("Diretorio criado: " + path);
-	                }
-	                            	
-	            	String extensao = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
-	                System.out.println("EXTENSÃO: " + extensao);
-	                byte[] bytes = multipartFile.getBytes();
-	                BufferedOutputStream stream = 
-	                        new BufferedOutputStream(new FileOutputStream(new File(path + File.separator + name + extensao)));
-	                
-	                		//new BufferedOutputStream(new FileOutputStream(new File("upload_imagens/" + name + extension)));
-	                stream.write(bytes);
-	                stream.close();
-	                System.out.println("Upload do arquivo [" + name + "] efetuado com sucesso!");
-	            } catch (Exception e) {
-	            	System.out.println("Falha ao executar o upload do arquivo [" + name + "]. Motivo:");
-	            	System.out.println(e.getMessage());
-	            }
-	        } else {
-	        	System.out.println("Falha ao fazer upload porque o arquivo esta vazio!");
-	        }
-	}else{
-		usuarioLogado = false;
-	}
+				try {
+					bancoDados.atualizaHtmlMarcacao(marcacao);
+					bancoDados.encerrarConexao();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+						
 //	       	resposta a requisicao
 	   		map.put("isValid", isValid);
 			map.put("usuarioLogado", usuarioLogado);
@@ -885,9 +864,48 @@ public class ServletDeControle {
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(new Gson().toJson(map));
 			
-	    }
+	  }
 	  
-	  
+	  /**
+	   * 
+	   * @param multipartFile (o arquivo da requisicao)
+	   * @param nomeArquivo (o nome desejado para o arquivo)
+	   * @return o nome completo do arquivo
+	   */
+	  private String uploadArquivo(MultipartFile multipartFile, String nomeArquivo) {
+		  String nomeCompletoArquivoComCaminho = null;
+
+		  if (!multipartFile.isEmpty()) {
+			  try {
+
+				  File path = new File(context.getRealPath("") + File.separator + "upload_imagens");
+				  System.out.println("CAMINHO IMAGEM: " + path);
+				
+				 System.out.println("CAMINHO IMAGEM: " + path); if
+				 (!path.exists()) { path.mkdir();
+				 System.out.println("Diretorio criado: " + path); }
+				 
+				  String extensao = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
+				
+				  byte[] bytes = multipartFile.getBytes();
+				  nomeCompletoArquivoComCaminho = path + File.separator + nomeArquivo + extensao;
+				  BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(nomeCompletoArquivoComCaminho)));
+
+				// new BufferedOutputStream(new FileOutputStream(new
+				// File("upload_imagens/" + name + extension)));
+				  stream.write(bytes);
+				  stream.close();
+				  System.out.println("Upload do arquivo [" + nomeArquivo + "] efetuado com sucesso!");
+			} catch (Exception e) {
+				System.out.println("Falha ao executar o upload do arquivo [" + nomeArquivo + "]. Motivo:");
+				System.out.println(e.getMessage());
+			}
+		} else {
+			System.out.println("Falha ao fazer upload porque o arquivo esta vazio!");
+		}
+
+		return nomeCompletoArquivoComCaminho;
+	}
 
 
 	
