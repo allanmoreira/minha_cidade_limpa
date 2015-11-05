@@ -628,6 +628,9 @@ public class ServletDeControle {
 			String sLong = request.getParameter("lon");
 			String sHtml = request.getParameter("html");
 			String sData = DateTime.now().toString("yyyyMMdd");
+			
+			
+		
 
 			oMarcacao.setDescricao(sCat);
 			oMarcacao.setStatus("1");
@@ -771,26 +774,67 @@ public class ServletDeControle {
 			boolean isValid = false;
 			boolean usuarioLogado = false;
 			int idMarcacao = 0;
+			PessoaFisica pf = new PessoaFisica();
+			Login usuarioSessao = (Login) session.getAttribute("usuarioLogado");
+			
+	//Verifica se tem alguem logado
+	if (usuarioSessao != null) {
+			usuarioLogado = true;
+			
+			//Tem que verificar se é pessoa física
+			//################ VER ESSA PARTE ################
 			
 			// pega os outros dados do form
 			String txtEndereco = request.getParameter("txtEndereco");
 			String dpMotivo = request.getParameter("dpMotivo");
 			String txtComentario = request.getParameter("txtComentario");
+			String txtlatitude = request.getParameter("latitude");
+			String txtlongitude = request.getParameter("longitude");
+			String txtIcon = request.getParameter("icon");
 			
 			System.out.println("Endereço: " + txtEndereco);
 			System.out.println("Motivo: " + dpMotivo);
 			System.out.println("Comentário: " + txtComentario);
 			
+			//############### Não esquecer de com o nome na imagem ############
+			 String contentString = "'<div id=\'content\'>' ";
+				contentString +=  "           '<div id=\'siteNotice\'>'" ;
+				contentString += "            '</div>' ";
+				contentString +=  "            '<input id=\'ipTitulo\' type=\'hidden\' name=\'ipTitulo\' value=\'' "+ dpMotivo +" '\'>' ";
+				contentString +=  "            '<input id=\'ipDenuncia\' type=\'hidden\' name=\'idDenuncia\' value=\'§§§§\'>' ";
+				contentString +=  "             '<input id=\'ipEndereco\' type=\'hidden\' name=\'ipEndereco\' value=\'' "+ txtEndereco +" '\'>' ";
+				contentString +=  "             '<input id=\'ipCaminho\' type=\'hidden\' name=\'ipCaminho\' value=\'' "+ ################## COLOCAR O CAMINHO DA IMAGEM ##############  +" '\'>' ";
+				contentString +=  "             '<input id=\'ipCaminhoFotoNova\' type=\'hidden\' name=\'ipCaminhoFotoNova\' value=\'FFDDNN\'>' ";
+				contentString +=  "             '<input id=\'ipDadosDigitados\' type=\'hidden\' name=\'ipDadosDigitados\' value=\'' "+ txtComentario  +" '\'>' ";
+				contentString +=  "             '<div id=\'bodyContent\'>' ";
+				contentString +=  "             '<p>' "+ txtComentario  +" '</p>' ";
+				contentString +=  "            '</div>'";
+				contentString +=  "            '</div>'";
+			
+			
 			MarcacaoDepredacao marcacao = new MarcacaoDepredacao();
 			
 			marcacao.setTipoDepredacao(dpMotivo);
 			marcacao.setDescricao(txtComentario);
+			marcacao.setPosLat(txtlatitude);
+			marcacao.setPosLon(txtlongitude);
+			marcacao.setHtml(contentString);
+	
+		
 			marcacao.setCadidatoResolverProblema(false);
-			marcacao.setIdPessoaFisicaFezMarcacao(6); // inseri o ID de uma pessoa física qualquer do banco de dados
 			
 			try {
+				
 				bancoDados.conectarAoBco();
+				
+				//Buscou a pessoa logada no banco
+				pf = bancoDados.buscarPessoaFisica(usuarioSessao.getIdLogin());
+				//Colocou o ID da pessoa na marcação
+				marcacao.setIdPessoaFisicaFezMarcacao(pf.getIdPessoaFisica()); 
+				//Cadastra a maracação
 				idMarcacao = bancoDados.cadastrarMarcacao(marcacao);
+				
+				
 				bancoDados.encerrarConexao();
 			} catch (ClassNotFoundException e) {
 				System.out.println("Erro de conexão ao banco de dados!");
@@ -830,7 +874,9 @@ public class ServletDeControle {
 	        } else {
 	        	System.out.println("Falha ao fazer upload porque o arquivo esta vazio!");
 	        }
-	    
+	}else{
+		usuarioLogado = false;
+	}
 //	       	resposta a requisicao
 	   		map.put("isValid", isValid);
 			map.put("usuarioLogado", usuarioLogado);
