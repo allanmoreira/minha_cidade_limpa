@@ -828,22 +828,22 @@ public class ServletDeControle {
 				String nomeCompletoArquivoComCaminho = uploadArquivo(multipartFile, nomeArquivo);
 
 				//############### Não esquecer de com o nome na imagem ############
-				String contentString = "'<div id=\'content\'>' ";
-				contentString +=  "           '<div id=\'siteNotice\'>'" ;
-				contentString += "            '</div>' ";
-				contentString +=  "            '<input id=\'ipTitulo\' type=\'hidden\' name=\'ipTitulo\' value=\'' "+ dpMotivo +" '\'>' ";
-				contentString +=  "            '<input id=\'ipDenuncia\' type=\'hidden\' name=\'idDenuncia\' value=\'§§§§\'>' ";
-				contentString +=  "             '<input id=\'ipEndereco\' type=\'hidden\' name=\'ipEndereco\' value=\'' "+ txtEndereco +" '\'>' ";
-				contentString +=  "             '<input id=\'ipCaminho\' type=\'hidden\' name=\'ipCaminho\' value=\' " +
+				String contentString = "<div id=\'content\'> ";
+				contentString +=  "           <div id=\'siteNotice\'>" ;
+				contentString += "            </div> ";
+				contentString +=  "           <input id=\'ipTitulo\' type=\'hidden\' name=\'ipTitulo\' value=\' "+ dpMotivo +" \'> ";
+				contentString +=  "           <input id=\'ipDenuncia\' type=\'hidden\' name=\'idDenuncia\' value=\'§§§§\'> ";
+				contentString +=  "           <input id=\'ipEndereco\' type=\'hidden\' name=\'ipEndereco\' value=\' "+ txtEndereco +"\'> ";
+				contentString +=  "           <input id=\'ipCaminho\' type=\'hidden\' name=\'ipCaminho\' value=\' " +
 						
 													"<c:url value=\'"+ nomeCompletoArquivoComCaminho +"'/>" 
 												+ "\'>' ";
-				contentString +=  "             '<input id=\'ipCaminhoFotoNova\' type=\'hidden\' name=\'ipCaminhoFotoNova\' value=\'FFDDNN\'>' ";
-				contentString +=  "             '<input id=\'ipDadosDigitados\' type=\'hidden\' name=\'ipDadosDigitados\' value=\'' "+ txtComentario  +" '\'>' ";
-				contentString +=  "             '<div id=\'bodyContent\'>' ";
-				contentString +=  "             '<p>' "+ txtComentario  +" '</p>' ";
-				contentString +=  "            '</div>'";
-				contentString +=  "            '</div>'";
+				contentString +=  "           <input id=\'ipCaminhoFotoNova\' type=\'hidden\' name=\'ipCaminhoFotoNova\' value=\'FFDDNN\'> ";
+				contentString +=  "           <input id=\'ipDadosDigitados\' type=\'hidden\' name=\'ipDadosDigitados\' value=\' "+ txtComentario  +" \'> ";
+				contentString +=  "           <div id=\'bodyContent\'> ";
+				contentString +=  "           <p> "+ txtComentario  +" </p> ";
+				contentString +=  "           </div>";
+				contentString +=  "           </div>";
 				
 				marcacao.setHtml(contentString);
 				

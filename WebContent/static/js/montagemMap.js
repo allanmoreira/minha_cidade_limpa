@@ -144,7 +144,9 @@
 	                     map.setZoom(11);
 	                     street = results[0].formatted_address.toString();
 	                     $('label[id*="txtEndereco"]').text(street);
-	                     HabilitaDivCadastro(true);
+	                     $('#latitudeEsc').val( latitude.lat);
+	    		         $('#longitudeEsc').val( latitude.lng);
+	    		         HabilitaDivCadastro(true);
 
 	                 } else {
 	                     window.alert('No results found');
