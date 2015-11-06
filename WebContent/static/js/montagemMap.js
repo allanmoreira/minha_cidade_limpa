@@ -237,7 +237,11 @@
 	         $('label[id*="txtEndDenuncia"]').text(idEndereco);
 	         $('label[id*="txtMotivoDenuncia"]').text(idMotivo);
 	         $('label[id$="txtDescricaoMark"]').text(idDescricao);
-	         $('img[id$="txtImagemDenuncia"]').attr(idImagemCaminho);
+	         
+	         var imgAlterado = "\'<c:url value='"+ idImagemCaminho +"'/>\'";  
+	         
+	         $('img[id$="txtImagemDenuncia"]').attr('src',idImagemCaminho);
+	       //  $('img[id$="txtImagemDenuncia"]').css('background-image', 'url(' + idImagemCaminho + ')');
 
 	     }
 	     
@@ -533,7 +537,7 @@
 	                     }
 	                     try {
 
-	                         resultJsonDenuncias += '", "html":"' + listaMarcacoes[i].html.replace("Â§Â§Â§Â§", listaMarcacoes[i].idMarcacaoDepredacao).replace("FFDDNN",listaMarcacoes[i].setImgDenunciaFinal ).replace("§§§§",listaMarcacoes[i].idMarcacaoDepredacao) + "";
+	                         resultJsonDenuncias += '", "html":"' + listaMarcacoes[i].html.toString().trim().replace(new RegExp("\'","g"),"\"")  + "";
 	                     } catch (err) {
 	                         resultJsonDenuncias += '", "html":"';
 	                     }
