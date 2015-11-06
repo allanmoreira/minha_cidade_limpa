@@ -720,7 +720,13 @@ public class ServletDeControle {
 					jaTemCandidato= false;
 					pf = bancoDados.buscarPessoaFisica(usuarioSessao.getIdLogin());
 					if(!bancoDados.verificaRelacaoCandidatura(pf.getIdPessoaFisica(),idMarkInt)){
-						bancoDados.UpdateStatus(idMarkInt,2);
+						//Recupera a marcação do banco 
+						MarcacaoDepredacao md = bancoDados.buscaMarcacaoEspeficifica(idMarkInt);
+						String shtml = md.getHtml();
+						if(shtml.contains("NAO")){
+							shtml.replace("NAO","SIM");
+						}
+						bancoDados.UpdateStatus(idMarkInt,2,shtml);
 						jaSeCadastrou = false;				
 						bancoDados.setCandidatura(pf.getIdPessoaFisica(), idMarkInt);			
 						bancoDados.encerrarConexao();

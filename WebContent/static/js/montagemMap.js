@@ -232,6 +232,13 @@
 	         var idDescricao = $('input[id*="ipDadosDigitados"]').val();
 	         var idImagemCaminho = $('input[id*="ipCaminho"]').val();
 
+	         
+	         if ( $('#ipJaSeCandidatou').val().indexOf("SIM") > -1){
+	        	 $('#btnSalvarCandidato').prop("disabled",true);
+	         }else{
+	        	 $('#btnSalvarCandidato').prop("disabled",false);
+	         }
+	         
 	         $('label[id*="txtEndDenuncia"]').text(idEndereco);
 	         $('label[id*="txtMotivoDenuncia"]').text(idMotivo);
 	         $('label[id$="txtDescricaoMark"]').text(idDescricao);
@@ -384,6 +391,7 @@
 		             '<input id=\'ipEndereco\' type=\'hidden\' name=\'ipEndereco\' value=\'' + endereco + '\'>' +
 		             '<input id=\'ipCaminho\' type=\'hidden\' name=\'ipCaminho\' value=\'' + caminho + '\'>' +
 		             '<input id=\'ipCaminhoFotoNova\' type=\'hidden\' name=\'ipCaminhoFotoNova\' value=\'FFDDNN\'>' +
+		             '<input id=\'ipJaSeCandidatou\' type=\'hidden\' name=\'ipJaSeCandidatou\' value=\'NAO\'>' +		             
 		             '<input id=\'ipDadosDigitados\' type=\'hidden\' name=\'ipDadosDigitados\' value=\'' + dadosDigitados + '\'>' +
 		             '<div id=\'bodyContent\'>' +
 		             '<p>' + dadosDigitados + '</p>' +

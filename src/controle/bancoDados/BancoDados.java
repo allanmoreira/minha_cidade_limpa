@@ -347,24 +347,35 @@ import modelos.PessoaJuridica;
 	}
 	
 	
-	public Integer buscarIDPorLatLog(String lat, String lng) throws SQLException {
+	public MarcacaoDepredacao buscaMarcacaoEspeficifica(int idMark) throws SQLException {
 		int idMarcacao= 0;
 		
-		String sql = "select id_marcacao_depredacao from marcacao_depredacao "
-				+ "where "
-				+ "lat = ? and "
-				+ "lon = ? ";
+		String sql = "select *  from marcacao_depredacao "
+				+ "where id_marcacao_depredacao = ? ";
+		
 		
 		preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, lat);
-        preparedStatement.setString(2, lng);
-        
+        preparedStatement.setInt(1,idMark);
         ResultSet resultSet = preparedStatement.executeQuery();
-        resultSet.next();
-        idMarcacao = resultSet.getInt("id_marcacao_depredacao");
-        resultSet.close();
+        MarcacaoDepredacao md = new MarcacaoDepredacao();
+        while(resultSet.next()){
+			
+			md.setIdMarcacaoDepredacao(resultSet.getInt("id_marcacao_depredacao"));
+			md.setTipoDepredacao(resultSet.getString("tipo_depredacao"));
+			md.setDescricao(resultSet.getString("descricao"));
+			md.setDataMarcacao(resultSet.getString("data_marcacao"));
+			md.setIdPessoaFisicaFezMarcacao(resultSet.getInt("id_pessoa_fisica_fez_narcacao"));
+			md.setHtml(resultSet.getString("html_depredacao"));
+			md.setPosLat(resultSet.getString("lat"));
+			md.setPosLon(resultSet.getString("lon"));
+			md.setStatus(resultSet.getString("status_marcacao"));
+			
+			md.setImgDenunciaFinal(resultSet.getString("img_denuncia_final"));
+			md.setImgDenunciaIni(resultSet.getString("img_denuncia"));
+		}
+         resultSet.close();
         
-        return idMarcacao;
+        return md;
 	}
 	
 
@@ -427,16 +438,18 @@ import modelos.PessoaJuridica;
 	}
 	
 	/* aqui cadastra no banco a relacao usuario x problema */
-	public boolean UpdateStatus(int idMarcacao, int status) throws SQLException {
+	public boolean UpdateStatus(int idMarcacao, int status, String html) throws SQLException {
 
 	
 		String sql = "update marcacao_depredacao set "
 					+ " status_marcacao = ? "
+					+ " html_depredacao = ?"
 					+ " where id_marcacao_depredacao = ? ";
 					
 	    preparedStatement = connection.prepareStatement(sql);
 	    preparedStatement.setInt(1, status);
-        preparedStatement.setInt(2, idMarcacao);
+	    preparedStatement.setString(2, html);
+        preparedStatement.setInt(3, idMarcacao);
         preparedStatement.executeUpdate();
 		return true;
 	
