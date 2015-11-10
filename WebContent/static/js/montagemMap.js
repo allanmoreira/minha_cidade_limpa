@@ -91,7 +91,7 @@
 	         Resolvendo: {
 	             icon: iconBase + 'static/img/icones/azul.png'
 	         },
-	         Analizando: {
+	         Candidatar: {
 	             icon: iconBase + 'static/img/icones/cinza.png'
 	         },
 	         Pronto: {
@@ -164,40 +164,39 @@
 		 });
 	
 
+		 
 		 //Click para fechar a div de cadastro
 		 $('button[id*="btnFecharInfoDenuncia"]').click(function() {
 			 HabilitaDivVisuDenuncia(false);
 		 });
 
-	
-	   
 		 
 		//Função que mostra e esconde a div fundo e cadastro
 	     function HabilitaDivCadastro(bMostraDiv) {
 	         if (bMostraDiv) {
-	             $('img[id*="gifLoader"]').css('display', 'none');
-	             $('div[id*="divFundo"]').css('display', '');
-	             $('div[id*="divCadastro"]').css('display', '')
+	             $('img[id$="gifLoader"]').css('display', 'none');
+	             $('div[id$="divFundo"]').css('display', '');
+	             $('div[id$="divCadastro"]').css('display', '')
 	         } else {
 	             $('textarea[id*="txtComentario"]').val("");
-	             $('div[id*="divFundo"]').css('display', 'none');
-	             $('div[id*="divCadastro"]').css('display', 'none')
+	             $('div[id$="divFundo"]').css('display', 'none');
+	             $('div[id$="divCadastro"]').css('display', 'none')
 	         }
 	     }
 
 		 //Função que mostra e esconde a div fundo e cadastro
 		 function HabilitaDivVisuDenuncia(bMostraDiv) {
 		     if (bMostraDiv) {
-		         $('div[id*="divFundo"]').css('display', '');
-		         $('div[id*="divDenuncia"]').css('display', '')
+		         $('div[id$="divFundo"]').css('display', '');
+		         $('div[id$="divDenuncia"]').css('display', '')
 		     } else {
 		         $('label[id*="txtEndDenuncia"]').text("");
 		         $('label[id*="txtMotivoDenuncia"]').text("");
 		         $('input[id$="txtDescricaoMark"]').text("");
 		         $('label[id*="txtImagemDenuncia"]').text("");
 
-		         $('div[id*="divFundo"]').css('display', 'none');
-		         $('div[id*="divDenuncia"]').css('display', 'none')
+		         $('div[id$="divFundo"]').css('display', 'none');
+		         $('div[id$="divDenuncia"]').css('display', 'none')
 		         $('div[id$="gmap"] [class="gm-style-iw"]').parent().children(':eq(2)').click()
 		     }
 		 }
@@ -231,7 +230,24 @@
 	         var idEndereco = $('input[id*="ipEndereco"]').val();
 	         var idDescricao = $('input[id*="ipDadosDigitados"]').val();
 	         var idImagemCaminho = $('input[id*="ipCaminho"]').val();
+	         
+	         
 
+	         if ( $('#ipLiberaVotacao').val().indexOf("VOTOSIM") > -1){
+	        	 	$('#btnSalvarCandidato').prop("disabled",true);
+	        	 	$('div[id$="likesDeslikes"]').css('display','');	        	
+	         }else{
+	         	 	$('div[id$="likesDeslikes"]').css('display','none')
+	  	       	 	$('#btnSalvarCandidato').prop("disabled",false);
+	         	 	
+	         	 if ( $('#ipJaSeCandidatou').val().indexOf("CANDSIM") > -1){
+	  	        	 $('#btnSalvarCandidato').prop("disabled",true);
+	  	         }else{
+	  	        	 $('#btnSalvarCandidato').prop("disabled",false);
+	  	         }
+	         }
+	      
+	         
 	         $('label[id*="txtEndDenuncia"]').text(idEndereco);
 	         $('label[id*="txtMotivoDenuncia"]').text(idMotivo);
 	         $('label[id$="txtDescricaoMark"]').text(idDescricao);
@@ -259,7 +275,24 @@
 		             		{
 		             		if (data.isValid)
 		             			{
-		             				$.bootstrapGrowl
+		             			
+		             		  	buscaListaMarcacoesCadastradas();
+			                    setTimeout(function() {
+		            		             //Retorna a lista do banco e adiciona os dados novos
+		            		             if (resultJsonDenuncias != undefined) {
+		            		                 var parsed = JSON.parse(resultJsonDenuncias);
+		            		                 for (i = 0; i < parsed.result.length; i++) {
+		            		                     var location = parsed.result[i];
+		            		                     AdicionaMarcacao(location);
+		            		                 }
+		            		             }
+		            		   }, 7000);	    
+		             				
+		             
+		             			
+		             			
+		             			
+			                    	$.bootstrapGrowl
 		             				("Registro incluído com sucesso!", 
 		             					{
 		             					type: 'success',
@@ -269,8 +302,10 @@
 		             					}
 		             				);
 		             			
+		             				
 		             				//window.setTimeout('location.reload()', 3000);
-		   	                     
+		             				 //setTimeout(function() { initMap();}, 1000);
+		             				 
 	    		                }
 		             		else{
 		             			if (!data.usuarioLogado) {
@@ -330,7 +365,84 @@
 	       	 }	     
 	     }
 	     
+	     
+	     
+	     function Loader(habilita){
+	    	 if(habilita){
+	    		 $('div[id$="gifLoader"]').css('display','');
+	    		 $('div[id$="divFundoExtra"]').css('display', ''); 
+	    		 
+	    	 }else{
+	    		 $('div[id$="gifLoader"]').css('display','none');
+	    		 $('div[id$="divFundoExtra"]').css('display', 'none'); 	    		 
+	    	 }
+	    	 
+	     }
 	     //#############################################################################################
+		 
+	   //####################################### LIKES E DESLIKES ###################################################
+		 
+		 $('img[id$="imglikes"]').click(function() {
+			 var idMark = document.getElementById('ipDenuncia').value;
+			 if(idMark != "" || idMark != undefined){
+				 Loader(true);
+				 GravaLikesDeslikes(1, idMark);			 
+			 }
+		 });
+
+		 $('img[id$="imgDeslikes"]').click(function() {
+			 var idMark = document.getElementById('ipDenuncia').value;
+			 if(idMark != "" || idMark != undefined){
+				 Loader(true);
+				 GravaLikesDeslikes(2, idMark);			 
+			 }
+		 });
+		 function GravaLikesDeslikes(Likes,idMark){
+			 
+			 $.ajax({
+	             	url: 'LikesDesLikes?idMark=' + idMark + '&like=' + Likes,
+	             	type: 'POST',
+	             	success: function(data) 
+	             		{
+	             		if (data.isValid)
+	             			{             			
+	             		  	
+	             			$.bootstrapGrowl
+	             				("Votação computado, obrigado!", 
+	             					{
+	             					type: 'success',
+	             					align: 'center',
+	             					width: 'auto',
+	             					allow_dismiss: false
+	             					}
+	             				);	
+	             			HabilitaDivVisuDenuncia(false);
+	             			}
+	             		else{
+	             			
+	             			
+	             			if (!data.usuarioLogado) {
+	             				 $.bootstrapGrowl("Usuário não está logado! Faça login ou cadastre-se!", {
+		                             type: 'danger',
+		                             align: 'center',
+		                             width: 'auto',
+		                             allow_dismiss: false
+		                         });
+		                     }else if (data.jaVotou) {
+		                         $.bootstrapGrowl("Usuário já participou desta votação!", {
+		                             type: 'danger',
+		                             align: 'center',
+		                             width: 'auto',
+		                             allow_dismiss: false
+		                         });
+		                     }	
+	             		}
+	             		Loader(false);
+	             }
+			 });
+			 
+			 
+		 }
 		 
 	
 	     
@@ -384,6 +496,8 @@
 		             '<input id=\'ipEndereco\' type=\'hidden\' name=\'ipEndereco\' value=\'' + endereco + '\'>' +
 		             '<input id=\'ipCaminho\' type=\'hidden\' name=\'ipCaminho\' value=\'' + caminho + '\'>' +
 		             '<input id=\'ipCaminhoFotoNova\' type=\'hidden\' name=\'ipCaminhoFotoNova\' value=\'FFDDNN\'>' +
+		             '<input id=\'ipLiberaVotacao\' type=\'hidden\' name=\'ipLiberaVotacao\' value=\'VOTOSIM\'>' +
+		             '<input id=\'ipJaSeCandidatou\' type=\'hidden\' name=\'ipJaSeCandidatou\' value=\'CANDNAO\'>' +		             
 		             '<input id=\'ipDadosDigitados\' type=\'hidden\' name=\'ipDadosDigitados\' value=\'' + dadosDigitados + '\'>' +
 		             '<div id=\'bodyContent\'>' +
 		             '<p>' + dadosDigitados + '</p>' +
@@ -447,21 +561,30 @@
 	                         allow_dismiss: false
 	                     });
 
-	                     markerClick = new google.maps.Marker({
+	                    markerClick = new google.maps.Marker({
 	                         position: latLongSave,
 	                         icon: 'static/img/icones/vermelho.png',
 	                         map: map
 	                     });
+	                   
+	                     markerClick.setMap(map);
+
+	        	         AdicionaInfoMarker(markerClick, map, infowindow, objDenuncia.html);
 	                     
 	                     //Simula o click do button upload
 	                     // $('#form_upload_imagem [type="submit"]').click();
 	                     buscaListaMarcacoesCadastradas();
 	                     
-	                     //Segura por um tempo para fazer o reload da pagina
-	                     //window.setTimeout('location.reload()', 3000);
 	                     
 	                     latLongSave = "";
 	                     $('textarea[id*="txtComentario"]').val("");
+	                
+	                     //Segura por um tempo para fazer o reload da pagina
+	                    setTimeout(function() { 
+	                       	//buscaListaMarcacoesCadastradas();
+	                    		
+	                    }, 1000);
+	                     
 	                     return true;
 	                 } else {
 	                     if (!data.usuarioLogado) {
@@ -488,6 +611,8 @@
 	         
 	     }	     
 	 }
+	 
+
 	 
 //###########################################################################################
 

@@ -116,6 +116,17 @@
 		style="min-width: 100%; height: 100%; position: fixed; background-color: black; opacity: 0.75; z-index: 9999; display: none;"
 		class="navbar navbar-fixed-top" role="navigation">
 	</div>
+	
+
+	   <div id="divFundoExtra"
+		style="min-width: 100%; height: 100%; position: fixed; background-color: black; opacity: 0.75; z-index:99999999; display: none;"
+		class="navbar navbar-fixed-top" role="navigation">
+	</div>
+	  <div id="gifLoader" style="top:50%; left:50%; position: fixed; z-index:999999999; display: none;"class="navbar navbar-fixed-top" role="navigation">
+			<img id="loading-image" src="static/img/icones/loader.gif"  alt="Loading..." />
+		</div>
+	
+	
 	        
 	<!-- modal denúncia depredação -->
 	<div id="divDenuncia"
@@ -146,17 +157,25 @@
 							<label class="sublinhado" ><u>Benefício:</u></label>
 							<br /> 
 							<label type="text" id="txtBeneficioDenuncia" class="estiloPrin">O prof. de Gerência de Projeto, disponibilizará 1 ponto na média.</label>
+							<br />
+							<div id="likesDeslikes" style="display:none; font-size: 10px;" >
+							<label class="estiloPrin">Você confirma denúncia?<img id="imglikes" style="cursor:pointer;"  src="static/img/icones/likes.png" alt="">
+                  			 <img id="imgDeslikes" style="cursor:pointer;"  src="static/img/icones/deslikes.png" alt="">
+							</label>
+							 
+                   							</div>	
+						
 							</div>
 						</div>
 						<div style="float:right; width:45%;margin:5px;">
 							<div class="cad_borda" style=" width:100%; height:99%; min-height:220px;">
 								<img id="txtImagemDenuncia" alt="" style="width: 100%; height: 100%; min-height: 183px;" />
-		
 							</div>
-						</div>
 					</div>
 				</div>
-		
+		</div>
+			
+							
 				<div style="float: right; padding: 0px 10px 10px;">
 			<!-- INCLUIR BOTOES  -->
 			<button class="btn btn-warning" id="btnUploadImagem">Img Resolvida Caso</button>
@@ -764,7 +783,7 @@
             <div class="row">
                 <div class="col-lg-4 col-lg-md-4">
                <p class="refTexto">Este projeto está direcionado aos moradores, turistas e órgãos públicos que 
-				estão diretamente envolvidos, situações de depredações do patrimônio público, além de te local com 
+				estão diretamente envolvidos, situc de depredações do patrimônio público, além de te local com 
 				 informações e contribuições sobre os problemas que as pessoas enfrentam
 				na cidade, este sistema disponibilizará aos usuários consultar e informar estes problemas que 
 				denigrem e afeta a imagem da cidade.</p>
@@ -818,7 +837,7 @@
 										<img src="<c:url value="static/img/icones/azul.png"/>" style="max-width: 20px" />:Resolvendo
 									</div>
 									<div>
-										<img src="<c:url value="static/img/icones/cinza.png"/>" style="max-width: 20px" />:Analizando
+										<img src="<c:url value="static/img/icones/cinza.png"/>" style="max-width: 20px" />:Candidatar-se
 									</div>
 								</div>
 				
