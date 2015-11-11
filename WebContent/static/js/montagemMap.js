@@ -1,4 +1,6 @@
-	 var map;
+//Subindo agora 10/11/2015 - 22:15	
+
+var map;
 	 var street;
 	 var latitude = {
 	     lat: "",
