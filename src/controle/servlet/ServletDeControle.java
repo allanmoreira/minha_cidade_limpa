@@ -835,7 +835,7 @@ public class ServletDeControle {
 				contentString +=  "<input id=\\'ipTitulo\\'  type=\\'hidden\\' name=\\'ipTitulo\\' value=\\' "+ dpMotivo +"\\'>";
 				contentString +=  "<input id=\\'ipDenuncia\\'  type=\\'hidden\\' name=\\'idDenuncia\\' value=\\' "+ idMarcacao + "\\'>";
 				contentString +=  "<input id=\\'ipEndereco\\'  type=\\'hidden\\' name=\\'ipEndereco\\' value=\\' "+ txtEndereco +"\\'>";
-				contentString +=  "<input id=\\'ipCaminho\\'  type=\\'hidden\\' name=\\'ipCaminho\\' value=\\' " + nomeCompletoArquivoComCaminho + "\\'>"; 
+				contentString +=  "<input id=\\'ipCaminho\\'  type=\\'hidden\\' name=\\'ipCaminho\\' value=\\'" + nomeCompletoArquivoComCaminho + "\\'>"; 
 				contentString +=  "<input id=\\'ipCaminhoFotoNova\\'  type=\\'hidden\\' name=\\'ipCaminhoFotoNova\\' value=\\'FFDDNN\\'> ";
 				contentString +=  "<input id=\\'ipDadosDigitados\\'  type=\\'hidden\\' name=\\'ipDadosDigitados\\' value=\\' "+ txtComentario  +"\\'>";
 				contentString +=  "<div id=\\'bodyContent\\'>";
@@ -876,7 +876,8 @@ public class ServletDeControle {
 		  if (!multipartFile.isEmpty()) {
 			  try {
 
-				  File path = new File(context.getRealPath("") + File.separator + "upload_imagens");
+				  File path = new File("static" + File.separator + "upload_imagens");
+				  File pathSalvarArquivo = new File(context.getRealPath("") + File.separator + "static" + File.separator + "upload_imagens");
 				  System.out.println("CAMINHO IMAGEM: " + path);
 				
 				 System.out.println("CAMINHO IMAGEM: " + path); if
@@ -886,7 +887,7 @@ public class ServletDeControle {
 				  String extensao = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
 				
 				  byte[] bytes = multipartFile.getBytes();
-				  nomeCompletoArquivoComCaminho = path + File.separator + nomeArquivo + extensao;
+				  nomeCompletoArquivoComCaminho = pathSalvarArquivo + File.separator + nomeArquivo + extensao;
 				  BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(nomeCompletoArquivoComCaminho)));
 
 				// new BufferedOutputStream(new FileOutputStream(new
@@ -894,6 +895,8 @@ public class ServletDeControle {
 				  stream.write(bytes);
 				  stream.close();
 				  System.out.println("Upload do arquivo [" + nomeArquivo + "] efetuado com sucesso!");
+				  
+				  nomeCompletoArquivoComCaminho = path + File.separator + nomeArquivo + extensao;
 			} catch (Exception e) {
 				System.out.println("Falha ao executar o upload do arquivo [" + nomeArquivo + "]. Motivo:");
 				System.out.println(e.getMessage());
