@@ -778,5 +778,92 @@ $('#caminho_imagem_upload').on("click", function(){
     //$("#container_img").append($('<img />'));
 });
 
+// faz a requisicao ajax utilizando o formdata, uma especie de hashmap do jquery
+function submit_upload_com_ajax(){
+	
+	var txtEndereco = $("#txtEndereco").val();
+	var dpMotivo = $("#dpMotivo").val();
+	var txtComentario = $("#txtComentario").val();
+	var latitude= $("#latitudeEsc").val();
+	var longitude = $("#longitudeEsc").val();
+	var icon ='static/img/icones/vermelho.png';
+    var caminho_imagem_upload = document.getElementById("caminho_imagem_upload").files[0];
 
+    var formdata = new FormData();
+    formdata.append("txtEndereco", txtEndereco);
+    formdata.append("dpMotivo", dpMotivo);
+    formdata.append("latitude", latitude);
+    formdata.append("longitude", longitude);
+    formdata.append("icon", icon);
+    formdata.append("txtComentario", txtComentario);
+    formdata.append("caminho_imagem_upload", caminho_imagem_upload);
+
+    var xhr = new XMLHttpRequest();       
+
+    xhr.open("POST","upload_imagem", true);
+
+    xhr.send(formdata);
+
+    xhr.onload = function(e) {
+
+        if (this.status == 200) {
+        	
+        	//######### NÂO SEI COMO APLICAR ESTAS VALIDAÇÕES AQUI
+        	/*
+        	if (data.isValid) {
+                $.bootstrapGrowl("contribuição registrada com sucesso!", {
+                    type: 'success',
+                    align: 'center',
+                    width: 'auto',
+                    allow_dismiss: false
+                });
+
+				//#########OBS SE ESTA FUNCTION FICAR AQUI TEM QUE TIRAR ESTAS 4 LINHAS ABAIXO
+				//#########SENAO MANDAR TODA A FUNCTION PARA O MONTAGEMAP.JS NO LOCAL AONDE ELE ESTÁ FAZENDO ATUALMENTE
+                markerClick = new google.maps.Marker({
+                    position: latLongSave,
+                    icon: 'static/img/icones/vermelho.png',
+                    map: map
+                });
+                
+                 buscaListaMarcacoesCadastradas();
+                
+               	//################FALTA LIMPAR O CAMPOS APÓS O RETORNO 
+               	
+                return true;
+            } else {
+                if (!data.usuarioLogado) {
+                    $.bootstrapGrowl("Usuário não está logado! Faça login ou cadastre-se!", {
+                        type: 'success',
+                        align: 'center',
+                        width: 'auto',
+                        allow_dismiss: false
+                    });
+
+                } else {
+                    $.bootstrapGrowl("Erro ao salvar denúncio, entre em contato conosco!", {
+                        type: 'danger',
+                        align: 'center',
+                        width: 'auto',
+                        allow_dismiss: false
+                    });
+                }
+
+                return false;
+            }
+        }
+        
+        */
+        	
+        	
+        	
+        	
+        	
+        	// imprime todas as informacoes que o servidor retornou
+           alert(this.responseText);
+
+        }
+
+    };  
+}
 

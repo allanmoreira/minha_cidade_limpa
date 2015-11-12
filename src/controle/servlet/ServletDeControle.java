@@ -628,6 +628,9 @@ public class ServletDeControle {
 			String sLong = request.getParameter("lon");
 			String sHtml = request.getParameter("html");
 			String sData = DateTime.now().toString("yyyyMMdd");
+			
+			
+		
 
 			oMarcacao.setDescricao(sCat);
 			oMarcacao.setStatus("1");
@@ -720,13 +723,7 @@ public class ServletDeControle {
 					jaTemCandidato= false;
 					pf = bancoDados.buscarPessoaFisica(usuarioSessao.getIdLogin());
 					if(!bancoDados.verificaRelacaoCandidatura(pf.getIdPessoaFisica(),idMarkInt)){
-						//Recupera a marcação do banco 
-						MarcacaoDepredacao md = bancoDados.buscaMarcacaoEspeficifica(idMarkInt);
-						String shtml = md.getHtml();
-						if(shtml.contains("CANDNAO")){
-							shtml = shtml.replace("CANDNAO","CANDSIM");
-						}
-						bancoDados.UpdateStatus(idMarkInt,2,shtml);
+						bancoDados.UpdateStatus(idMarkInt,2);
 						jaSeCadastrou = false;				
 						bancoDados.setCandidatura(pf.getIdPessoaFisica(), idMarkInt);			
 						bancoDados.encerrarConexao();
@@ -766,149 +763,147 @@ public class ServletDeControle {
 	}
 
 	
-	
-	
-	
-	@RequestMapping("LikesDesLikes")
-	public void LikesDeslikes(HttpServletRequest request,HttpServletResponse response, HttpSession session) throws IOException {
-		BancoDados bancoDados = new BancoDados();
-		Map<String, Object> map = new HashMap<String, Object>();
-		PessoaFisica pf = new PessoaFisica();
-		boolean isValid = false;
-		boolean usuarioLogado = false;
-		boolean jaVotou = true;
-		int VotoLikes= 0 ;
-		int VotoDeslikes = 0;
-		
-		Login usuarioSessao = (Login) session.getAttribute("usuarioLogado");
-		String idMark = request.getParameter("idMark");
-		String likes = request.getParameter("like");
-		
-		
-		int idMarkInt = Integer.parseInt(idMark);
-		int iLikes = Integer.parseInt(likes);
-		
-		if (usuarioSessao != null) {
-			usuarioLogado = true;
-	
-			try {
-				
-				bancoDados.conectarAoBco();
-				pf = bancoDados.buscarPessoaFisica(usuarioSessao.getIdLogin());
-				jaVotou= bancoDados.VerificaSeUsuarioJaVotou(idMarkInt, pf.getIdPessoaFisica());
-				if(!jaVotou){
-						bancoDados.GravaVotacao(idMarkInt,pf.getIdPessoaFisica(),iLikes);
-						VotoLikes = bancoDados.BuscaQuantVotacao(idMarkInt,1);
-						VotoDeslikes = bancoDados.BuscaQuantVotacao(idMarkInt,2);
-						MarcacaoDepredacao md = bancoDados.buscaMarcacaoEspeficifica(idMarkInt);
-						String shtml = md.getHtml();
-						
-						if(VotoDeslikes == 3 || VotoLikes == 3){
-							if(shtml.contains("VOTOSIM")){
-								shtml = shtml.replace("VOTOSIM","VOTONAO");
-							}
-							bancoDados.UpdateStatus(idMarkInt,3,shtml);
-						}
-						
-						bancoDados.encerrarConexao();
-						isValid = true;
-				}
-	
-			} catch (ClassNotFoundException e) {
-				// Erro ao concetar ao banco de dados
-				// Levanta página Erro 500 (não existe)
-				String erro = "CLASSE = ";
-				erro += e.getMessage();
-				erro += " \n ";
-				erro += e.getStackTrace();
-
-			} catch (SQLException e) {
-
-				String erro = "SQL = ";
-				erro += e.getMessage();
-				erro += " \n ";
-				erro += e.getStackTrace();
-				// Erro ao executar a instrução
-				// Levanta página Erro 500 (não existe)
-			}
-		} else {
-			isValid = false;
-		}
-
-		map.put("isValid", isValid);
-		map.put("usuarioLogado", usuarioLogado);
-		map.put("jaVotou", jaVotou);
-
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(new Gson().toJson(map));
-	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	  @RequestMapping(value="upload_imagem", method=RequestMethod.POST)
-	  public @ResponseBody void handleFileUpload(@RequestParam("upload_imagem_name") String name, 
-		            							 @RequestParam("upload_imagem_file") MultipartFile file,
+	  @RequestMapping(value="upload_imagem")
+	  public void cadastrarMarcacao(@RequestParam("caminho_imagem_upload") MultipartFile multipartFile,
 		            							 HttpServletResponse response, 
 	        									 HttpServletRequest request, 
 	        									 HttpSession session) throws IOException, ServletException{
 	    	      							 		  
+		  	MarcacaoDepredacao marcacao = new MarcacaoDepredacao();
 			Map<String, Object> map = new HashMap<String, Object>();
+			BancoDados bancoDados = new BancoDados();
 			boolean isValid = false;
 			boolean usuarioLogado = false;
-	       if (!file.isEmpty()) {
-	            try {
-	            	
-	            	
-	            	//File path = new File(System.getProperty("user.dir") + "/upload_imagens/");
-           	
-	            	File path = new File(  context.getRealPath("") + File.separator + "upload_imagens");
-	                if (!path.exists()) {
-	                	path.mkdir();
-	                	System.out.println("Diretorio criado: " + path);
-	                }
-	                            	
-	            	String extension=file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-	                
-	                byte[] bytes = file.getBytes();
-	                BufferedOutputStream stream = 
-	                        new BufferedOutputStream(new FileOutputStream(new File(path + File.separator + name + extension)));
-	                
-	                		//new BufferedOutputStream(new FileOutputStream(new File("upload_imagens/" + name + extension)));
-	                stream.write(bytes);
-	                stream.close();
-	                System.out.println("You successfully uploaded " + name + "!");
-	            } catch (Exception e) {
-	            	System.out.println("You failed to upload " + name + " => " + e.getMessage());
-	            }
-	        } else {
-	        	System.out.println("You failed to upload " + name + " because the file was empty.");
-	        }
-	       
-	   	map.put("isValid", isValid);
-		map.put("usuarioLogado", usuarioLogado);
-		
-		//RequestDispatcher dispatcher = request.getRequestDispatcher("index");  
-		//dispatcher.forward(request, response); 
-		
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(new Gson().toJson(map));
-		
-	    }
+			int idMarcacao = 0;
+			PessoaFisica pf = new PessoaFisica();
+			Login usuarioSessao = (Login) session.getAttribute("usuarioLogado");
+			
+			//Verifica se tem alguem logado
+			if (usuarioSessao != null) {
+				usuarioLogado = true;
+				
+				//Tem que verificar se é pessoa física
+				//################ VER ESSA PARTE ################
+				
+				// pega os outros dados do form
+				String txtEndereco = request.getParameter("txtEndereco");
+				String dpMotivo = request.getParameter("dpMotivo");
+				String txtComentario = request.getParameter("txtComentario");
+				String txtlatitude = request.getParameter("latitude");
+				String txtlongitude = request.getParameter("longitude");
+				String txtIcon = request.getParameter("icon");
+				
+				marcacao.setTipoDepredacao(dpMotivo);
+				marcacao.setDescricao(txtComentario);
+				marcacao.setPosLat(txtlatitude);
+				marcacao.setPosLon(txtlongitude);
+				
+				marcacao.setCadidatoResolverProblema(false);
+				
+				System.out.println(usuarioSessao.getIdLogin());
+			
+				try {
+					
+					bancoDados.conectarAoBco();
+					
+					//Buscou a pessoa logada no banco
+					pf = bancoDados.buscarPessoaFisica(usuarioSessao.getIdLogin());
+					
+					//Colocou o ID da pessoa na marcação
+					marcacao.setIdPessoaFisicaFezMarcacao(pf.getIdPessoaFisica()); 
+					//Cadastra a maracação
+					idMarcacao = bancoDados.cadastrarMarcacao(marcacao);
+					
+					marcacao.setIdMarcacaoDepredacao(idMarcacao);
+					
+				} catch (ClassNotFoundException e) {
+					System.out.println("Erro de conexão ao banco de dados!" );
+				} catch (SQLException e1) {
+					System.out.println("Erro ao salvar marcação no banco de dados:");
+					System.out.println(e1.getMessage());
+				}
+				
+				String nomeArquivo = idMarcacao + "_A";
+				
+				String nomeCompletoArquivoComCaminho = uploadArquivo(multipartFile, nomeArquivo);
+				nomeCompletoArquivoComCaminho = nomeCompletoArquivoComCaminho.replace("\\","\\\\");
+				//############### Não esquecer de com o nome na imagem ############
+				
+				String contentString = "<div id=\\'content\\'> ";
+				contentString +=  "<div id=\\'siteNotice\\'>" ;
+				contentString += " </div>";
+				contentString +=  "<input id=\\'ipTitulo\\'  type=\\'hidden\\' name=\\'ipTitulo\\' value=\\' "+ dpMotivo +"\\'>";
+				contentString +=  "<input id=\\'ipDenuncia\\'  type=\\'hidden\\' name=\\'idDenuncia\\' value=\\' "+ idMarcacao + "\\'>";
+				contentString +=  "<input id=\\'ipEndereco\\'  type=\\'hidden\\' name=\\'ipEndereco\\' value=\\' "+ txtEndereco +"\\'>";
+				contentString +=  "<input id=\\'ipCaminho\\'  type=\\'hidden\\' name=\\'ipCaminho\\' value=\\' " + nomeCompletoArquivoComCaminho + "\\'>"; 
+				contentString +=  "<input id=\\'ipCaminhoFotoNova\\'  type=\\'hidden\\' name=\\'ipCaminhoFotoNova\\' value=\\'FFDDNN\\'> ";
+				contentString +=  "<input id=\\'ipDadosDigitados\\'  type=\\'hidden\\' name=\\'ipDadosDigitados\\' value=\\' "+ txtComentario  +"\\'>";
+				contentString +=  "<div id=\\'bodyContent\\'>";
+				contentString +=  "<p> "+ txtComentario  +" </p>";
+				contentString +=  "</div>";
+				contentString +=  "</div>";
+				
+				marcacao.setHtml(contentString.trim());
+				
+				try {
+					bancoDados.atualizaHtmlMarcacao(marcacao);
+					bancoDados.encerrarConexao();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+						
+//	       	resposta a requisicao
+	   		map.put("isValid", isValid);
+			map.put("usuarioLogado", usuarioLogado);
+			
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(new Gson().toJson(map));
+			
+	  }
 	  
-	  
+	  /**
+	   * 
+	   * @param multipartFile (o arquivo da requisicao)
+	   * @param nomeArquivo (o nome desejado para o arquivo)
+	   * @return o nome completo do arquivo
+	   */
+	  private String uploadArquivo(MultipartFile multipartFile, String nomeArquivo) {
+		  String nomeCompletoArquivoComCaminho = null;
+
+		  if (!multipartFile.isEmpty()) {
+			  try {
+
+				  File path = new File(context.getRealPath("") + File.separator + "upload_imagens");
+				  System.out.println("CAMINHO IMAGEM: " + path);
+				
+				 System.out.println("CAMINHO IMAGEM: " + path); if
+				 (!path.exists()) { path.mkdir();
+				 System.out.println("Diretorio criado: " + path); }
+				 
+				  String extensao = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
+				
+				  byte[] bytes = multipartFile.getBytes();
+				  nomeCompletoArquivoComCaminho = path + File.separator + nomeArquivo + extensao;
+				  BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(nomeCompletoArquivoComCaminho)));
+
+				// new BufferedOutputStream(new FileOutputStream(new
+				// File("upload_imagens/" + name + extension)));
+				  stream.write(bytes);
+				  stream.close();
+				  System.out.println("Upload do arquivo [" + nomeArquivo + "] efetuado com sucesso!");
+			} catch (Exception e) {
+				System.out.println("Falha ao executar o upload do arquivo [" + nomeArquivo + "]. Motivo:");
+				System.out.println(e.getMessage());
+			}
+		} else {
+			System.out.println("Falha ao fazer upload porque o arquivo esta vazio!");
+		}
+
+		return nomeCompletoArquivoComCaminho;
+	}
 
 
 	
