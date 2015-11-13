@@ -28,7 +28,8 @@ function initMap() {
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	});
 
-	buscaListaMarcacoesCadastradas();
+	
+	
 
 	//Leitura do json DATAPOA
 	if (DadosPoa.DadosPoa.length > 0) {
@@ -38,17 +39,27 @@ function initMap() {
 		}
 	}
 
-
-	setTimeout(function() {
-		//Retorna a lista do banco e adiciona os dados novos
-		if (resultJsonDenuncias != undefined) {
-			var parsed = JSON.parse(resultJsonDenuncias);
-			for (i = 0; i < parsed.result.length; i++) {
-				var location = parsed.result[i];
-				AdicionaMarcacao(location);
-			}
+	if(resultJsonDenuncias != undefined){
+		var parsed = JSON.parse(resultJsonDenuncias);
+		for (i = 0; i < parsed.result.length; i++) {
+			var location = parsed.result[i];
+			AdicionaMarcacao(location);
 		}
-	}, 5000);
+	}else{
+		buscaListaMarcacoesCadastradas();
+		setTimeout(function() {
+			//Retorna a lista do banco e adiciona os dados novos
+			if (resultJsonDenuncias != undefined) {
+				var parsed = JSON.parse(resultJsonDenuncias);
+				for (i = 0; i < parsed.result.length; i++) {
+					var location = parsed.result[i];
+					AdicionaMarcacao(location);
+				}
+			}
+		}, 5000);
+
+	}
+	
 
 
 	marker.addListener('click', function() {
@@ -213,7 +224,7 @@ function initMap() {
 	$('button[id$="btnSalvarCandidato"]').click(function() {
 		//Chama a function q irá chamar a servlet candidatarse
 		SalvarCandidato();
-		HabilitaDivVisuDenuncia(false);
+		return false;
 	});
 
 	//Evento que ocorre quando clica na marcação do mapa
@@ -264,6 +275,7 @@ function initMap() {
 	function SalvarCandidato() {
 		var idMark = document.getElementById('ipDenuncia').value;
 		if (idMark != "" && idMark != undefined) {
+			Loader(false);
 
 			//GIOVANNE AQUI VC FAZ I CONTATO POR AJAX COM PARA CADASTRAR A PESSOA NA DENUNCIA
 			// * Tem que ver como a pessoa irá fazer para se cadastrar.
@@ -278,34 +290,39 @@ function initMap() {
 				type: 'POST',
 				success: function(data) {
 					if (data.isValid) {
-
-						buscaListaMarcacoesCadastradas();
-						setTimeout(function() {
-							//Retorna a lista do banco e adiciona os dados novos
-							if (resultJsonDenuncias != undefined) {
-								var parsed = JSON.parse(resultJsonDenuncias);
-								for (i = 0; i < parsed.result.length; i++) {
-									var location = parsed.result[i];
-									AdicionaMarcacao(location);
-								}
-							}
-						}, 7000);
-
-
-
-
-						$.bootstrapGrowl("Registro incluído com sucesso!", {
-							type: 'success',
-							align: 'center',
-							width: 'auto',
-							allow_dismiss: false
-						});
-
-
+					
+						  formatacaoJSON(data.listaMarcacoesCadastradas)
+	                      
+	                      setTimeout(function() {
+	                       	initMap();
+                        	
+            				/*//Retorna a lista do banco e adiciona os dados novos
+            				if (resultJsonDenuncias != undefined) {
+            					var parsed = JSON.parse(resultJsonDenuncias);
+            					for (i = 0; i < parsed.result.length; i++) {
+            						var location = parsed.result[i];
+            						AdicionaMarcacao(location);
+            					}*/
+	                       	
+	          				//Esconde a div
+	          				Loader(false);
+	          				HabilitaDivVisuDenuncia(false);
+	          				
+	          				$.bootstrapGrowl("Registro incluído com sucesso!", {
+								type: 'success',
+								align: 'center',
+								width: 'auto',
+								allow_dismiss: false
+							});
+	  
+	             			}, 4000);
+	                      
 						//window.setTimeout('location.reload()', 3000);
 						//setTimeout(function() { initMap();}, 1000);
 
 					} else {
+						Loader(false);
+						HabilitaDivVisuDenuncia(false);
 						if (!data.usuarioLogado) {
 							$.bootstrapGrowl("Usuário não está logado! Faça login ou cadastre-se!", {
 								type: 'success',
@@ -400,16 +417,43 @@ function initMap() {
 			success: function(data) {
 				if (data.isValid) {
 
-					$.bootstrapGrowl("Votação computado, obrigado!", {
-						type: 'success',
-						align: 'center',
-						width: 'auto',
-						allow_dismiss: false
-					});
-					HabilitaDivVisuDenuncia(false);
+									
+					  formatacaoJSON(data.listaMarcacoesCadastradas)
+                      
+                      setTimeout(function() {
+                       	initMap();
+                    	
+        				/*//Retorna a lista do banco e adiciona os dados novos
+        				if (resultJsonDenuncias != undefined) {
+        					var parsed = JSON.parse(resultJsonDenuncias);
+        					for (i = 0; i < parsed.result.length; i++) {
+        						var location = parsed.result[i];
+        						AdicionaMarcacao(location);
+        					}*/
+                       	
+                       	
+          				//Esconde a div
+          				Loader(false);
+          				HabilitaDivVisuDenuncia(false);
+          				
+          				$.bootstrapGrowl("Votação computado, obrigado!", {
+    						type: 'success',
+    						align: 'center',
+    						width: 'auto',
+    						allow_dismiss: false
+    					});
+          		
+    					
+          				  
+             			}, 4000);
+                      
+					
+					
+					
+					
 				} else {
 
-
+					Loader(false);
 					if (!data.usuarioLogado) {
 						$.bootstrapGrowl("Usuário não está logado! Faça login ou cadastre-se!", {
 							type: 'danger',
@@ -426,7 +470,7 @@ function initMap() {
 						});
 					}
 				}
-				Loader(false);
+		
 			}
 		});
 
@@ -628,8 +672,9 @@ function initMap() {
 	
 	$('button[id$="btnSalvar"]').click(function() {
 		submit_upload_com_ajax();
+		return false;
 		//Esconde a div
-		HabilitaDivCadastro(false);
+		//HabilitaDivCadastro(false);
 	});
 		
 		
@@ -637,7 +682,6 @@ function initMap() {
 	// faz a requisicao ajax utilizando o formdata, uma especie de hashmap do jquery
 	function submit_upload_com_ajax() {
 
-			
 		var txtEndereco = $("#EnderecoEsc").val();
 		var dpMotivo = $("#dpMotivo").val();
 		var txtComentario = $("#txtComentario").val();
@@ -646,89 +690,174 @@ function initMap() {
 		var icon = 'static/img/icones/vermelho.png';
 		var caminho_imagem_upload = document.getElementById("caminho_imagem_upload").files[0];
 
-		var formdata = new FormData();
-		formdata.append("txtEndereco", txtEndereco);
-		formdata.append("dpMotivo", dpMotivo);
-		formdata.append("latitude", latitude);
-		formdata.append("longitude", longitude);
-		formdata.append("icon", icon);
-		formdata.append("txtComentario", txtComentario);
-		formdata.append("caminho_imagem_upload", caminho_imagem_upload);
+		if(txtComentario != undefined && txtComentario != ""){
+			if(caminho_imagem_upload != undefined){
+				Loader(true);
+				var formdata = new FormData();
+				formdata.append("txtEndereco", txtEndereco);
+				formdata.append("dpMotivo", dpMotivo);
+				formdata.append("latitude", latitude);
+				formdata.append("longitude", longitude);
+				formdata.append("icon", icon);
+				formdata.append("txtComentario", txtComentario);
+				formdata.append("caminho_imagem_upload", caminho_imagem_upload);
 
-		var xhr = new XMLHttpRequest();
+				var xhr = new XMLHttpRequest();
 
-		xhr.open("POST", "upload_imagem", true);
+				xhr.open("POST", "upload_imagem", true);
 
-		xhr.send(formdata);
+				xhr.send(formdata);
 
-		xhr.onload = function(e) {
+				xhr.onload = function(e) {
 
-			if (this.status == 200) {
+					if (this.status == 200) {				
+						if (xhr.readyState == 4) {
+							var responseJson = eval('(' + xhr.responseText + ')');
+							
+							
+							if (responseJson.isValid) {
+		                                                         
+		                        formatacaoJSON(responseJson.listaMarcacoesCadastradas)
+		                        
+		                        setTimeout(function() {
+		                        	initMap();
+		                        	
+		            				/*//Retorna a lista do banco e adiciona os dados novos
+		            				if (resultJsonDenuncias != undefined) {
+		            					var parsed = JSON.parse(resultJsonDenuncias);
+		            					for (i = 0; i < parsed.result.length; i++) {
+		            						var location = parsed.result[i];
+		            						AdicionaMarcacao(location);
+		            					}*/
+		            				
+		            				//Esconde a div
+		            				Loader(false);
+		            				HabilitaDivCadastro(false);
+		            				
+		            				  $.bootstrapGrowl("contribuição registrada com sucesso!", {
+		                                  type: 'success',
+		                                  align: 'center',
+		                                  width: 'auto',
+		                                  allow_dismiss: false
+		                              });
+		            				  
+		               			}, 5000);
+		                        
+		                        
+		                       	//################FALTA LIMPAR O CAMPOS APÓS O RETORNO 
+		                        latLongSave = "";
+		    					$('textarea[id*="txtComentario"]').val("");
+		                       	
+		                        return true;
+		                    } else {
+		                    	Loader(false);
+		                        if (!responseJson.usuarioLogado) {
+		                            $.bootstrapGrowl("Usuário não está logado! Faça login ou cadastre-se!", {
+		                                type: 'danger',
+		                                align: 'center',
+		                                width: 'auto',
+		                                allow_dismiss: false
+		                            });
 
-				//######### NÂO SEI COMO APLICAR ESTAS VALIDAÇÕES AQUI
-				/*
-                 	if (data.isValid) {
-                         $.bootstrapGrowl("contribuição registrada com sucesso!", {
-                             type: 'success',
-                             align: 'center',
-                             width: 'auto',
-                             allow_dismiss: false
-                         });
-
-         				//#########OBS SE ESTA FUNCTION FICAR AQUI TEM QUE TIRAR ESTAS 4 LINHAS ABAIXO
-         				//#########SENAO MANDAR TODA A FUNCTION PARA O MONTAGEMAP.JS NO LOCAL AONDE ELE ESTÁ FAZENDO ATUALMENTE
-                         markerClick = new google.maps.Marker({
-                             position: latLongSave,
-                             icon: 'static/img/icones/vermelho.png',
-                             map: map
-                         });
-                         
-                          buscaListaMarcacoesCadastradas();
-                         
-                        	//################FALTA LIMPAR O CAMPOS APÓS O RETORNO 
-                        	
-                         return true;
-                     } else {
-                         if (!data.usuarioLogado) {
-                             $.bootstrapGrowl("Usuário não está logado! Faça login ou cadastre-se!", {
-                                 type: 'success',
-                                 align: 'center',
-                                 width: 'auto',
-                                 allow_dismiss: false
-                             });
-
-                         } else {
-                             $.bootstrapGrowl("Erro ao salvar denúncio, entre em contato conosco!", {
-                                 type: 'danger',
-                                 align: 'center',
-                                 width: 'auto',
-                                 allow_dismiss: false
-                             });
-                         }
-
-                         return false;
-                     }
-                 }
-                 
-                 */
-
-
-
-
-				// imprime todas as informacoes que o servidor retornou
-				alert(this.responseText);
-
+		                        } else {
+		                            $.bootstrapGrowl("Erro ao salvar denúncio, entre em contato conosco!", {
+		                                type: 'danger',
+		                                align: 'center',
+		                                width: 'auto',
+		                                allow_dismiss: false
+		                            });
+		                        }
+		                        return false;
+		                    }
+				        }
+					}
+				};	
+				
+			}else{
+				 $.bootstrapGrowl("Carregue uma foto de denúncia!", {
+	                   type: 'danger',
+	                   align: 'center',
+	                   width: 'auto',
+	                   allow_dismiss: false
+	               });
 			}
-
-		};
+		}else{
+			   $.bootstrapGrowl("Preenche um comentário sobre a denúncia!", {
+                   type: 'danger',
+                   align: 'center',
+                   width: 'auto',
+                   allow_dismiss: false
+               });
+		}
 	}
-
-
-
-
+	
+	
+	
+	
+	
+	 function Loader(habilita){
+		 	    	 if(habilita){
+		 	    		 $('div[id$="gifLoader"]').css('display','');
+		 	    		 $('div[id$="divFundoExtra"]').css('display', ''); 
+		 	    		 
+		 	    	 }else{
+		 	    		 $('div[id$="gifLoader"]').css('display','none');
+		 	    		 $('div[id$="divFundoExtra"]').css('display', 'none'); 	    		 
+		 	    	 }
+		 	    	 
+	 }
+	
 }
 
 //###########################################################################################
+
+
+function formatacaoJSON(ListaMarcacao) {
+	
+	var listaMarcacoes = ListaMarcacao;
+	resultJsonDenuncias = '{ "result" : [';
+	for (var i = 0; i < listaMarcacoes.length; i++) {
+
+		resultJsonDenuncias += '{';
+		try {
+			resultJsonDenuncias += '"title":"' + listaMarcacoes[i].tipoDepredacao + "";
+		} catch (err) {
+			resultJsonDenuncias += '", "title":"';
+		}
+		try {
+			resultJsonDenuncias += '", "categoria":"' + listaMarcacoes[i].descricao + "";
+		} catch (err) {
+			resultJsonDenuncias += '", "categoria":"';
+		}
+		try {
+			resultJsonDenuncias += '", "lat":"' + listaMarcacoes[i].posLat + "";
+		} catch (err) {
+			resultJsonDenuncias += '", "lat":"';
+		}
+		try {
+			resultJsonDenuncias += '", "lon":"' + listaMarcacoes[i].posLon + "";
+		} catch (err) {
+			resultJsonDenuncias += '", "lon":"';
+		}
+		try {
+			resultJsonDenuncias += '", "icon":"' + RetornaIconeStatus(listaMarcacoes[i].status) + "";
+		} catch (err) {
+			resultJsonDenuncias += '", "icon":"';
+		}
+		try {
+
+			resultJsonDenuncias += '", "html":"' + listaMarcacoes[i].html.toString().trim().replace(new RegExp("\'", "g"), "\"") + "";
+		} catch (err) {
+			resultJsonDenuncias += '", "html":"';
+		}
+
+		resultJsonDenuncias += '" }';
+		resultJsonDenuncias += i < listaMarcacoes.length - 1 ? ',' : '';
+
+	}
+	resultJsonDenuncias += ' ]}';
+}
+
 
 function buscaListaMarcacoesCadastradas() {}
 $.ajax({

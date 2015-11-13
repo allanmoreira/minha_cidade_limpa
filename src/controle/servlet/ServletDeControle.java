@@ -629,7 +629,7 @@ public class ServletDeControle {
 			String sLong = request.getParameter("lon");
 			String sHtml = request.getParameter("html");
 			String sData = DateTime.now().toString("yyyyMMdd");
-
+			oMarcacao.setDataMarcacao(sData);
 			oMarcacao.setDescricao(sCat);
 			oMarcacao.setStatus("1");
 			oMarcacao.setTipoDepredacao(sTipo);
@@ -637,7 +637,7 @@ public class ServletDeControle {
 			oMarcacao.setPosLon(sLong);
 			oMarcacao.setHtml(sHtml);
 			oMarcacao.setCadidatoResolverProblema(false);
-			oMarcacao.setDataMarcacao(sData);
+	
 
 			oMarcacao.setImgDenunciaIni(sCaminho);
 			oMarcacao.setImgDenunciaFinal("");
@@ -706,9 +706,10 @@ public class ServletDeControle {
 		boolean usuarioLogado = false;
 		boolean jaTemCandidato = true;
 		boolean jaSeCadastrou = true;
+		ArrayList<MarcacaoDepredacao> listaMarcacoesCadastradas = new ArrayList<MarcacaoDepredacao>();
 		Login usuarioSessao = (Login) session.getAttribute("usuarioLogado");
 		String idMark = request.getParameter("idmarcacao");
-		int idMarkInt = Integer.parseInt(idMark);
+		int idMarkInt = Integer.parseInt(idMark.toString().trim());
 		
 		if (usuarioSessao != null) {
 			usuarioLogado = true;
@@ -729,7 +730,9 @@ public class ServletDeControle {
 						}
 						bancoDados.UpdateStatus(idMarkInt,2,shtml);
 						jaSeCadastrou = false;				
-						bancoDados.setCandidatura(pf.getIdPessoaFisica(), idMarkInt);			
+						bancoDados.setCandidatura(pf.getIdPessoaFisica(), idMarkInt);		
+						listaMarcacoesCadastradas = bancoDados.listaMarcacoesCadastradas();	
+						
 						bancoDados.encerrarConexao();
 						isValid = true;
 					}				
@@ -760,6 +763,9 @@ public class ServletDeControle {
 		map.put("usuarioLogado", usuarioLogado);
 		map.put("jaTemCandidato", jaTemCandidato);
 		map.put("jaSeCadastrou", jaSeCadastrou);
+		map.put("listaMarcacoesCadastradas", listaMarcacoesCadastradas);
+		
+		
 
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
@@ -780,13 +786,15 @@ public class ServletDeControle {
 		boolean jaVotou = true;
 		int VotoLikes= 0 ;
 		int VotoDeslikes = 0;
+		ArrayList<MarcacaoDepredacao> listaMarcacoesCadastradas = new ArrayList<MarcacaoDepredacao>();
+		
 		
 		Login usuarioSessao = (Login) session.getAttribute("usuarioLogado");
 		String idMark = request.getParameter("idMark");
 		String likes = request.getParameter("like");
 		
 		
-		int idMarkInt = Integer.parseInt(idMark);
+		int idMarkInt = Integer.parseInt(idMark.toString().trim());
 		int iLikes = Integer.parseInt(likes);
 		
 		if (usuarioSessao != null) {
@@ -804,12 +812,14 @@ public class ServletDeControle {
 						MarcacaoDepredacao md = bancoDados.buscaMarcacaoEspeficifica(idMarkInt);
 						String shtml = md.getHtml();
 						
-						if(VotoDeslikes == 3 || VotoLikes == 3){
+						if(VotoDeslikes >= 2 || VotoLikes >= 2){
 							if(shtml.contains("VOTOSIM")){
 								shtml = shtml.replace("VOTOSIM","VOTONAO");
 							}
 							bancoDados.UpdateStatus(idMarkInt,3,shtml);
 						}
+						
+						listaMarcacoesCadastradas = bancoDados.listaMarcacoesCadastradas();	
 						
 						bancoDados.encerrarConexao();
 						isValid = true;
@@ -839,7 +849,10 @@ public class ServletDeControle {
 		map.put("isValid", isValid);
 		map.put("usuarioLogado", usuarioLogado);
 		map.put("jaVotou", jaVotou);
+		map.put("listaMarcacoesCadastradas", listaMarcacoesCadastradas);
 
+		
+		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(new Gson().toJson(map));
@@ -857,6 +870,7 @@ public class ServletDeControle {
 	    	      							 		  
 		  	MarcacaoDepredacao marcacao = new MarcacaoDepredacao();
 			Map<String, Object> map = new HashMap<String, Object>();
+			ArrayList<MarcacaoDepredacao> listaMarcacoesCadastradas = new ArrayList<MarcacaoDepredacao>();
 			BancoDados bancoDados = new BancoDados();
 			boolean isValid = false;
 			boolean usuarioLogado = false;
@@ -878,11 +892,14 @@ public class ServletDeControle {
 				String txtlatitude = request.getParameter("latitude");
 				String txtlongitude = request.getParameter("longitude");
 				String txtIcon = request.getParameter("icon");
+				String sData = DateTime.now().toString("yyyyMMdd");
 				
+				marcacao.setDataMarcacao(sData);
 				marcacao.setTipoDepredacao(dpMotivo);
 				marcacao.setDescricao(txtComentario);
 				marcacao.setPosLat(txtlatitude);
 				marcacao.setPosLon(txtlongitude);
+				marcacao.setStatus("1");
 				
 				marcacao.setCadidatoResolverProblema(false);
 				
@@ -894,7 +911,6 @@ public class ServletDeControle {
 					
 					//Buscou a pessoa logada no banco
 					pf = bancoDados.buscarPessoaFisica(usuarioSessao.getIdLogin());
-					
 					//Colocou o ID da pessoa na marcação
 					marcacao.setIdPessoaFisicaFezMarcacao(pf.getIdPessoaFisica()); 
 					//Cadastra a maracação
@@ -922,6 +938,10 @@ public class ServletDeControle {
 				contentString +=  "<input id=\\'ipDenuncia\\'  type=\\'hidden\\' name=\\'idDenuncia\\' value=\\' "+ idMarcacao + "\\'>";
 				contentString +=  "<input id=\\'ipEndereco\\'  type=\\'hidden\\' name=\\'ipEndereco\\' value=\\' "+ txtEndereco +"\\'>";
 				contentString +=  "<input id=\\'ipCaminho\\'  type=\\'hidden\\' name=\\'ipCaminho\\' value=\\'" + nomeCompletoArquivoComCaminho + "\\'>"; 
+				           
+				contentString +=  "<input id=\\'ipLiberaVotacao\\' type=\\'hidden\\' name=\\'ipLiberaVotacao\\' value=\\'VOTOSIM\\'>";
+				contentString +=  "<input id=\\'ipJaSeCandidatou\\' type=\\'hidden\\' name=\\'ipJaSeCandidatou\\' value=\\'CANDNAO\\'>";	
+				
 				contentString +=  "<input id=\\'ipCaminhoFotoNova\\'  type=\\'hidden\\' name=\\'ipCaminhoFotoNova\\' value=\\'FFDDNN\\'> ";
 				contentString +=  "<input id=\\'ipDadosDigitados\\'  type=\\'hidden\\' name=\\'ipDadosDigitados\\' value=\\' "+ txtComentario  +"\\'>";
 				contentString +=  "<div id=\\'bodyContent\\'>";
@@ -933,6 +953,8 @@ public class ServletDeControle {
 				
 				try {
 					bancoDados.UpdateStatus(idMarcacao,1,contentString);
+					listaMarcacoesCadastradas = bancoDados.listaMarcacoesCadastradas();	
+					isValid =true;
 					bancoDados.encerrarConexao();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -943,6 +965,7 @@ public class ServletDeControle {
 //	       	resposta a requisicao
 	   		map.put("isValid", isValid);
 			map.put("usuarioLogado", usuarioLogado);
+			map.put("listaMarcacoesCadastradas", listaMarcacoesCadastradas);
 			
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");

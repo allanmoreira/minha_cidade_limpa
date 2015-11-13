@@ -46,6 +46,15 @@
 
 <body id="page-top" class="index">
 
+
+	   <div id="divFundoExtra"
+		style="min-width: 100%; height: 100%; position: fixed; background-color: black; opacity: 0.75; z-index:99999999; display: none;"
+		class="navbar navbar-fixed-top" role="navigation">
+	</div>
+	  <div id="gifLoader" style="top:50%; left:50%; position: fixed; z-index:999999999; display: none;"class="navbar navbar-fixed-top" role="navigation">
+			<img id="loading-image" src="static/img/icones/loader.gif"  alt="Loading..." />
+		</div>
+
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
@@ -826,7 +835,7 @@
 										<img src="<c:url value="static/img/icones/azul.png"/>" style="max-width: 20px" />:Resolvendo
 									</div>
 									<div>
-										<img src="<c:url value="static/img/icones/cinza.png"/>" style="max-width: 20px" />:Analizando
+										<img src="<c:url value="static/img/icones/cinza.png"/>" style="max-width: 20px" />:Candidatar
 									</div>
 								</div>
 				
