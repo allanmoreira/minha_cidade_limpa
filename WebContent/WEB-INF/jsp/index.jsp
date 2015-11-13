@@ -117,7 +117,7 @@
 		class="navbar navbar-fixed-top" role="navigation">
 	</div>
 	        
-	<!-- modal denúncia depredação -->
+		<!-- modal denúncia depredação -->
 	<div id="divDenuncia"
 		class="abseed_conteudo_sub abseed_Div_Casastro navbar navbar-fixed-top"
 		style="max-width: 560px; width: 100%; min-height: auto; position: fixed; top: 25%; margin-left: 10px; margin-top: 0px; margin: 0px auto; z-index: 9999; padding: 0px; border-radius: 5px; display: none;"
@@ -146,17 +146,25 @@
 							<label class="sublinhado" ><u>Benefício:</u></label>
 							<br /> 
 							<label type="text" id="txtBeneficioDenuncia" class="estiloPrin">O prof. de Gerência de Projeto, disponibilizará 1 ponto na média.</label>
+							<br />
+							<div id="likesDeslikes" style="display:none; font-size: 10px;" >
+							<label class="estiloPrin">Você confirma denúncia?<img id="imglikes" style="cursor:pointer;"  src="static/img/icones/likes.png" alt="">
+                  			 <img id="imgDeslikes" style="cursor:pointer;"  src="static/img/icones/deslikes.png" alt="">
+							</label>
+							 
+                   							</div>	
+						
 							</div>
 						</div>
 						<div style="float:right; width:45%;margin:5px;">
 							<div class="cad_borda" style=" width:100%; height:99%; min-height:220px;">
 								<img id="txtImagemDenuncia" alt="" style="width: 100%; height: 100%; min-height: 183px;" />
-		
 							</div>
-						</div>
 					</div>
 				</div>
-		
+		</div>
+			
+							
 				<div style="float: right; padding: 0px 10px 10px;">
 			<!-- INCLUIR BOTOES  -->
 			<button class="btn btn-warning" id="btnUploadImagem">Img Resolvida Caso</button>
@@ -213,8 +221,8 @@
 						</div>
 						<div style="float: right; width: 45%; margin: 5px;">
 							<div id="container_img" class="cad_borda"
-								style="width: 100%; height: 99%; min-height: 183px;">
-								<img id="div_imagem_upload" alt="" style="width: 100%; height: 100%; min-height: 183px;" />
+								style="width: 100%; height: 183px;">
+								<img id="div_imagem_upload" alt="" style="width: 100%; height: 183px;" />
 							</div>
 						</div>
 					</div>
@@ -230,12 +238,12 @@
 					<!-- campo name > COLAR O ID DA DENUNCIA AQUI PARA NOMEAR A FOTO EX: "1514" -->
 					<input type="text" name="upload_imagem_name"><br /> <br />
 					<input type="submit" class="btn btn-warning" value="Upload">
-						
+					
+				   		<input type="text" id="EnderecoEsc" name="EnderecoEsc"></input> 							
 				   		<input type="text" id="longitudeEsc" name="longitudeEsc"></input> 				   	
 				   		<input type="text" id="latitudeEsc" name="latitudeEsc"></input>
-				   		<input type="text" id="htmlEsc" name="htmlEsc"></input>
-				
-					
+				   
+						
 				</div>
 					<div style="float: center; padding: 7px 10px 10px 20px;">
 						<input type="file" name="caminho_imagem_upload" id="caminho_imagem_upload" class="btn btn-warning"  src="" style="width: 92%;"></input>
@@ -252,7 +260,7 @@
 				
 				<button class="btn btn-danger" id="btnFechar">Fechar</button>
 				<!-- <button class="btn btn-success" id="btnSalvar" >Salvar</button> -->
-				<button class="btn btn-success" onclick="submit_upload_com_ajax()" >Salvar</button>
+				<button class="btn btn-success"  id="btnSalvar"  >Salvar</button>
 			</div>
 		
 	</div>

@@ -86,6 +86,7 @@ public class ServletDeControle {
 	 * @return
 	 */
 	
+
 	@RequestMapping("index")
 	public ModelAndView homeNovoTemplate(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
@@ -628,9 +629,6 @@ public class ServletDeControle {
 			String sLong = request.getParameter("lon");
 			String sHtml = request.getParameter("html");
 			String sData = DateTime.now().toString("yyyyMMdd");
-			
-			
-		
 
 			oMarcacao.setDescricao(sCat);
 			oMarcacao.setStatus("1");
@@ -723,7 +721,13 @@ public class ServletDeControle {
 					jaTemCandidato= false;
 					pf = bancoDados.buscarPessoaFisica(usuarioSessao.getIdLogin());
 					if(!bancoDados.verificaRelacaoCandidatura(pf.getIdPessoaFisica(),idMarkInt)){
-						bancoDados.UpdateStatus(idMarkInt,2);
+						//Recupera a marcação do banco 
+						MarcacaoDepredacao md = bancoDados.buscaMarcacaoEspeficifica(idMarkInt);
+						String shtml = md.getHtml();
+						if(shtml.contains("CANDNAO")){
+							shtml = shtml.replace("CANDNAO","CANDSIM");
+						}
+						bancoDados.UpdateStatus(idMarkInt,2,shtml);
 						jaSeCadastrou = false;				
 						bancoDados.setCandidatura(pf.getIdPessoaFisica(), idMarkInt);			
 						bancoDados.encerrarConexao();
@@ -762,6 +766,88 @@ public class ServletDeControle {
 		response.getWriter().write(new Gson().toJson(map));
 	}
 
+	
+	
+	
+	
+	@RequestMapping("LikesDesLikes")
+	public void LikesDeslikes(HttpServletRequest request,HttpServletResponse response, HttpSession session) throws IOException {
+		BancoDados bancoDados = new BancoDados();
+		Map<String, Object> map = new HashMap<String, Object>();
+		PessoaFisica pf = new PessoaFisica();
+		boolean isValid = false;
+		boolean usuarioLogado = false;
+		boolean jaVotou = true;
+		int VotoLikes= 0 ;
+		int VotoDeslikes = 0;
+		
+		Login usuarioSessao = (Login) session.getAttribute("usuarioLogado");
+		String idMark = request.getParameter("idMark");
+		String likes = request.getParameter("like");
+		
+		
+		int idMarkInt = Integer.parseInt(idMark);
+		int iLikes = Integer.parseInt(likes);
+		
+		if (usuarioSessao != null) {
+			usuarioLogado = true;
+	
+			try {
+				
+				bancoDados.conectarAoBco();
+				pf = bancoDados.buscarPessoaFisica(usuarioSessao.getIdLogin());
+				jaVotou= bancoDados.VerificaSeUsuarioJaVotou(idMarkInt, pf.getIdPessoaFisica());
+				if(!jaVotou){
+						bancoDados.GravaVotacao(idMarkInt,pf.getIdPessoaFisica(),iLikes);
+						VotoLikes = bancoDados.BuscaQuantVotacao(idMarkInt,1);
+						VotoDeslikes = bancoDados.BuscaQuantVotacao(idMarkInt,2);
+						MarcacaoDepredacao md = bancoDados.buscaMarcacaoEspeficifica(idMarkInt);
+						String shtml = md.getHtml();
+						
+						if(VotoDeslikes == 3 || VotoLikes == 3){
+							if(shtml.contains("VOTOSIM")){
+								shtml = shtml.replace("VOTOSIM","VOTONAO");
+							}
+							bancoDados.UpdateStatus(idMarkInt,3,shtml);
+						}
+						
+						bancoDados.encerrarConexao();
+						isValid = true;
+				}
+	
+			} catch (ClassNotFoundException e) {
+				// Erro ao concetar ao banco de dados
+				// Levanta página Erro 500 (não existe)
+				String erro = "CLASSE = ";
+				erro += e.getMessage();
+				erro += " \n ";
+				erro += e.getStackTrace();
+
+			} catch (SQLException e) {
+
+				String erro = "SQL = ";
+				erro += e.getMessage();
+				erro += " \n ";
+				erro += e.getStackTrace();
+				// Erro ao executar a instrução
+				// Levanta página Erro 500 (não existe)
+			}
+		} else {
+			isValid = false;
+		}
+
+		map.put("isValid", isValid);
+		map.put("usuarioLogado", usuarioLogado);
+		map.put("jaVotou", jaVotou);
+
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(new Gson().toJson(map));
+	}
+
+	
+	
+	
 	
 	  @RequestMapping(value="upload_imagem")
 	  public void cadastrarMarcacao(@RequestParam("caminho_imagem_upload") MultipartFile multipartFile,
@@ -846,7 +932,7 @@ public class ServletDeControle {
 				marcacao.setHtml(contentString.trim());
 				
 				try {
-					bancoDados.atualizaHtmlMarcacao(marcacao);
+					bancoDados.UpdateStatus(idMarcacao,1,contentString);
 					bancoDados.encerrarConexao();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -907,5 +993,7 @@ public class ServletDeControle {
 
 		return nomeCompletoArquivoComCaminho;
 	}
+	
+	
 	
 }
