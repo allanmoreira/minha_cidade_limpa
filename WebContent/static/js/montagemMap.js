@@ -10,6 +10,7 @@ var titulo;
 var latLongSave;
 var idMark;
 var resultJsonDenuncias;
+var ispf;
 
 initMap();
 //Inicialização do map
@@ -246,10 +247,14 @@ function initMap() {
 		var idDescricao = $('input[id*="ipDadosDigitados"]').val();
 		var idImagemCaminho = $('input[id*="ipCaminho"]').val();
 
-
-
+		if(lg == undefined || (lg != undefined &&  lg.PF)){
+				$('#btnSalvarBeneficio').css('display','none');			
+		}
+		
 		if ($('#ipLiberaVotacao').val().indexOf("VOTOSIM") > -1) {
 			$('#btnSalvarCandidato').prop("disabled", true);
+			$('#btnSalvarCandidato').css('display','none');
+			
 			$('#btnResolvido').css('display','none');
 			$('#caminho_imagem_uploadR').css('display','none');	
 			$('div[id$="likesDeslikes"]').css('display', '');
@@ -270,6 +275,14 @@ function initMap() {
 				$('#caminho_imagem_uploadR').css('display','none');
 				$('#btnSalvarCandidato').prop("disabled", false);
 			}
+		}
+		
+		//Finalizaou o processo de denuncia 
+		if(idImagemCaminho.indexOf("_R") > -1){
+			$('#btnSalvarCandidato').css('display','none');
+			$('#caminho_imagem_uploadR').css('display','none');
+			$('#btnResolvido').css('display','none');
+			
 		}
 		  	         
 		//var imgAlterado = "\'<c:url value='"+ idImagemCaminho +"'/>\'";  
@@ -703,7 +716,7 @@ function initMap() {
 	function submit_upload_com_ajax(status) {
 
 		//################### QUANDO TENTO ASSIM: O BOTAO SALVAR PARA DE FUNCIONAR :S
-		//var idMark1 = document.getElementById('ipDenuncia').value;
+		var idMark1 =$('input[id$="ipDenuncia"]').val();
 		var txtEndereco = $("#EnderecoEsc").val();
 		var dpMotivo = $("#dpMotivo").val();
 		var txtComentario = $("#txtComentario").val();
@@ -729,7 +742,7 @@ function initMap() {
 				formdata.append("txtComentario", txtComentario);
 				formdata.append("caminho_imagem_upload", caminho_imagem_upload);
 				formdata.append("status", status);
-				alert(idMark);
+				//alert(idMark);
 				formdata.append("idMark", idMark);
 
 				var xhr = new XMLHttpRequest();
@@ -750,21 +763,16 @@ function initMap() {
 		                        formatacaoJSON(responseJson.listaMarcacoesCadastradas)
 		                        
 		                        setTimeout(function() {
-		                        	initMap();
+
+		            				//LIMPAR OS CAMPOS
 		                        	
-		            				/*//Retorna a lista do banco e adiciona os dados novos
-		            				if (resultJsonDenuncias != undefined) {
-		            					var parsed = JSON.parse(resultJsonDenuncias);
-		            					for (i = 0; i < parsed.result.length; i++) {
-		            						var location = parsed.result[i];
-		            						AdicionaMarcacao(location);
-		            					}*/
+		                        	initMap();
+		                        		                        	
+		                        	Loader(false);
+		            				HabilitaDivVisuDenuncia(false);
 		            				
-		            				//Esconde a div
-		            				Loader(false);
-		            				HabilitaDivCadastro(false);
 		            				
-		            				  $.bootstrapGrowl("contribuição registrada com sucesso!", {
+		            				$.bootstrapGrowl("contribuição registrada com sucesso!", {
 		                                  type: 'success',
 		                                  align: 'center',
 		                                  width: 'auto',

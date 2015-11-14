@@ -1,3 +1,5 @@
+var lg;
+
 function submeter_form_cadastro_pessoa_fisica(){
 	var matchdata = new RegExp(/((0[1-9]|[12][0-9]|3[01])\/(0[13578]|1[02])\/[12][0-9]{3})|((0[1-9]|[12][0-9]|30)\/(0[469]|11)\/[12][0-9]{3})|((0[1-9]|1[0-9]|2[0-8])\/02\/[12][0-9]([02468][1235679]|[13579][01345789]))|((0[1-9]|[12][0-9])\/02\/[12][0-9]([02468][048]|[13579][26]))/gi);
 	var data_nascim = $('form[id*="form_cadastrar_pessoa_fisica"] [id$="data_nascim"]').val();
@@ -628,6 +630,8 @@ function submeter_form_login(){
 							width: 'auto',
 							allow_dismiss: false
 						});
+						
+						lg = data.login;
 						
 						//Alterar a Li com o nome da pessoa e opção de editar dados
 						$('#link_login_cadastro').text(pessoaFisica.nome);

@@ -879,13 +879,11 @@ public class ServletDeControle {
 			Login usuarioSessao = (Login) session.getAttribute("usuarioLogado");
 			
 			//Verifica se tem alguem logado
-			//Verifica se tem alguem logado
 			if (usuarioSessao != null) {
 				usuarioLogado = true;
 				
-				//Tem que verificar se é pessoa física
-				//################ VER ESSA PARTE ################
-				
+				String status = request.getParameter("status").toString().trim();
+				String idMark = request.getParameter("idMark").toString().trim();
 				// pega os outros dados do form
 				String txtEndereco = request.getParameter("txtEndereco");
 				String dpMotivo = request.getParameter("dpMotivo");
@@ -894,54 +892,59 @@ public class ServletDeControle {
 				String txtlongitude = request.getParameter("longitude");
 				String txtIcon = request.getParameter("icon");
 				String sData = DateTime.now().toString("yyyyMMdd");
-				String status = request.getParameter("status");
-				String idMark = request.getParameter("idMark");
 				
-				if(status == "4"){
-					System.out.print(idMark);
+				
+				if(status.equals("4")){
 					idMarkInt = Integer.parseInt(idMark.toString().trim());
-				}
-								
+				
+				}else{
+															
 				marcacao.setDataMarcacao(sData);
 				marcacao.setTipoDepredacao(dpMotivo);
 				marcacao.setDescricao(txtComentario);
 				marcacao.setPosLat(txtlatitude);
 				marcacao.setPosLon(txtlongitude);
-				//marcacao.setStatus("1");
 				marcacao.setStatus(status);
-				
 				marcacao.setCadidatoResolverProblema(false);
 				
-				System.out.println(usuarioSessao.getIdLogin());
+				}
 			
 				try {
 					
 					bancoDados.conectarAoBco();
-					
-					//Buscou a pessoa logada no banco
-					pf = bancoDados.buscarPessoaFisica(usuarioSessao.getIdLogin());
-					//Colocou o ID da pessoa na marcação
-					marcacao.setIdPessoaFisicaFezMarcacao(pf.getIdPessoaFisica()); 
-					
-					//########################## SOMENTE CADASTRAR SE O STATUS DA MARCAÇÃO FOR 1
+						
 					//Cadastra a maracação
-					if (status == "1") {
+					if (status.equals("1")) {
+						
+						//Buscou a pessoa logada no banco
+						pf = bancoDados.buscarPessoaFisica(usuarioSessao.getIdLogin());
+						//Colocou o ID da pessoa na marcação
+						marcacao.setIdPessoaFisicaFezMarcacao(pf.getIdPessoaFisica()); 	
 						idMarcacao = bancoDados.cadastrarMarcacao(marcacao);
 						marcacao.setIdMarcacaoDepredacao(idMarcacao);
+					
 					} else /* status 4 */ {
 					
 						MarcacaoDepredacao md = bancoDados.buscaMarcacaoEspeficifica(idMarkInt);
+						
+						//######### TEM QUE VERIFICAR SE A PESSOA Q ESTA FINALIZANDO EH A MSM Q ESTA CANDIDATADA A RESOLVER O PROBLEMA
+						
+						
+						//#####################################
+						
 						String shtml = md.getHtml();
 						
-						if(shtml.contains("VOTOSIM")){
-							shtml = shtml.replace("VOTOSIM","VOTONAO");
-						}
-						if(shtml.contains("CANDNAO")){
-							shtml = shtml.replace("CANDNAO","CANDSIM");
-						}
+						//if(shtml.contains("VOTOSIM")){
+						//	shtml = shtml.replace("VOTOSIM","VOTONAO");
+						//}
+						//if(shtml.contains("CANDNAO")){
+						//	shtml = shtml.replace("CANDNAO","CANDSIM");
+						//}
+						
 						if(shtml.contains(idMark + "_A")){
 							shtml = shtml.replace((idMark + "_A"),(idMark + "_R"));
 						}
+						
 						bancoDados.UpdateStatus(idMarkInt,4,shtml);
 						
 						listaMarcacoesCadastradas = bancoDados.listaMarcacoesCadastradas();	
@@ -959,7 +962,7 @@ public class ServletDeControle {
 				
 				String nomeArquivo;
 				
-				if(status == "1")
+				if(status.equals("1"))
 					nomeArquivo = idMarcacao + "_A";
 				else
 					nomeArquivo = idMark + "_R";
@@ -968,7 +971,7 @@ public class ServletDeControle {
 				nomeCompletoArquivoComCaminho = nomeCompletoArquivoComCaminho.replace("\\","\\\\");
 				//############### Não esquecer de com o nome na imagem ############
 
-				if(status == "1"){
+				if(status.equals("1")){
 					String contentString = "<div id=\\'content\\'> ";
 					contentString +=  "<div id=\\'siteNotice\\'>" ;
 					contentString += " </div>";

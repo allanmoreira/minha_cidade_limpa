@@ -165,14 +165,11 @@
 
 						</div>
 					
-						<div style="float: left; padding: 0px 0px 10px;">
-				<button class="btn btn-success" id="btnResolvido">Finalizar</button>
-				<!-- <button class="btn btn-warning" id="btnUploadImagem">Img Resolvida Caso</button> -->
-				<button class="btn btn-danger" id="btnFecharInfoDenuncia">Fechar</button>
-				<button class="btn btn-success" id="btnSalvarCandidato">Candidatar-me</button>
-				<button class="btn btn-success" id="btnSalvarBeneficio" >Cadastrar Benefício</button>
-				
-				
+			<div style="float: left; padding: 0px 0px 10px; font-size: 10pt;">
+				<button class="btn btn-success" id="btnResolvido"style="    width: 85px;">Finalizar</button>
+				<button class="btn btn-danger" id="btnFecharInfoDenuncia" style="    width: 80px;">Fechar</button>
+				<button class="btn btn-success" id="btnSalvarCandidato" style="    width: 110px;">Candidatar</button>
+				<button class="btn btn-success" id="btnSalvarBeneficio" style="    width: 130px;" >Cad. Benefício</button>	
 			</div>
 			
 					</div>
@@ -183,7 +180,7 @@
 						</div>
 						
 			
-				<div style="float: left; padding: 19px 1px 1px 1px;">
+				<div style="float: left; padding: 7px 1px 1px 1px;">
 					<input type="file" name="caminho_imagem_uploadR"
 					id="caminho_imagem_uploadR" class="btn btn-warning" src=""
 					style="width: 92%;"></input>
