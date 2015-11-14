@@ -166,8 +166,8 @@
 							</div>
 						</div>
 						<div style="float:right; width:45%;margin:5px;">
-							<div class="cad_borda" style=" width:100%; height:99%; min-height:220px;">
-								<img id="txtImagemDenuncia" alt="" style="width: 100%; height: 100%; min-height: 183px;" />
+							<div class="cad_borda" style=" width:100%; height:183px;">
+								<img id="txtImagemDenuncia" alt="" style="width: 100%; height: 183px;" />
 							</div>
 					</div>
 				</div>

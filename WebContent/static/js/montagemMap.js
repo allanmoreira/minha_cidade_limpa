@@ -264,10 +264,17 @@ function initMap() {
 		}
 
 
+		  	         
+		//var imgAlterado = "\'<c:url value='"+ idImagemCaminho +"'/>\'";  
+		   	         
+		       
+
 		$('label[id*="txtEndDenuncia"]').text(idEndereco);
 		$('label[id*="txtMotivoDenuncia"]').text(idMotivo);
 		$('label[id$="txtDescricaoMark"]').text(idDescricao);
-		$('img[id$="txtImagemDenuncia"]').attr(idImagemCaminho);
+	     $('img[id$="txtImagemDenuncia"]').attr('src',idImagemCaminho);
+	     
+		//$('img[id$="txtImagemDenuncia"]').attr(idImagemCaminho);
 
 	}
 
