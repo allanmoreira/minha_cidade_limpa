@@ -176,7 +176,9 @@
 							
 				<div style="float: right; padding: 0px 10px 10px;">
 			<!-- INCLUIR BOTOES  -->
-			<button class="btn btn-warning" id="btnUploadImagem">Img Resolvida Caso</button>
+			<input type="file" name="caminho_imagem_uploadR" id="caminho_imagem_uploadR" class="btn btn-warning"  src="" style="width: 92%;"></input>
+			<button class="btn btn-success" id="btnResolvido" >Finalizar</button>
+			<!-- <button class="btn btn-warning" id="btnUploadImagem">Img Resolvida Caso</button> -->
 			<button class="btn btn-danger" id="btnFecharInfoDenuncia">Fechar</button>
 			<button class="btn btn-success" id="btnSalvarCandidato" >Candidatar-me</button>
 		</div>

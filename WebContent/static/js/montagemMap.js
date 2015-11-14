@@ -675,10 +675,17 @@ function initMap() {
 		//$("#container_img").append($('<img />'));
 	});
 
-	
-	
+	//cadastrar marcacao com problema
 	$('button[id$="btnSalvar"]').click(function() {
-		submit_upload_com_ajax();
+		submit_upload_com_ajax(1);
+		return false;
+		//Esconde a div
+		//HabilitaDivCadastro(false);
+	});
+
+	//para usar o upload da foto do problema resolvido
+	$('button[id$="btnResolvido"]').click(function() {
+		submit_upload_com_ajax(4);
 		return false;
 		//Esconde a div
 		//HabilitaDivCadastro(false);
@@ -687,15 +694,20 @@ function initMap() {
 		
 	
 	// faz a requisicao ajax utilizando o formdata, uma especie de hashmap do jquery
-	function submit_upload_com_ajax() {
+	function submit_upload_com_ajax(status) {
 
 		var txtEndereco = $("#EnderecoEsc").val();
 		var dpMotivo = $("#dpMotivo").val();
 		var txtComentario = $("#txtComentario").val();
 		var latitude = $("#latitudeEsc").val();
 		var longitude = $("#longitudeEsc").val();
-		var icon = 'static/img/icones/vermelho.png';
-		var caminho_imagem_upload = document.getElementById("caminho_imagem_upload").files[0];
+		if(status == 1 /* status 1 cadastrar problema */){
+			var icon = 'static/img/icones/vermelho.png';
+			var caminho_imagem_upload = document.getElementById("caminho_imagem_upload").files[0];
+		} else if(status == 4 /* status 4 resolver problema */){
+			var icon = 'static/img/icones/verde.png';
+			var caminho_imagem_upload = document.getElementById("caminho_imagem_uploadR").files[0];
+		}
 
 		if(txtComentario != undefined && txtComentario != ""){
 			if(caminho_imagem_upload != undefined){
@@ -708,6 +720,7 @@ function initMap() {
 				formdata.append("icon", icon);
 				formdata.append("txtComentario", txtComentario);
 				formdata.append("caminho_imagem_upload", caminho_imagem_upload);
+				formdata.append("status", status);
 
 				var xhr = new XMLHttpRequest();
 

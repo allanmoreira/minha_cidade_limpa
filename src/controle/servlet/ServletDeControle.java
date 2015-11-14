@@ -893,13 +893,15 @@ public class ServletDeControle {
 				String txtlongitude = request.getParameter("longitude");
 				String txtIcon = request.getParameter("icon");
 				String sData = DateTime.now().toString("yyyyMMdd");
+				String status = request.getParameter("status");
 				
 				marcacao.setDataMarcacao(sData);
 				marcacao.setTipoDepredacao(dpMotivo);
 				marcacao.setDescricao(txtComentario);
 				marcacao.setPosLat(txtlatitude);
 				marcacao.setPosLon(txtlongitude);
-				marcacao.setStatus("1");
+				//marcacao.setStatus("1");
+				marcacao.setStatus(status);
 				
 				marcacao.setCadidatoResolverProblema(false);
 				
@@ -925,7 +927,12 @@ public class ServletDeControle {
 					System.out.println(e1.getMessage());
 				}
 				
-				String nomeArquivo = idMarcacao + "_A";
+				String nomeArquivo;
+				
+				if(status == "1")
+					nomeArquivo = idMarcacao + "_A";
+				else
+					nomeArquivo = idMarcacao + "_R";
 				
 				String nomeCompletoArquivoComCaminho = uploadArquivo(multipartFile, nomeArquivo);
 				nomeCompletoArquivoComCaminho = nomeCompletoArquivoComCaminho.replace("\\","\\\\");
@@ -952,7 +959,7 @@ public class ServletDeControle {
 				marcacao.setHtml(contentString.trim());
 				
 				try {
-					bancoDados.UpdateStatus(idMarcacao,1,contentString);
+					bancoDados.UpdateStatus(idMarcacao,Integer.parseInt(status),contentString);
 					listaMarcacoesCadastradas = bancoDados.listaMarcacoesCadastradas();	
 					isValid =true;
 					bancoDados.encerrarConexao();
