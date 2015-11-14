@@ -894,7 +894,7 @@ public class ServletDeControle {
 				String txtIcon = request.getParameter("icon");
 				String sData = DateTime.now().toString("yyyyMMdd");
 				String status = request.getParameter("status");
-				
+								
 				marcacao.setDataMarcacao(sData);
 				marcacao.setTipoDepredacao(dpMotivo);
 				marcacao.setDescricao(txtComentario);
@@ -918,10 +918,12 @@ public class ServletDeControle {
 					
 					//########################## SOMENTE CADASTRAR SE O STATUS DA MARCAÇÃO FOR 1
 					//Cadastra a maracação
-					idMarcacao = bancoDados.cadastrarMarcacao(marcacao);
-					
-					marcacao.setIdMarcacaoDepredacao(idMarcacao);
+					if (status == "1") {
+						idMarcacao = bancoDados.cadastrarMarcacao(marcacao);
+						marcacao.setIdMarcacaoDepredacao(idMarcacao);
+					}
 					//##############################################################
+					
 					
 				} catch (ClassNotFoundException e) {
 					System.out.println("Erro de conexão ao banco de dados!" );
@@ -948,9 +950,16 @@ public class ServletDeControle {
 				contentString +=  "<input id=\\'ipDenuncia\\'  type=\\'hidden\\' name=\\'idDenuncia\\' value=\\' "+ idMarcacao + "\\'>";
 				contentString +=  "<input id=\\'ipEndereco\\'  type=\\'hidden\\' name=\\'ipEndereco\\' value=\\' "+ txtEndereco +"\\'>";
 				contentString +=  "<input id=\\'ipCaminho\\'  type=\\'hidden\\' name=\\'ipCaminho\\' value=\\'" + nomeCompletoArquivoComCaminho + "\\'>"; 
-				           
-				contentString +=  "<input id=\\'ipLiberaVotacao\\' type=\\'hidden\\' name=\\'ipLiberaVotacao\\' value=\\'VOTOSIM\\'>";
-				contentString +=  "<input id=\\'ipJaSeCandidatou\\' type=\\'hidden\\' name=\\'ipJaSeCandidatou\\' value=\\'CANDNAO\\'>";	
+				
+				if(status == "1"){
+					// STATUS 1 = CANDNAO VOTOSIM
+					contentString +=  "<input id=\\'ipLiberaVotacao\\' type=\\'hidden\\' name=\\'ipLiberaVotacao\\' value=\\'VOTOSIM\\'>";
+					contentString +=  "<input id=\\'ipJaSeCandidatou\\' type=\\'hidden\\' name=\\'ipJaSeCandidatou\\' value=\\'CANDNAO\\'>";
+				} else {
+					// STATUS 1 = CANDSIM VOTONAO
+					contentString +=  "<input id=\\'ipLiberaVotacao\\' type=\\'hidden\\' name=\\'ipLiberaVotacao\\' value=\\'VOTONAO\\'>";
+					contentString +=  "<input id=\\'ipJaSeCandidatou\\' type=\\'hidden\\' name=\\'ipJaSeCandidatou\\' value=\\'CANDSIM\\'>";
+				}
 				
 				contentString +=  "<input id=\\'ipCaminhoFotoNova\\'  type=\\'hidden\\' name=\\'ipCaminhoFotoNova\\' value=\\'FFDDNN\\'> ";
 				contentString +=  "<input id=\\'ipDadosDigitados\\'  type=\\'hidden\\' name=\\'ipDadosDigitados\\' value=\\' "+ txtComentario  +"\\'>";
