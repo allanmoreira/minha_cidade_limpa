@@ -264,13 +264,13 @@ function initMap() {
 		//verifica se tem beneficio cadastrado para poder mostrar
 		var temBeneficio = verificaBeneficioCadastrado();
 		
-		if(lg == undefined && temBeneficio == false )// || (lg != undefined && lg.PF)){
+		if(lg == undefined || lg != undefined && lg.PF)// && temBeneficio == false )// || (lg != undefined && lg.PF)){
 		{	
 			
-			alert('entrou no if do pj e do sem beneficio');
-			$('<label type="text" id="txtBeneficioDenuncia" class="estiloPrin" value="Insira aqui o benefício"></label>').css('display','none');
-
-			$('#btnSalvarBeneficio').css('display','');			
+			//alert('entrou no if do pj e do sem beneficio');
+			//$('<label type="text" id="txtBeneficioDenuncia" class="estiloPrin" value="Insira aqui o benefício"  width: 130px></label>').css('display','none');
+			//$('<textarea id="txtBeneficioDenuncia" name="txtBeneficioDenuncia" rows="3" cols="40"></textarea>')
+			//$('#btnSalvarBeneficio').css('display','');			
 		}
 		
 		if ($('#ipLiberaVotacao').val().indexOf("VOTOSIM") > -1) {

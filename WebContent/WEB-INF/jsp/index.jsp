@@ -168,7 +168,7 @@
 				<button class="btn btn-success" id="btnResolvido"style="    width: 85px;">Finalizar</button>
 				<button class="btn btn-danger" id="btnFecharInfoDenuncia" style="    width: 80px;">Fechar</button>
 				<button class="btn btn-success" id="btnSalvarCandidato" style="    width: 110px;">Candidatar</button>
-				<button class="btn btn-success" id="btnSalvarBeneficio" style="    width: 130px;" >Cad. Benefício</button>	
+				<button class="btn btn-success" id="btnSalvarBeneficio" style="    width: 160px;" >Cadastrar Benefício</button>	
 			</div>
 			
 					</div>
