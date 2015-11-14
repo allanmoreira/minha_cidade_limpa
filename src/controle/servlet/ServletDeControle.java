@@ -1026,6 +1026,82 @@ public class ServletDeControle {
 
 		return nomeCompletoArquivoComCaminho;
 	}
+
+/* FUNCAO QUE RECEBE O CADASTRO DO BENEFICIO */
+
+@RequestMapping("incluirBeneficio")
+	public void incluirBeneficio(HttpServletRequest request,HttpServletResponse response, HttpSession session) throws IOException {
+		BancoDados bancoDados = new BancoDados();
+		Map<String, Object> map = new HashMap<String, Object>();
+		PessoaJuridica pj = new PessoaJuridica();
+		// Data data = new Data();
+		boolean isValid = false;
+		boolean pfOuPj = true;
+		boolean usuarioLogado = false;
+		boolean jaTemBeneficio = true;
+		boolean jaSeCadastrou = true;
+		Login usuarioSessao = (Login) session.getAttribute("usuarioLogado");
+		String idMark = request.getParameter("idmarcacao");
+		String descricaoBeneficio = request.getParameter("descricao");
+		int idMarkInt = Integer.parseInt(idMark);
+		
+		if (usuarioSessao != null) {
+			usuarioLogado = true;
+	
+			try {
+				
+				bancoDados.conectarAoBco();
+
+				if(!bancoDados.VerificaSeTemBeneficio(idMarkInt))
+				{
+					jaTemBeneficio= false;
+					pj = bancoDados.buscarPessoaJuridica(usuarioSessao.getIdLogin());
+					
+					jaSeCadastrou = false;				
+					
+					BeneficioEmpresa oBeneficio = new BeneficioEmpresa();
+						oBeneficio.setDescricaoBeneficio(descricaoBeneficio);
+						oBeneficio.setIdMarcacaoDepredacao(idMarkInt);
+						oBeneficio.setIdPessoaJuridica(pj.getIdPessoaJuridica());
+					
+					bancoDados.cadastrarBeneficio(oBeneficio);			
+					bancoDados.encerrarConexao();
+					isValid = true;
+					}				
+				}
+	
+			catch (ClassNotFoundException e) {
+				// Erro ao concetar ao banco de dados
+				// Levanta pÃ¡gina Erro 500 (nÃ£o existe)
+				String erro = "CLASSE = ";
+				erro += e.getMessage();
+				erro += " \n ";
+				erro += e.getStackTrace();
+
+			} catch (SQLException e) {
+
+				String erro = "SQL = ";
+				erro += e.getMessage();
+				erro += " \n ";
+				erro += e.getStackTrace();
+				// Erro ao executar a instruÃ§Ã£o
+				// Levanta pÃ¡gina Erro 500 (nÃ£o existe)
+			}
+		} else {
+			isValid = false;
+		}
+
+		map.put("isValid", isValid);
+		map.put("usuarioLogado", usuarioLogado);
+		map.put("jaTemBeneficio", jaTemBeneficio);
+
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(new Gson().toJson(map));
+	}
+
+
+
 	
 	
 	

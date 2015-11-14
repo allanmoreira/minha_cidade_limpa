@@ -507,4 +507,53 @@ public class BancoDados {
 		return Quant;
 }
 
+
+
+/* VERIFICACOES PARA ADD BENEFICIO */
+
+/* Aqui verifica se esse usuario nao esta cadastrado para outra depredacao */
+	public boolean VerificaSeTemBeneficio(int idMarcacao) throws SQLException {
+
+		String sql = "select COUNT(id_marcacao_depredacao) "
+				+ "from beneficio_empresa "
+				+ "where id_marcacao_depredacao = ?";
+
+		preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.setInt(1, idMarcacao);
+		ResultSet resultSet = preparedStatement.executeQuery();
+
+		if (resultSet.next()) {
+			return true;
+		}
+		return false;
+	}
+
+
+public void cadastrarBeneficio(BeneficioEmpresa oBeneficio)
+			throws SQLException {
+		String sql = "insert into beneficio_empresa "
+				+ "(id_marcacao_depredacao,"
+				+ "id_pessoa_juri_fez_narcacao, "
+				+ "descricao, "
+				+ "values (?, ?, ?)";
+
+		preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.setInt(1, oBeneficio.getIdMarcacaoDepredacao());
+		preparedStatement.setString(2, oBeneficio.isCadidatoResolverProblema());
+		preparedStatement.setString(3, oBeneficio.getDescricao());
+
+		String dados = preparedStatement.toString();
+
+		preparedStatement.executeUpdate();
+	}
+
+
+
+
+
+
+
+
+
+
 }
