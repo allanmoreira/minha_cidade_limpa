@@ -282,7 +282,6 @@ function initMap() {
 			$('#btnSalvarCandidato').css('display','none');
 			$('#caminho_imagem_uploadR').css('display','none');
 			$('#btnResolvido').css('display','none');
-			
 		}
 		  	         
 		//var imgAlterado = "\'<c:url value='"+ idImagemCaminho +"'/>\'";  
