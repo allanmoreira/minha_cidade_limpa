@@ -14,6 +14,7 @@ import modelos.Login;
 import modelos.MarcacaoDepredacao;
 import modelos.PessoaFisica;
 import modelos.PessoaJuridica;
+import modelos.BeneficioEmpresa;
 
 public class BancoDados {
 	private Connection connection;
@@ -539,7 +540,7 @@ public void cadastrarBeneficio(BeneficioEmpresa oBeneficio)
 
 		preparedStatement = connection.prepareStatement(sql);
 		preparedStatement.setInt(1, oBeneficio.getIdMarcacaoDepredacao());
-		preparedStatement.setString(2, oBeneficio.getIdPessoaJuridica());
+		preparedStatement.setInt(2, oBeneficio.getIdPessoaJuridica());
 		preparedStatement.setString(3, oBeneficio.getDescricaoBeneficio());
 
 		String dados = preparedStatement.toString();
