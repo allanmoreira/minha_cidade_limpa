@@ -237,6 +237,20 @@ function initMap() {
 		});
 	}
 
+	
+	function verificaBeneficioCadastrado()
+	{
+		if(document.getElementById('txtBeneficioDenuncia').innertHTML == '')
+		{
+			return true;
+		}
+		else
+		{	
+			return false;
+		}
+	}
+	
+	
 	//Preenche todos os campos necessário que irá aparecer na divDenuncia 
 	//quando for clicado em alguma marcação do map
 
@@ -247,8 +261,16 @@ function initMap() {
 		var idDescricao = $('input[id*="ipDadosDigitados"]').val();
 		var idImagemCaminho = $('input[id*="ipCaminho"]').val();
 
-		if(lg == undefined || (lg != undefined &&  lg.PF)){
-				$('#btnSalvarBeneficio').css('display','none');			
+		//verifica se tem beneficio cadastrado para poder mostrar
+		var temBeneficio = verificaBeneficioCadastrado();
+		
+		if(lg == undefined && temBeneficio == false )// || (lg != undefined && lg.PF)){
+		{	
+			
+			alert('entrou no if do pj e do sem beneficio');
+			$('<label type="text" id="txtBeneficioDenuncia" class="estiloPrin" value="Insira aqui o benefício"></label>').css('display','none');
+
+			$('#btnSalvarBeneficio').css('display','');			
 		}
 		
 		if ($('#ipLiberaVotacao').val().indexOf("VOTOSIM") > -1) {

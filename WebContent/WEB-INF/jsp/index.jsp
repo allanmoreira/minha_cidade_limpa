@@ -150,8 +150,7 @@
 							<br /> <label class="sublinhado"><u>Informativo:</u></label> <br />
 							<label type="text" id="txtDescricaoMark" class="estiloPrin"></label>
 							<br /> <label class="sublinhado"><u>Benefício:</u></label> <br />
-							<label type="text" id="txtBeneficioDenuncia" class="estiloPrin">O
-								prof. de Gerência de Projeto, disponibilizará 1 ponto na média.</label>
+							<label type="text" id="txtBeneficioDenuncia" class="estiloPrin"></label>
 							<br />
 							<div id="likesDeslikes" style="display: none; font-size: 10px;">
 								<label class="estiloPrin">Você confirma denúncia?<img
