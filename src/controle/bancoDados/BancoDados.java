@@ -539,8 +539,8 @@ public void cadastrarBeneficio(BeneficioEmpresa oBeneficio)
 
 		preparedStatement = connection.prepareStatement(sql);
 		preparedStatement.setInt(1, oBeneficio.getIdMarcacaoDepredacao());
-		preparedStatement.setString(2, oBeneficio.isCadidatoResolverProblema());
-		preparedStatement.setString(3, oBeneficio.getDescricao());
+		preparedStatement.setString(2, oBeneficio.getIdPessoaJuridica());
+		preparedStatement.setString(3, oBeneficio.getDescricaoBeneficio());
 
 		String dados = preparedStatement.toString();
 
