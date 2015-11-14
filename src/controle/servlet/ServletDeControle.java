@@ -915,10 +915,13 @@ public class ServletDeControle {
 					pf = bancoDados.buscarPessoaFisica(usuarioSessao.getIdLogin());
 					//Colocou o ID da pessoa na marcação
 					marcacao.setIdPessoaFisicaFezMarcacao(pf.getIdPessoaFisica()); 
+					
+					//########################## SOMENTE CADASTRAR SE O STATUS DA MARCAÇÃO FOR 1
 					//Cadastra a maracação
 					idMarcacao = bancoDados.cadastrarMarcacao(marcacao);
 					
 					marcacao.setIdMarcacaoDepredacao(idMarcacao);
+					//##############################################################
 					
 				} catch (ClassNotFoundException e) {
 					System.out.println("Erro de conexão ao banco de dados!" );

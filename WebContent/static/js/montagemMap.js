@@ -230,7 +230,6 @@ function initMap() {
 	//Evento que ocorre quando clica na marcação do mapa
 	function AdicionaInfoMarker(marker, map, infowindow, strDescricao) {
 		google.maps.event.addListener(marker, 'click', function() {
-			HabilitaDivVisuDenuncia(true);
 			infowindow.setContent(strDescricao);
 			infowindow.open(map, marker);
 			PreencheCampos();
@@ -251,31 +250,38 @@ function initMap() {
 
 		if ($('#ipLiberaVotacao').val().indexOf("VOTOSIM") > -1) {
 			$('#btnSalvarCandidato').prop("disabled", true);
+			$('#btnResolvido').css('display','none');
+			$('#caminho_imagem_uploadR').css('display','none');	
 			$('div[id$="likesDeslikes"]').css('display', '');
+			
+			
 		} else {
 			$('div[id$="likesDeslikes"]').css('display', 'none')
 			$('#btnSalvarCandidato').prop("disabled", false);
 
 			if ($('#ipJaSeCandidatou').val().indexOf("CANDSIM") > -1) {
+				$('#btnResolvido').css('display','');
+				$('#caminho_imagem_uploadR').css('display','');
+				//Esconde o botão e bloqueia
+				$('#btnSalvarCandidato').css('display','none');
 				$('#btnSalvarCandidato').prop("disabled", true);
 			} else {
+				$('#btnResolvido').css('display','none');
+				$('#caminho_imagem_uploadR').css('display','none');
 				$('#btnSalvarCandidato').prop("disabled", false);
 			}
 		}
-
-
 		  	         
 		//var imgAlterado = "\'<c:url value='"+ idImagemCaminho +"'/>\'";  
-		   	         
-		       
-
 		$('label[id*="txtEndDenuncia"]').text(idEndereco);
 		$('label[id*="txtMotivoDenuncia"]').text(idMotivo);
 		$('label[id$="txtDescricaoMark"]').text(idDescricao);
 	     $('img[id$="txtImagemDenuncia"]').attr('src',idImagemCaminho);
 	     
 		//$('img[id$="txtImagemDenuncia"]').attr(idImagemCaminho);
-
+	 
+	     HabilitaDivVisuDenuncia(true);
+	     
 	}
 
 
@@ -709,7 +715,7 @@ function initMap() {
 			var caminho_imagem_upload = document.getElementById("caminho_imagem_uploadR").files[0];
 		}
 
-		if(txtComentario != undefined && txtComentario != ""){
+		if( (txtComentario != undefined && txtComentario != "") || status == 4  ){
 			if(caminho_imagem_upload != undefined){
 				Loader(true);
 				var formdata = new FormData();
