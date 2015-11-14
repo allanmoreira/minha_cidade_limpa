@@ -793,7 +793,6 @@ public class ServletDeControle {
 		String idMark = request.getParameter("idMark");
 		String likes = request.getParameter("like");
 		
-		
 		int idMarkInt = Integer.parseInt(idMark.toString().trim());
 		int iLikes = Integer.parseInt(likes);
 		
@@ -875,9 +874,11 @@ public class ServletDeControle {
 			boolean isValid = false;
 			boolean usuarioLogado = false;
 			int idMarcacao = 0;
+			int idMarkInt = 0;
 			PessoaFisica pf = new PessoaFisica();
 			Login usuarioSessao = (Login) session.getAttribute("usuarioLogado");
 			
+			//Verifica se tem alguem logado
 			//Verifica se tem alguem logado
 			if (usuarioSessao != null) {
 				usuarioLogado = true;
@@ -894,6 +895,12 @@ public class ServletDeControle {
 				String txtIcon = request.getParameter("icon");
 				String sData = DateTime.now().toString("yyyyMMdd");
 				String status = request.getParameter("status");
+				String idMark = request.getParameter("idMark");
+				
+				if(status == "4"){
+					System.out.print(idMark);
+					idMarkInt = Integer.parseInt(idMark.toString().trim());
+				}
 								
 				marcacao.setDataMarcacao(sData);
 				marcacao.setTipoDepredacao(dpMotivo);
@@ -921,9 +928,27 @@ public class ServletDeControle {
 					if (status == "1") {
 						idMarcacao = bancoDados.cadastrarMarcacao(marcacao);
 						marcacao.setIdMarcacaoDepredacao(idMarcacao);
-					}
-					//##############################################################
+					} else /* status 4 */ {
 					
+						MarcacaoDepredacao md = bancoDados.buscaMarcacaoEspeficifica(idMarkInt);
+						String shtml = md.getHtml();
+						
+						if(shtml.contains("VOTOSIM")){
+							shtml = shtml.replace("VOTOSIM","VOTONAO");
+						}
+						if(shtml.contains("CANDNAO")){
+							shtml = shtml.replace("CANDNAO","CANDSIM");
+						}
+						if(shtml.contains(idMark + "_A")){
+							shtml = shtml.replace((idMark + "_A"),(idMark + "_R"));
+						}
+						bancoDados.UpdateStatus(idMarkInt,4,shtml);
+						
+						listaMarcacoesCadastradas = bancoDados.listaMarcacoesCadastradas();	
+						
+						bancoDados.encerrarConexao();
+						isValid = true;
+					}
 					
 				} catch (ClassNotFoundException e) {
 					System.out.println("Erro de conexão ao banco de dados!" );
@@ -937,47 +962,42 @@ public class ServletDeControle {
 				if(status == "1")
 					nomeArquivo = idMarcacao + "_A";
 				else
-					nomeArquivo = idMarcacao + "_R";
+					nomeArquivo = idMark + "_R";
 				
 				String nomeCompletoArquivoComCaminho = uploadArquivo(multipartFile, nomeArquivo);
 				nomeCompletoArquivoComCaminho = nomeCompletoArquivoComCaminho.replace("\\","\\\\");
 				//############### Não esquecer de com o nome na imagem ############
-				
-				String contentString = "<div id=\\'content\\'> ";
-				contentString +=  "<div id=\\'siteNotice\\'>" ;
-				contentString += " </div>";
-				contentString +=  "<input id=\\'ipTitulo\\'  type=\\'hidden\\' name=\\'ipTitulo\\' value=\\' "+ dpMotivo +"\\'>";
-				contentString +=  "<input id=\\'ipDenuncia\\'  type=\\'hidden\\' name=\\'idDenuncia\\' value=\\' "+ idMarcacao + "\\'>";
-				contentString +=  "<input id=\\'ipEndereco\\'  type=\\'hidden\\' name=\\'ipEndereco\\' value=\\' "+ txtEndereco +"\\'>";
-				contentString +=  "<input id=\\'ipCaminho\\'  type=\\'hidden\\' name=\\'ipCaminho\\' value=\\'" + nomeCompletoArquivoComCaminho + "\\'>"; 
-				
+
 				if(status == "1"){
-					// STATUS 1 = CANDNAO VOTOSIM
+					String contentString = "<div id=\\'content\\'> ";
+					contentString +=  "<div id=\\'siteNotice\\'>" ;
+					contentString += " </div>";
+					contentString +=  "<input id=\\'ipTitulo\\'  type=\\'hidden\\' name=\\'ipTitulo\\' value=\\' "+ dpMotivo +"\\'>";
+					contentString +=  "<input id=\\'ipDenuncia\\'  type=\\'hidden\\' name=\\'idDenuncia\\' value=\\' "+ idMarcacao + "\\'>";
+					contentString +=  "<input id=\\'ipEndereco\\'  type=\\'hidden\\' name=\\'ipEndereco\\' value=\\' "+ txtEndereco +"\\'>";
+					contentString +=  "<input id=\\'ipCaminho\\'  type=\\'hidden\\' name=\\'ipCaminho\\' value=\\'" + nomeCompletoArquivoComCaminho + "\\'>"; 
 					contentString +=  "<input id=\\'ipLiberaVotacao\\' type=\\'hidden\\' name=\\'ipLiberaVotacao\\' value=\\'VOTOSIM\\'>";
 					contentString +=  "<input id=\\'ipJaSeCandidatou\\' type=\\'hidden\\' name=\\'ipJaSeCandidatou\\' value=\\'CANDNAO\\'>";
-				} else {
-					// STATUS 1 = CANDSIM VOTONAO
-					contentString +=  "<input id=\\'ipLiberaVotacao\\' type=\\'hidden\\' name=\\'ipLiberaVotacao\\' value=\\'VOTONAO\\'>";
-					contentString +=  "<input id=\\'ipJaSeCandidatou\\' type=\\'hidden\\' name=\\'ipJaSeCandidatou\\' value=\\'CANDSIM\\'>";
-				}
+					contentString +=  "<input id=\\'ipCaminhoFotoNova\\'  type=\\'hidden\\' name=\\'ipCaminhoFotoNova\\' value=\\'FFDDNN\\'> ";
+					contentString +=  "<input id=\\'ipDadosDigitados\\'  type=\\'hidden\\' name=\\'ipDadosDigitados\\' value=\\' "+ txtComentario  +"\\'>";
+					contentString +=  "<div id=\\'bodyContent\\'>";
+					contentString +=  "<p> "+ txtComentario  +" </p>";
+					contentString +=  "</div>";
+					contentString +=  "</div>";
 				
-				contentString +=  "<input id=\\'ipCaminhoFotoNova\\'  type=\\'hidden\\' name=\\'ipCaminhoFotoNova\\' value=\\'FFDDNN\\'> ";
-				contentString +=  "<input id=\\'ipDadosDigitados\\'  type=\\'hidden\\' name=\\'ipDadosDigitados\\' value=\\' "+ txtComentario  +"\\'>";
-				contentString +=  "<div id=\\'bodyContent\\'>";
-				contentString +=  "<p> "+ txtComentario  +" </p>";
-				contentString +=  "</div>";
-				contentString +=  "</div>";
-				
-				marcacao.setHtml(contentString.trim());
-				
-				try {
-					bancoDados.UpdateStatus(idMarcacao,Integer.parseInt(status),contentString);
-					listaMarcacoesCadastradas = bancoDados.listaMarcacoesCadastradas();	
-					isValid =true;
-					bancoDados.encerrarConexao();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					marcacao.setHtml(contentString.trim());
+					
+
+					
+					try {
+						bancoDados.UpdateStatus(idMarcacao,Integer.parseInt(status),contentString);
+						listaMarcacoesCadastradas = bancoDados.listaMarcacoesCadastradas();	
+						isValid =true;
+						bancoDados.encerrarConexao();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 						

@@ -702,6 +702,8 @@ function initMap() {
 	// faz a requisicao ajax utilizando o formdata, uma especie de hashmap do jquery
 	function submit_upload_com_ajax(status) {
 
+		//################### QUANDO TENTO ASSIM: O BOTAO SALVAR PARA DE FUNCIONAR :S
+		//var idMark1 = document.getElementById('ipDenuncia').value;
 		var txtEndereco = $("#EnderecoEsc").val();
 		var dpMotivo = $("#dpMotivo").val();
 		var txtComentario = $("#txtComentario").val();
@@ -727,6 +729,8 @@ function initMap() {
 				formdata.append("txtComentario", txtComentario);
 				formdata.append("caminho_imagem_upload", caminho_imagem_upload);
 				formdata.append("status", status);
+				alert(idMark);
+				formdata.append("idMark", idMark);
 
 				var xhr = new XMLHttpRequest();
 
