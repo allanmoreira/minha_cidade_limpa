@@ -621,6 +621,7 @@ function submeter_form_login(){
 				if(data.isValid) {
 					var pessoaFisica = data.pessoaFisica;
 					var pessoaJuridica = data.pessoaJuridica;
+					lg = data.login;
 					
 					// se for pessoa fisica...
 					if(pessoaFisica != null) {
@@ -630,9 +631,7 @@ function submeter_form_login(){
 							width: 'auto',
 							allow_dismiss: false
 						});
-						
-						lg = data.login;
-						
+										
 						//Alterar a Li com o nome da pessoa e opção de editar dados
 						$('#link_login_cadastro').text(pessoaFisica.nome);
 						// Altera o link para o modal de edição do cadastro

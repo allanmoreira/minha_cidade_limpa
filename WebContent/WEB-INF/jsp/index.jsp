@@ -150,7 +150,8 @@
 							<br /> <label class="sublinhado"><u>Informativo:</u></label> <br />
 							<label type="text" id="txtDescricaoMark" class="estiloPrin"></label>
 							<br /> <label class="sublinhado"><u>Benefício:</u></label> <br />
-							<label type="text" id="txtBeneficioDenuncia" class="estiloPrin"></label>
+							<label type="text" id="txtBeneficioDenuncia" class="estiloPrin" style="display: none;"></label>
+							<textarea id="txtBeneficiotext" name="txtBeneficiotext" class="cad_comentario cad_borda" rows="5" cols="40" style="display:none; height: 45px"></textarea>
 							<br />
 							<div id="likesDeslikes" style="display: none; font-size: 10px;">
 								<label class="estiloPrin">Você confirma denúncia?<img
@@ -166,9 +167,9 @@
 					
 			<div style="float: left; padding: 0px 0px 10px; font-size: 10pt;">
 				<button class="btn btn-success" id="btnResolvido"style="    width: 85px;">Finalizar</button>
-				<button class="btn btn-danger" id="btnFecharInfoDenuncia" style="    width: 80px;">Fechar</button>
-				<button class="btn btn-success" id="btnSalvarCandidato" style="    width: 110px;">Candidatar</button>
-				<button class="btn btn-success" id="btnSalvarBeneficio" style="    width: 160px;" >Cadastrar Benefício</button>	
+				<button class="btn btn-danger" id="btnFecharInfoDenuncia" style=" width: 80px;">Fechar</button>
+				<button class="btn btn-success" id="btnSalvarCandidato" style="width: 110px;">Candidatar</button>
+				<button class="btn btn-success" id="btnSalvarBeneficio" style="width: 135px;" >Cad. Benefício</button>	
 			</div>
 			
 					</div>

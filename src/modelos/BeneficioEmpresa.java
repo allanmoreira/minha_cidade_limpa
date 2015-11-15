@@ -6,7 +6,7 @@ import java.io.Serializable;
 public class BeneficioEmpresa extends PessoaJuridica implements Serializable{
 	private int idMarcacaoDepredacao;
 	private String descricaoBeneficio;
-	private boolean aprovado;
+	private int aprovado;
 	private int idPessoaJuridica;
 	public int getIdMarcacaoDepredacao() {
 		return idMarcacaoDepredacao;
@@ -20,10 +20,10 @@ public class BeneficioEmpresa extends PessoaJuridica implements Serializable{
 	public void setDescricaoBeneficio(String descricaoBeneficio) {
 		this.descricaoBeneficio = descricaoBeneficio;
 	}
-	public boolean isAprovado() {
+	public int isAprovado() {
 		return aprovado;
 	}
-	public void setAprovado(boolean aprovado) {
+	public void setAprovado(int aprovado) {
 		this.aprovado = aprovado;
 	}
 

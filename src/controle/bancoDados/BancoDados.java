@@ -252,6 +252,8 @@ public class BancoDados {
 		pj.setTelefone(resultSet.getString("telefone"));
 		pj.setIdLogin(resultSet.getInt("id_login"));
 		pj.setUsername(resultSet.getString("username"));
+		pj.setIdPessoaJuridica(resultSet.getInt("id_pessoa_juridica"));
+		
 		resultSet.close();
 
 		return pj;
@@ -515,7 +517,7 @@ public class BancoDados {
 /* Aqui verifica se esse usuario nao esta cadastrado para outra depredacao */
 	public boolean VerificaSeTemBeneficio(int idMarcacao) throws SQLException {
 
-		String sql = "select COUNT(id_marcacao_depredacao) "
+		String sql = "select * "
 				+ "from beneficio_empresa "
 				+ "where id_marcacao_depredacao = ?";
 
@@ -534,14 +536,15 @@ public void cadastrarBeneficio(BeneficioEmpresa oBeneficio)
 			throws SQLException {
 		String sql = "insert into beneficio_empresa "
 				+ "(id_marcacao_depredacao,"
-				+ "id_pessoa_juri_fez_narcacao, "
-				+ "descricao, "
-				+ "values (?, ?, ?)";
+				+ "id_pessoa_juridica, "
+				+ "descricao_beneficio, aprovado) "
+				+ "values (?, ?, ?, ?)";
 
 		preparedStatement = connection.prepareStatement(sql);
 		preparedStatement.setInt(1, oBeneficio.getIdMarcacaoDepredacao());
 		preparedStatement.setInt(2, oBeneficio.getIdPessoaJuridica());
 		preparedStatement.setString(3, oBeneficio.getDescricaoBeneficio());
+		preparedStatement.setInt(4, oBeneficio.isAprovado());
 
 		String dados = preparedStatement.toString();
 

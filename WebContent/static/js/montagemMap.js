@@ -28,7 +28,26 @@ function initMap() {
 		zoom: 12,
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	});
+	
+	//#################LEGENDA STATUS
+	map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(
+		document.getElementById('legend'));
 
+	var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+	var icons = {
+		Problema: {
+			icon: iconBase + 'static/img/icones/vermelho.png'
+		},
+		Resolvendo: {
+			icon: iconBase + 'static/img/icones/azul.png'
+		},
+		Candidatar: {
+			icon: iconBase + 'static/img/icones/cinza.png'
+		},
+		Pronto: {
+			icon: iconBase + 'static/img/icones/verde.png'
+		}
+	};
 	
 	
 
@@ -91,25 +110,7 @@ function initMap() {
 	};
 
 
-	//#################LEGENDA STATUS
-	map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(
-		document.getElementById('legend'));
-
-	var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-	var icons = {
-		Problema: {
-			icon: iconBase + 'static/img/icones/vermelho.png'
-		},
-		Resolvendo: {
-			icon: iconBase + 'static/img/icones/azul.png'
-		},
-		Candidatar: {
-			icon: iconBase + 'static/img/icones/cinza.png'
-		},
-		Pronto: {
-			icon: iconBase + 'static/img/icones/verde.png'
-		}
-	};
+	
 
 	function CenterControl(controlDiv, map) {
 
@@ -196,6 +197,9 @@ function initMap() {
 			$('div[id$="divCadastro"]').css('display', '')
 		} else {
 			$('textarea[id*="txtComentario"]').val("");
+			$('#caminho_imagem_upload').val("");
+			var $image = $('#div_imagem_upload')
+			$image.removeAttr('src').replaceWith($image.clone());
 			$('div[id$="divFundo"]').css('display', 'none');
 			$('div[id$="divCadastro"]').css('display', 'none')
 		}
@@ -260,18 +264,8 @@ function initMap() {
 		var idEndereco = $('input[id*="ipEndereco"]').val();
 		var idDescricao = $('input[id*="ipDadosDigitados"]').val();
 		var idImagemCaminho = $('input[id*="ipCaminho"]').val();
+		var idBeneficio =$('input[id*="ipBeneficioDenuncia"]').val(); 
 
-		//verifica se tem beneficio cadastrado para poder mostrar
-		var temBeneficio = verificaBeneficioCadastrado();
-		
-		if(lg == undefined || lg != undefined && lg.PF)// && temBeneficio == false )// || (lg != undefined && lg.PF)){
-		{	
-			
-			//alert('entrou no if do pj e do sem beneficio');
-			//$('<label type="text" id="txtBeneficioDenuncia" class="estiloPrin" value="Insira aqui o benefício"  width: 130px></label>').css('display','none');
-			//$('<textarea id="txtBeneficioDenuncia" name="txtBeneficioDenuncia" rows="3" cols="40"></textarea>')
-			//$('#btnSalvarBeneficio').css('display','');			
-		}
 		
 		if ($('#ipLiberaVotacao').val().indexOf("VOTOSIM") > -1) {
 			$('#btnSalvarCandidato').prop("disabled", true);
@@ -298,6 +292,43 @@ function initMap() {
 				$('#btnSalvarCandidato').prop("disabled", false);
 			}
 		}
+		
+		
+		//###### PARTE DO GIOVANNI
+		//verifica se tem beneficio cadastrado para poder mostrar
+	//	var temBeneficio = verificaBeneficioCadastrado();
+		if(idBeneficio.indexOf("NAOBENEF") == -1){//Tem beneficio
+			$('#txtBeneficioDenuncia').css('display','');
+			$('#txtBeneficioDenuncia').text(idBeneficio);
+		}else{
+			$('#txtBeneficioDenuncia').css('display','none');
+			$('#txtBeneficiotext').css('display','none');
+		}
+		
+		if(lg == undefined ) // Não tem ninguem logado
+		{	
+			$('#btnSalvarBeneficio').css('display','none');	
+		}else if (lg.PF){// eh pessoa fisica
+			$('#btnSalvarBeneficio').css('display','none');	
+		}else if (!lg.PF){//eh pessoa juridica
+			//Esconde as divs likes e deslikes
+			$('div[id$="likesDeslikes"]').css('display', 'none');
+			
+			if(idBeneficio.indexOf("NAOBENEF") > -1){//não tem beneficio	
+				//Habilita o botao do beneficio
+				$('#btnSalvarBeneficio').css('display','');
+				$('#txtBeneficiotext').css('display','');		
+				//Esconde o campo label
+				$('#txtBeneficioDenuncia').css('display','none');
+			}else{
+				$('#btnSalvarBeneficio').css('display','none');
+				$('#txtBeneficiotext').css('display','none');
+				$('#txtBeneficioDenuncia').text(idBeneficio);
+			}			
+			
+		}
+		
+		
 		
 		//Finalizaou o processo de denuncia 
 		if(idImagemCaminho.indexOf("_R") > -1){
@@ -471,34 +502,20 @@ function initMap() {
                       
                       setTimeout(function() {
                        	initMap();
-                    	
-        				/*//Retorna a lista do banco e adiciona os dados novos
-        				if (resultJsonDenuncias != undefined) {
-        					var parsed = JSON.parse(resultJsonDenuncias);
-        					for (i = 0; i < parsed.result.length; i++) {
-        						var location = parsed.result[i];
-        						AdicionaMarcacao(location);
-        					}*/
-                       	
-                       	
-          				//Esconde a div
+                                        	
           				Loader(false);
           				HabilitaDivVisuDenuncia(false);
           				
           				$.bootstrapGrowl("Votação computado, obrigado!", {
-    						type: 'success',
-    						align: 'center',
-    						width: 'auto',
-    						allow_dismiss: false
-    					});
-          		
-    					
-          				  
+          						type: 'success',
+    							align: 'center',
+    							width: 'auto',
+    							allow_dismiss: false
+          				});
+          			  
              			}, 4000);
                       
-					
-					
-					
+					return false;
 					
 				} else {
 
@@ -716,13 +733,39 @@ function initMap() {
 
 	});
 	
+	
+	//###################### PARTE DO VINICIUS
 	$('#caminho_imagem_uploadR').on("change", function() {
-		verificaMostraBotao();
+		verificaMostraBotaoR();
 	});
 
 	$('#caminho_imagem_uploadR').on("click", function() {
-		$('#caminho_imagem_uploadR').change(verificaMostraBotao);
+		$('#caminho_imagem_uploadR').change(verificaMostraBotaoR);
 	});
+	
+	
+	function readURLR(input) {
+		if (input != "" && input.files[0]) {
+			var reader = new FileReader();
+
+			reader.onload = function(e) {
+				$("#txtImagemDenuncia").attr('src', e.target.result)
+			};
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+
+	function verificaMostraBotaoR() {
+		$('input[type=file]').each(function(index) {
+			if ($('input[type=file]').eq(index).val() != "") {
+
+				//alert($('#caminho_imagem_upload').val());
+				readURLR(this);
+				//$('.hide').show();
+			}
+		});
+	}
+	
 	
 	
 
@@ -793,15 +836,14 @@ function initMap() {
 		                        formatacaoJSON(responseJson.listaMarcacoesCadastradas)
 		                        
 		                        setTimeout(function() {
-
-		            				//LIMPAR OS CAMPOS
-		                        	
-		                        	initMap();
-		                        		                        	
+		            				//LIMPAR OS CAMPOS		                        	
+		                        	initMap();		                        		                        	
 		                        	Loader(false);
-		                        	HabilitaDivCadastro(false);
-		                        	
-		            				
+		                        	HabilitaDivCadastro(false);   
+		                        	if(status == 4 ){
+		                        		HabilitaDivVisuDenuncia(false);			            					
+		                        	}
+		                        	 
 		            				
 		            				$.bootstrapGrowl("contribuição registrada com sucesso!", {
 		                                  type: 'success',
@@ -875,6 +917,100 @@ function initMap() {
 		 	    	 }
 		 	    	 
 	 }
+	 
+	 
+	 
+	 
+	 
+	 //############## PARTE DO GIOVANNI
+	 
+
+	//Evento do click do botão salvar beneficio da  divDenuncia
+	 $('button[id$="btnSalvarBeneficio"]').click(function() {
+	 //Chama a function q irá chamar a servlet candidatarse
+	    SalvarBeneficio();
+	    return false;
+	 });
+
+
+	function SalvarBeneficio() {
+				 var idMark = document.getElementById('ipDenuncia').value;
+		    	 var descricaoBeneficio = $('#txtBeneficiotext').val();
+
+		    	 if(idMark != "" && idMark != undefined ){
+		    		 if(descricaoBeneficio != "" && descricaoBeneficio != undefined){
+		    		  Loader(true);
+		    		 $.ajax({
+			             	url: 'incluirBeneficio?idmarcacao=' + idMark + '&descricao=' + descricaoBeneficio,
+			             	type: 'POST',
+			             	success: function(data) 
+			             		{
+			             		if (data.isValid){
+			             			
+			             		   formatacaoJSON(data.listaMarcacoesCadastradas)
+			                        
+			                        setTimeout(function() {
+			            				//LIMPAR OS CAMPOS		                        	
+			                        	initMap();		                        		                        	
+			                        	Loader(false);
+			                        	HabilitaDivCadastro(false);                    	
+			            				
+			               				$.bootstrapGrowl("beneficio registrado com sucesso!", {
+			                                  type: 'success',
+			                                  align: 'center',
+			                                  width: 'auto',
+			                                  allow_dismiss: false
+			                              });
+			            				  
+			               				}, 5000);
+	 
+		    		                }
+			             		else{
+			             			Loader(false);
+			             			if (!data.usuarioLogado) {
+				                         $.bootstrapGrowl("Usuário não está logado! Faça login ou cadastre-se!", {
+				                             type: 'success',
+				                             align: 'center',
+				                             width: 'auto',
+				                             allow_dismiss: false
+				                         });
+
+				                     }else if (data.jaTemBeneficio){
+				                    	  $.bootstrapGrowl("Esta depredação já tem um Beneficio!", {
+					                             type: 'danger',
+					                             align: 'center',
+					                             width: 'auto',
+					                             allow_dismiss: false
+					                         });
+				                    }
+			             			else {
+				                         $.bootstrapGrowl("Erro ao se candidatar, entre em contato conosco!", {
+				                             type: 'danger',
+				                             align: 'center',
+				                             width: 'auto',
+				                             allow_dismiss: false
+				                         });
+				                     }
+			             			
+			             			
+			             		}
+			             }
+		    		 });
+		    		 }else{
+		    			 $.bootstrapGrowl("Informe o beneficio!", {
+			                   type: 'danger',
+			                   align: 'center',
+			                   width: 'auto',
+			                   allow_dismiss: false
+			               });
+		    			 
+		    		 }
+		    		 	  		 
+		    	 }	     
+		     }
+
+
+	
 	
 }
 
@@ -1000,95 +1136,6 @@ function RetornaIconeStatus(status) {
 			return "";
 	}
 }
-
-
-//Evento do click do botão salvar beneficio da  divDenuncia
-		 $('button[id$="btnSalvarBeneficio"]').click(function() {
-			 //Chama a function q irá chamar a servlet candidatarse
-		     SalvarBeneficio();
-		     HabilitaDivBeneficio(false);
-		 });
-
-
-function SalvarBeneficio() {
-	    	 var idMark = document.getElementById('ipDenuncia').value;
-	    	 var descricaoBeneficio = document.getElementById('txtBeneficioDenuncia').value;
-
-	    	 if(idMark != "" && idMark != undefined){
-	    		 Loader(true);
-	    		 $.ajax({
-		             	url: 'incluirBeneficio?idmarcacao=' + idMark + '&descricao=' + descricaoBeneficio,
-		             	type: 'POST',
-		             	success: function(data) 
-		             		{
-		             		if (data.isValid)
-		             			{
-		             			
-		             		  	buscaListaMarcacoesCadastradas();
-			                    setTimeout(function() {
-		            		             //Retorna a lista do banco e adiciona os dados novos
-		            		             if (resultJsonDenuncias != undefined) {
-		            		                 var parsed = JSON.parse(resultJsonDenuncias);
-		            		                 for (i = 0; i < parsed.result.length; i++) {
-		            		                     var location = parsed.result[i];
-		            		                     AdicionaMarcacao(location);
-		            		                 }
-		            		             }
-		            		   }, 7000);	    
-		             				
-			                    Loader(true);
-		             			
-			                    	$.bootstrapGrowl
-		             				("Registro incluído com sucesso!", 
-		             					{
-		             					type: 'success',
-		             					align: 'center',
-		             					width: 'auto',
-		             					allow_dismiss: false
-		             					}
-		             				);
-		             			
-		             				
-		             				//window.setTimeout('location.reload()', 3000);
-		             				 //setTimeout(function() { initMap();}, 1000);
-		             				 
-	    		                }
-		             		else{
-		             			if (!data.usuarioLogado) {
-			                         $.bootstrapGrowl("Usuário não está logado! Faça login ou cadastre-se!", {
-			                             type: 'success',
-			                             align: 'center',
-			                             width: 'auto',
-			                             allow_dismiss: false
-			                         });
-
-			                     }else if (data.jaTemBeneficio){
-			                    	  $.bootstrapGrowl("Esta depredação já tem um Beneficio!", {
-				                             type: 'danger',
-				                             align: 'center',
-				                             width: 'auto',
-				                             allow_dismiss: false
-				                         });
-			                    }
-		             			else {
-			                         $.bootstrapGrowl("Erro ao se candidatar, entre em contato conosco!", {
-			                             type: 'danger',
-			                             align: 'center',
-			                             width: 'auto',
-			                             allow_dismiss: false
-			                         });
-			                     }
-		             			
-		             			
-		             		}
-		             }
-	    		 });
-	    		 	  		 
-	    		 //window.setTimeout('location.reload()', 3000);
-	    		 
-	    		 
-	       	 }	     
-	     }
 
 
 

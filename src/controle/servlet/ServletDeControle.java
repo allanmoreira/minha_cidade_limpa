@@ -147,33 +147,29 @@ public class ServletDeControle {
 				bancoDados.conectarAoBco();
 				boolean autorizaLogar = bancoDados.login(login);
 				login = bancoDados.dadosUsuarioLogado(login);
-				bancoDados.encerrarConexao();
-				
-//				if (autorizaLogar) {
-					
+							
 					if(login.isPF()){
-						bancoDados.conectarAoBco();
+					
 						pessoaFisica = bancoDados.buscarPessoaFisica(login.getIdLogin());
 						dataNascimento = pessoaFisica.getDataNascimentoString();
 						nomeUsuarioLogado = pessoaFisica.getNome();
-						bancoDados.encerrarConexao();
 						// para caso a página seja atualizada
 						session.setAttribute("pessoaFisica", pessoaFisica);
 					}
 					else{
-						bancoDados.conectarAoBco();
+		
 						pessoaJuridica = bancoDados.buscarPessoaJuridica(login.getIdLogin());
 						nomeUsuarioLogado = pessoaJuridica.getNome();
-						bancoDados.encerrarConexao();
+
 						// para caso a página seja atualizada
 						session.setAttribute("pessoaJuridica", pessoaJuridica);
 					}
 					
-					session.setAttribute("usuarioLogado", login);
-					// utilizado para peencher o campo caso a pagina seja atualizada
-					session.setAttribute("nomeUsuarioLogado", nomeUsuarioLogado);
-					isValid = true;
-//				}
+			bancoDados.encerrarConexao();
+			session.setAttribute("usuarioLogado", login);
+			// utilizado para peencher o campo caso a pagina seja atualizada
+			session.setAttribute("nomeUsuarioLogado", nomeUsuarioLogado);
+			isValid = true;
 				
 			}
 
@@ -802,6 +798,8 @@ public class ServletDeControle {
 			try {
 				
 				bancoDados.conectarAoBco();
+				
+				
 				pf = bancoDados.buscarPessoaFisica(usuarioSessao.getIdLogin());
 				jaVotou= bancoDados.VerificaSeUsuarioJaVotou(idMarkInt, pf.getIdPessoaFisica());
 				if(!jaVotou){
@@ -819,10 +817,9 @@ public class ServletDeControle {
 						}
 						
 						listaMarcacoesCadastradas = bancoDados.listaMarcacoesCadastradas();	
-						
-						bancoDados.encerrarConexao();
 						isValid = true;
 				}
+				bancoDados.encerrarConexao();
 	
 			} catch (ClassNotFoundException e) {
 				// Erro ao concetar ao banco de dados
@@ -876,6 +873,7 @@ public class ServletDeControle {
 			int idMarcacao = 0;
 			int idMarkInt = 0;
 			PessoaFisica pf = new PessoaFisica();
+			PessoaJuridica pj = new PessoaJuridica();
 			Login usuarioSessao = (Login) session.getAttribute("usuarioLogado");
 			
 			//Verifica se tem alguem logado
@@ -916,10 +914,12 @@ public class ServletDeControle {
 					//Cadastra a maracação
 					if (status.equals("1")) {
 						
-						//Buscou a pessoa logada no banco
-						pf = bancoDados.buscarPessoaFisica(usuarioSessao.getIdLogin());
-						//Colocou o ID da pessoa na marcação
-						marcacao.setIdPessoaFisicaFezMarcacao(pf.getIdPessoaFisica()); 	
+						
+							//Buscou a pessoa logada no banco
+							pf = bancoDados.buscarPessoaFisica(usuarioSessao.getIdLogin());
+							//Colocou o ID da pessoa na marcação
+							marcacao.setIdPessoaFisicaFezMarcacao(pf.getIdPessoaFisica()); 			
+						
 						idMarcacao = bancoDados.cadastrarMarcacao(marcacao);
 						marcacao.setIdMarcacaoDepredacao(idMarcacao);
 					
@@ -982,6 +982,7 @@ public class ServletDeControle {
 					contentString +=  "<input id=\\'ipLiberaVotacao\\' type=\\'hidden\\' name=\\'ipLiberaVotacao\\' value=\\'VOTOSIM\\'>";
 					contentString +=  "<input id=\\'ipJaSeCandidatou\\' type=\\'hidden\\' name=\\'ipJaSeCandidatou\\' value=\\'CANDNAO\\'>";
 					contentString +=  "<input id=\\'ipCaminhoFotoNova\\'  type=\\'hidden\\' name=\\'ipCaminhoFotoNova\\' value=\\'FFDDNN\\'> ";
+					contentString +=  "<input id=\\'ipBeneficioDenuncia\\'  type=\\'hidden\\' name=\\'ipBeneficioDenuncia\\' value=\\'NAOBENEF\\'> ";
 					contentString +=  "<input id=\\'ipDadosDigitados\\'  type=\\'hidden\\' name=\\'ipDadosDigitados\\' value=\\' "+ txtComentario  +"\\'>";
 					contentString +=  "<div id=\\'bodyContent\\'>";
 					contentString +=  "<p> "+ txtComentario  +" </p>";
@@ -1075,7 +1076,8 @@ public class ServletDeControle {
 		Login usuarioSessao = (Login) session.getAttribute("usuarioLogado");
 		String idMark = request.getParameter("idmarcacao");
 		String descricaoBeneficio = request.getParameter("descricao");
-		int idMarkInt = Integer.parseInt(idMark);
+		int idMarkInt = Integer.parseInt(idMark.toString().trim());
+		ArrayList<MarcacaoDepredacao> listaMarcacoesCadastradas = new ArrayList<MarcacaoDepredacao>();
 		
 		if (usuarioSessao != null) {
 			usuarioLogado = true;
@@ -1095,8 +1097,21 @@ public class ServletDeControle {
 						oBeneficio.setDescricaoBeneficio(descricaoBeneficio);
 						oBeneficio.setIdMarcacaoDepredacao(idMarkInt);
 						oBeneficio.setIdPessoaJuridica(pj.getIdPessoaJuridica());
-					
-					bancoDados.cadastrarBeneficio(oBeneficio);			
+						oBeneficio.setAprovado(1);
+						bancoDados.cadastrarBeneficio(oBeneficio);		
+						
+						MarcacaoDepredacao md = bancoDados.buscaMarcacaoEspeficifica(idMarkInt);
+						String shtml = md.getHtml();
+						
+						if(shtml.contains("NAOBENEF")){
+							shtml = shtml.replace("NAOBENEF",descricaoBeneficio);
+						}
+						
+						int statusMark = Integer.parseInt(md.getStatus().toString().trim());
+						bancoDados.UpdateStatus(idMarkInt,statusMark,shtml);
+						listaMarcacoesCadastradas = bancoDados.listaMarcacoesCadastradas();	
+											
+						
 					bancoDados.encerrarConexao();
 					isValid = true;
 					}				
@@ -1126,6 +1141,9 @@ public class ServletDeControle {
 		map.put("isValid", isValid);
 		map.put("usuarioLogado", usuarioLogado);
 		map.put("jaTemBeneficio", jaTemBeneficio);
+		map.put("listaMarcacoesCadastradas", listaMarcacoesCadastradas);
+			
+		
 
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
