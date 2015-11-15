@@ -445,6 +445,7 @@ function initMap() {
 		if (idMark != "" || idMark != undefined) {
 			Loader(true);
 			GravaLikesDeslikes(1, idMark);
+			return false;
 		}
 	});
 
@@ -453,6 +454,7 @@ function initMap() {
 		if (idMark != "" || idMark != undefined) {
 			Loader(true);
 			GravaLikesDeslikes(2, idMark);
+			return false;
 		}
 	});
 
@@ -711,24 +713,31 @@ function initMap() {
 
 	$('#caminho_imagem_upload').on("click", function() {
 		$('#caminho_imagem_upload').change(verificaMostraBotao);
-		//verificaMostraBotao();
-		//$("#container_img").append($('<img />'));
+
 	});
+	
+	$('#caminho_imagem_uploadR').on("change", function() {
+		verificaMostraBotao();
+	});
+
+	$('#caminho_imagem_uploadR').on("click", function() {
+		$('#caminho_imagem_uploadR').change(verificaMostraBotao);
+	});
+	
+	
 
 	//cadastrar marcacao com problema
 	$('button[id$="btnSalvar"]').click(function() {
 		submit_upload_com_ajax(1);
 		return false;
-		//Esconde a div
-		//HabilitaDivCadastro(false);
+
 	});
 
 	//para usar o upload da foto do problema resolvido
 	$('button[id$="btnResolvido"]').click(function() {
 		submit_upload_com_ajax(4);
 		return false;
-		//Esconde a div
-		//HabilitaDivCadastro(false);
+
 	});
 		
 		
@@ -790,7 +799,8 @@ function initMap() {
 		                        	initMap();
 		                        		                        	
 		                        	Loader(false);
-		            				HabilitaDivVisuDenuncia(false);
+		                        	HabilitaDivCadastro(false);
+		                        	
 		            				
 		            				
 		            				$.bootstrapGrowl("contribuição registrada com sucesso!", {
@@ -1005,7 +1015,7 @@ function SalvarBeneficio() {
 	    	 var descricaoBeneficio = document.getElementById('txtBeneficioDenuncia').value;
 
 	    	 if(idMark != "" && idMark != undefined){
-	    		 
+	    		 Loader(true);
 	    		 $.ajax({
 		             	url: 'incluirBeneficio?idmarcacao=' + idMark + '&descricao=' + descricaoBeneficio,
 		             	type: 'POST',
@@ -1026,6 +1036,7 @@ function SalvarBeneficio() {
 		            		             }
 		            		   }, 7000);	    
 		             				
+			                    Loader(true);
 		             			
 			                    	$.bootstrapGrowl
 		             				("Registro incluído com sucesso!", 
