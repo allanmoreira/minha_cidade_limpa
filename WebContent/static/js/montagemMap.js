@@ -862,8 +862,16 @@ function initMap() {
 		                        return true;
 		                    } else {
 		                    	Loader(false);
-		                        if (!responseJson.usuarioLogado) {
+		                    	if (!responseJson.usuarioLogado) {
 		                            $.bootstrapGrowl("Usuário não está logado! Faça login ou cadastre-se!", {
+		                                type: 'danger',
+		                                align: 'center',
+		                                width: 'auto',
+		                                allow_dismiss: false
+		                            });
+
+		                        } else if (!responseJson.usuarioCerto) {
+		                            $.bootstrapGrowl("Usuário não candidatou-se para resolver este problema!", {
 		                                type: 'danger',
 		                                align: 'center',
 		                                width: 'auto',

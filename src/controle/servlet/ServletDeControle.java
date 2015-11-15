@@ -870,6 +870,7 @@ public class ServletDeControle {
 			BancoDados bancoDados = new BancoDados();
 			boolean isValid = false;
 			boolean usuarioLogado = false;
+			boolean usuarioCerto = false;
 			int idMarcacao = 0;
 			int idMarkInt = 0;
 			PessoaFisica pf = new PessoaFisica();
@@ -926,31 +927,37 @@ public class ServletDeControle {
 					} else /* status 4 */ {
 					
 						MarcacaoDepredacao md = bancoDados.buscaMarcacaoEspeficifica(idMarkInt);
-						
+
+						pf = bancoDados.buscarPessoaFisica(usuarioSessao.getIdLogin());
 						//######### TEM QUE VERIFICAR SE A PESSOA Q ESTA FINALIZANDO EH A MSM Q ESTA CANDIDATADA A RESOLVER O PROBLEMA
 						
+						if (bancoDados.verificaCandidatoCerto(pf.getIdPessoaFisica(), md.getIdMarcacaoDepredacao())) {
+							
+							usuarioCerto = true;
 						
-						//#####################################
-						
-						String shtml = md.getHtml();
-						
-						//if(shtml.contains("VOTOSIM")){
-						//	shtml = shtml.replace("VOTOSIM","VOTONAO");
-						//}
-						//if(shtml.contains("CANDNAO")){
-						//	shtml = shtml.replace("CANDNAO","CANDSIM");
-						//}
-						
-						if(shtml.contains(idMark + "_A")){
-							shtml = shtml.replace((idMark + "_A"),(idMark + "_R"));
+							//#####################################
+							
+							String shtml = md.getHtml();
+							
+							//if(shtml.contains("VOTOSIM")){
+							//	shtml = shtml.replace("VOTOSIM","VOTONAO");
+							//}
+							//if(shtml.contains("CANDNAO")){
+							//	shtml = shtml.replace("CANDNAO","CANDSIM");
+							//}
+							
+							if(shtml.contains(idMark + "_A")){
+								shtml = shtml.replace((idMark + "_A"),(idMark + "_R"));
+							}
+							
+							bancoDados.UpdateStatus(idMarkInt,4,shtml);
+							
+							listaMarcacoesCadastradas = bancoDados.listaMarcacoesCadastradas();	
+							
+							bancoDados.encerrarConexao();
+							isValid = true;
+							
 						}
-						
-						bancoDados.UpdateStatus(idMarkInt,4,shtml);
-						
-						listaMarcacoesCadastradas = bancoDados.listaMarcacoesCadastradas();	
-						
-						bancoDados.encerrarConexao();
-						isValid = true;
 					}
 					
 				} catch (ClassNotFoundException e) {
@@ -1008,6 +1015,7 @@ public class ServletDeControle {
 //	       	resposta a requisicao
 	   		map.put("isValid", isValid);
 			map.put("usuarioLogado", usuarioLogado);
+			map.put("usuarioCerto", usuarioCerto);
 			map.put("listaMarcacoesCadastradas", listaMarcacoesCadastradas);
 			
 			response.setContentType("application/json");

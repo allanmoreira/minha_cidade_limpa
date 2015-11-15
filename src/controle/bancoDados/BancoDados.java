@@ -404,6 +404,26 @@ public class BancoDados {
 		return false;
 	}
 
+
+	/* Aqui verifica se esse usuario é o candidato certo */
+	public boolean verificaCandidatoCerto(int idPessoa, int idMarcacao)
+			throws SQLException {
+
+		String sql = "select * " + "from cadidatura_resolucao_problema "
+				+ "where id_pessoa_fisica = ? and "
+				+ "id_marcacao_depredacao = ? ";
+
+		preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.setInt(1, idPessoa);
+		preparedStatement.setInt(2, idMarcacao);
+		ResultSet resultSet = preparedStatement.executeQuery();
+
+		if (resultSet.next()) {
+			return true;
+		}
+		return false;
+	}
+
 	/* aqui cadastra no banco a relacao usuario x problema */
 	public boolean setCandidatura(int idPessoa, int idMarcacao)
 			throws SQLException {
