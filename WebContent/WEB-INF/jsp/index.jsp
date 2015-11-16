@@ -151,7 +151,7 @@
 							<label type="text" id="txtDescricaoMark" class="estiloPrin"></label>
 							<br /> <label class="sublinhado"><u>Benefício:</u></label> <br />
 							<label type="text" id="txtBeneficioDenuncia" class="estiloPrin" style="display: none;"></label>
-							<textarea id="txtBeneficiotext" name="txtBeneficiotext" class="cad_comentario cad_borda" rows="5" cols="40" style="display:none; height: 45px"></textarea>
+							<textarea id="txtBeneficiotext" name="txtBeneficiotext"  maxlength="40" class="cad_comentario cad_borda" rows="5" cols="40" style="display:none; height: 45px"></textarea>
 							<br />
 							<div id="likesDeslikes" style="display: none; font-size: 10px;">
 								<label class="estiloPrin">Você confirma denúncia?<img
@@ -928,7 +928,8 @@
 
 							<div id="gmap"
 								style="max-width: 972px; height: 300px; border: 5px solid orange; margin: 0px auto;"></div>
-							<div id="legend"
+						
+						<!-- 	<div id="legend"
 								style="background-color: rgba(128, 128, 128, 0.89) !important;">
 								Status:
 								<div style="text-align: left;">
@@ -949,11 +950,20 @@
 											style="max-width: 20px" />:Candidatar
 									</div>
 								</div>
-
+ -->
 							</div>
 							<!--	<iframe src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Kuningan,+Jakarta+Capital+Region,+Indonesia&amp;aq=3&amp;oq=kuningan+&amp;sll=37.0625,-95.677068&amp;sspn=37.410045,86.572266&amp;ie=UTF8&amp;hq=&amp;hnear=Kuningan&amp;t=m&amp;z=14&amp;ll=-6.238824,106.830177&amp;output=embed">
-											</iframe> -->
+										</iframe> -->
+										
+											<div style="width: 100%;max-width: 972px; background: darkgoldenrod; text-align: center;  margin: 0 auto;">
+	<img src="<c:url value="static/img/icones/vermelho.png"/>"	style="max-width: 20px" />:Problema &nbsp;
+	<img src="<c:url value="static/img/icones/verde.png"/>"	style="max-width: 20px" />:Pronto &nbsp;
+	<img src="<c:url value="static/img/icones/azul.png"/>"	style="max-width: 20px" />:Resolvendo &nbsp;
+		<img src="<c:url value="static/img/icones/cinza.png"/>" style="max-width: 20px" />:Candidatar &nbsp;
+
+</div>
 						</div>
+					
 
 
 					</div>

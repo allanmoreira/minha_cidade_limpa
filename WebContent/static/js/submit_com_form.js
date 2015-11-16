@@ -531,6 +531,7 @@ function submeter_form_logout(){
 		data: {'submit':true},
 		success: function(data){
 			if(data.isValid) {
+				lg = undefined;
 				// Apaga os formulários de edição de PF e de PJ
 				$('#form_editar_cadastro_pessoa_fisica')[0].reset();
 				$('#form_editar_cadastro_pessoa_juridica')[0].reset();

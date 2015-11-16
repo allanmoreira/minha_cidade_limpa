@@ -29,26 +29,7 @@ function initMap() {
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	});
 	
-	//#################LEGENDA STATUS
-	map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(
-		document.getElementById('legend'));
 
-	var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-	var icons = {
-		Problema: {
-			icon: iconBase + 'static/img/icones/vermelho.png'
-		},
-		Resolvendo: {
-			icon: iconBase + 'static/img/icones/azul.png'
-		},
-		Candidatar: {
-			icon: iconBase + 'static/img/icones/cinza.png'
-		},
-		Pronto: {
-			icon: iconBase + 'static/img/icones/verde.png'
-		}
-	};
-	
 	
 /*
 	//Leitura do json DATAPOA
@@ -60,6 +41,7 @@ function initMap() {
 	}
 */
 	if(resultJsonDenuncias != undefined){
+		
 		var parsed = JSON.parse(resultJsonDenuncias);
 		for (i = 0; i < parsed.result.length; i++) {
 			var location = parsed.result[i];
@@ -176,34 +158,10 @@ function initMap() {
 
 
 
-	//Click para fechar a div de cadastro
-	$('button[id*="btnFechar"]').click(function() {
-		HabilitaDivCadastro(false);
-	});
 
 
-
-	//Click para fechar a div de cadastro
-	$('button[id*="btnFecharInfoDenuncia"]').click(function() {
-		HabilitaDivVisuDenuncia(false);
-	});
-
-
-	//Função que mostra e esconde a div fundo e cadastro
-	function HabilitaDivCadastro(bMostraDiv) {
-		if (bMostraDiv) {
-			$('img[id$="gifLoader"]').css('display', 'none');
-			$('div[id$="divFundo"]').css('display', '');
-			$('div[id$="divCadastro"]').css('display', '')
-		} else {
-			$('textarea[id*="txtComentario"]').val("");
-			$('#caminho_imagem_upload').val("");
-			var $image = $('#div_imagem_upload')
-			$image.removeAttr('src').replaceWith($image.clone());
-			$('div[id$="divFundo"]').css('display', 'none');
-			$('div[id$="divCadastro"]').css('display', 'none')
-		}
-	}
+	
+	
 
 	//Função que mostra e esconde a div fundo e cadastro
 	function HabilitaDivVisuDenuncia(bMostraDiv) {
@@ -221,17 +179,7 @@ function initMap() {
 			$('div[id$="gmap"] [class="gm-style-iw"]').parent().children(':eq(2)').click()
 		}
 	}
-
-
-	//################################ DIV CANDIDATAR-SE PARA RESOLVER O PROBLEMA DA DENUNCIA
-
-	//Evento do click do botão salvar candidato da  divDenuncia
-	$('button[id$="btnSalvarCandidato"]').click(function() {
-		//Chama a function q irá chamar a servlet candidatarse
-		SalvarCandidato();
-		return false;
-	});
-
+	
 	//Evento que ocorre quando clica na marcação do mapa
 	function AdicionaInfoMarker(marker, map, infowindow, strDescricao) {
 		google.maps.event.addListener(marker, 'click', function() {
@@ -307,11 +255,21 @@ function initMap() {
 			$('#txtBeneficiotext').css('display','none');
 		}
 		
-		if(lg == undefined ) // Não tem ninguem logado
+		if(lg == undefined ) // Não tem ninguem logado		
 		{	
+		//	$('#caminho_imagem_upload').css('display','none');
+			$('#caminho_imagem_uploadR').css('display','none');
+			$('#btnResolvido').css('display','none');
+			$('#btnSalvarCandidato').css('display','none');
+			$('div[id$="likesDeslikes"]').css('display', 'none');
+			$('#txtBeneficiotext').css('display','none');
 			$('#btnSalvarBeneficio').css('display','none');	
+			
 		}else if (lg.PF){// eh pessoa fisica
+			$('div[id$="likesDeslikes"]').css('display', '');
+			
 			$('#btnSalvarBeneficio').css('display','none');	
+			$('#txtBeneficiotext').css('display','none');
 		}else if (!lg.PF){//eh pessoa juridica
 			//Esconde as divs likes e deslikes
 			$('div[id$="likesDeslikes"]').css('display', 'none');
@@ -342,6 +300,7 @@ function initMap() {
 			$('#btnResolvido').css('display','none');
 			$('#btnSalvarBeneficio').css('display','none');
 			$('#txtBeneficiotext').css('display','none');
+			$('div[id$="likesDeslikes"]').css('display', 'none');
 		}
 		  	         
 		//var imgAlterado = "\'<c:url value='"+ idImagemCaminho +"'/>\'";  
@@ -355,6 +314,151 @@ function initMap() {
 	     HabilitaDivVisuDenuncia(true);
 	     
 	}
+
+
+
+function buscaListaMarcacoesCadastradas() {}
+$.ajax({
+	url: 'lista_marcacoes_cadastradas',
+	type: 'POST',
+	dataType: 'json',
+	contentType: 'application/json; charset=utf-8',
+	success: function(data) {
+		if (data.isValid) {
+			var listaMarcacoes = data.listaMarcacoesCadastradas;
+			resultJsonDenuncias = '{ "result" : [';
+			for (var i = 0; i < listaMarcacoes.length; i++) {
+
+				resultJsonDenuncias += '{';
+				try {
+					resultJsonDenuncias += '"title":"' + listaMarcacoes[i].tipoDepredacao + "";
+				} catch (err) {
+					resultJsonDenuncias += '", "title":"';
+				}
+				try {
+					resultJsonDenuncias += '", "categoria":"' + listaMarcacoes[i].descricao + "";
+				} catch (err) {
+					resultJsonDenuncias += '", "categoria":"';
+				}
+				try {
+					resultJsonDenuncias += '", "lat":"' + listaMarcacoes[i].posLat + "";
+				} catch (err) {
+					resultJsonDenuncias += '", "lat":"';
+				}
+				try {
+					resultJsonDenuncias += '", "lon":"' + listaMarcacoes[i].posLon + "";
+				} catch (err) {
+					resultJsonDenuncias += '", "lon":"';
+				}
+				try {
+					resultJsonDenuncias += '", "icon":"' + RetornaIconeStatus(listaMarcacoes[i].status) + "";
+				} catch (err) {
+					resultJsonDenuncias += '", "icon":"';
+				}
+				try {
+
+					resultJsonDenuncias += '", "html":"' + listaMarcacoes[i].html.toString().trim().replace(new RegExp("\'", "g"), "\"") + "";
+				} catch (err) {
+					resultJsonDenuncias += '", "html":"';
+				}
+
+				resultJsonDenuncias += '" }';
+				resultJsonDenuncias += i < listaMarcacoes.length - 1 ? ',' : '';
+
+			}
+			resultJsonDenuncias += ' ]}';
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+});
+
+
+
+
+function RetornaIconeStatus(status) {
+	switch (status) {
+		case "1":
+			return 'static/img/icones/vermelho.png';
+		case "2":
+			return 'static/img/icones/azul.png';
+		case "3":
+			return 'static/img/icones/cinza.png'
+		case "4":
+			return 'static/img/icones/verde.png'
+		default:
+			return "";
+	}
+}
+
+
+	
+	
+}
+
+
+	//Click para fechar a div de cadastro
+	$('button[id*="btnFechar"]').click(function() {
+		HabilitaDivCadastro(false);
+	});
+
+
+
+	//Click para fechar a div de cadastro
+	$('button[id*="btnFecharInfoDenuncia"]').click(function() {
+		HabilitaDivVisuDenuncia(false);
+	});
+
+
+	//Função que mostra e esconde a div fundo e cadastro
+	function HabilitaDivCadastro(bMostraDiv) {
+		if (bMostraDiv) {
+			$('img[id$="gifLoader"]').css('display', 'none');
+			$('div[id$="divFundo"]').css('display', '');
+			$('div[id$="divCadastro"]').css('display', '')
+		} else {
+			$('textarea[id*="txtComentario"]').val("");
+			$('#caminho_imagem_upload').val("");
+			var $image = $('#div_imagem_upload')
+			$image.removeAttr('src').replaceWith($image.clone());
+			$('div[id$="divFundo"]').css('display', 'none');
+			$('div[id$="divCadastro"]').css('display', 'none')
+		}
+	}
+
+	//Função que mostra e esconde a div fundo e cadastro
+	function HabilitaDivVisuDenuncia(bMostraDiv) {
+		if (bMostraDiv) {
+			$('div[id$="divFundo"]').css('display', '');
+			$('div[id$="divDenuncia"]').css('display', '')
+		} else {
+			$('label[id*="txtEndDenuncia"]').text("");
+			$('label[id*="txtMotivoDenuncia"]').text("");
+			$('input[id$="txtDescricaoMark"]').text("");
+			$('label[id*="txtImagemDenuncia"]').text("");
+
+			$('div[id$="divFundo"]').css('display', 'none');
+			$('div[id$="divDenuncia"]').css('display', 'none')
+			$('div[id$="gmap"] [class="gm-style-iw"]').parent().children(':eq(2)').click()
+		}
+	}
+
+
+
+
+	//################################ DIV CANDIDATAR-SE PARA RESOLVER O PROBLEMA DA DENUNCIA
+
+	//Evento do click do botão salvar candidato da  divDenuncia
+	$('button[id$="btnSalvarCandidato"]').click(function() {
+		//Chama a function q irá chamar a servlet candidatarse
+		SalvarCandidato();
+		event.stopImmediatePropagation();
+		return false;
+	});
+
+	
 
 
 	function SalvarCandidato() {
@@ -435,27 +539,24 @@ function initMap() {
 				}
 			});
 
-			//window.setTimeout('location.reload()', 3000);
-
-			//APÓS O RETORNO DE SE CANDIDATAR VERIFICAR SE O STATUS ESTÀ TROCADO.
-			//2º APÓS OK chamar esta function (buscaListaMarcacoesCadastradas())	 
-			buscaListaMarcacoesCadastradas();
-			//3º Executar este script abaixo    		 
-			setTimeout(function() {
-				//Retorna a lista do banco e adiciona os dados novos
-				if (resultJsonDenuncias != undefined) {
-					var parsed = JSON.parse(resultJsonDenuncias);
-					for (i = 0; i < parsed.result.length; i++) {
-						var location = parsed.result[i];
-						AdicionaMarcacao(location);
-					}
-				}
-			}, 5000);
+		
+	
 
 		}
 	}
 
-	//####################################### LIKES E DESLIKES ###################################################
+	
+	
+
+
+
+
+
+
+
+
+
+
 
 	function Loader(habilita) {
 		if (habilita) {
@@ -469,6 +570,10 @@ function initMap() {
 
 	}
 
+
+
+
+	//####################################### LIKES E DESLIKES ###################################################
 
 
 
@@ -528,6 +633,8 @@ function initMap() {
 
 	
 
+
+
 	$('img[id$="imgDeslikes"]').on("click",function(event) {
 		var idMark = document.getElementById('ipDenuncia').value;
 		if (idMark != "" || idMark != undefined) {
@@ -550,162 +657,8 @@ function initMap() {
 
 	});
 	
-	
-	
-	//########################## FUNCOES E ACOES QUE IRÃO ACONTECER QUANDO HOUVER UMA DENUNCIA ######################	     
-	//Evento do click que ocorre quando salva a marcação
-	//		 $('button[id$="btnSalvar"]').click(function() {
-	//			 //Chama a function que recolhe os dados 
-	//		     SalvaDados();
-	//		     //Esconde a div
-	//		     HabilitaDivCadastro(false);
-	//		 });
 
-	//Função que recolhe as informações da denúncia
-	function SalvaDados() {
-		//Atribui o q tem na src da imagem
-		var img = $('#div_imagem_upload').attr('src');
-		//Verifica se foi informado alguma imagem
-		if (img != undefined && img.indexOf("data:image") > -1) {
-
-			dadosDigitados = "";
-			titulo = "";
-			//Recupera o texto digitiado
-			dadosDigitados = $('textarea[id*="txtComentario"]').val();
-			//Recupera o motivo da denuncia
-			titulo = $('select[id*="dpMotivo"]').val();
-
-			//Cria o nome do arquivo
-			var d = new Date();
-			var nameImage = d.getFullYear();
-			nameImage += ("00" + (d.getMonth() + 1)).slice(-2);
-			nameImage += ("00" + d.getDate()).slice(-2);
-			nameImage += ("00" + d.getHours()).slice(-2);
-			nameImage += ("00" + d.getMinutes()).slice(-2);
-			nameImage += ("00" + d.getSeconds()).slice(-2);
-
-			//Seta o nome do arquivo 
-			$('input[name$="upload_imagem_name"]').val(nameImage);
-
-			//Seta o nome com o tipo jpeg, png....
-			var formato = img.substring(img.indexOf("/") + 1, img.indexOf(";"));
-			//colova o valor na variavel caminho
-			var caminho = "../upload_imagens/" + nameImage + "." + formato;
-			//Recupera o endereço que foi clicado no mapa
-			var endereco = $('label[id*="txtEndereco"]').text();
-			//Cria um "string" com todas as informações da denuncia
-			var contentString = '<div id=\'content\'>' +
-				'<div id=\'siteNotice\'>' +
-				'</div>' +
-				'<input id=\'ipTitulo\' type=\'hidden\' name=\'ipTitulo\' value=\'' + titulo + '\'>' +
-				'<input id=\'ipDenuncia\' type=\'hidden\' name=\'idDenuncia\' value=\'§§§§\'>' +
-				'<input id=\'ipEndereco\' type=\'hidden\' name=\'ipEndereco\' value=\'' + endereco + '\'>' +
-				'<input id=\'ipCaminho\' type=\'hidden\' name=\'ipCaminho\' value=\'' + caminho + '\'>' +
-				'<input id=\'ipCaminhoFotoNova\' type=\'hidden\' name=\'ipCaminhoFotoNova\' value=\'FFDDNN\'>' +
-				'<input id=\'ipDadosDigitados\' type=\'hidden\' name=\'ipDadosDigitados\' value=\'' + dadosDigitados + '\'>' +
-				'<div id=\'bodyContent\'>' +
-				'<p>' + dadosDigitados + '</p>' +
-				'</div>' +
-				'</div>';
-			//Seta os hidden que estão oculto na div divCadastro
-			//Com a latitude, longitudo e a string HTML que terá que ser gravada no banco 
-			$('#latitudeEsc').val(latitude.lat);
-			$('#longitudeEsc').val(latitude.lng);
-			$('#htmlEsc').val(contentString);
-
-			//Cria o objeto e adiciona no JSON
-			var objDenuncia = {}
-			objDenuncia["categoria"] = 'Denuncia';
-			objDenuncia["icon"] = 'static/img/icones/vermelho.png';
-			objDenuncia["lat"] = "" + latitude.lat + "";
-			objDenuncia["lon"] = "" + latitude.lng + "";
-			objDenuncia["title"] = "" + titulo + "";
-			objDenuncia["html"] = "" + contentString + "";
-			//Coloca o caminho da imagem ../upload_imagem/yyyyMMddHHmmss.jpg, png....
-			objDenuncia["caminho"] = caminho;
-
-			//Chama a função que salva a denuncia no banco
-			salvarMarkBD(objDenuncia);
-			//Segura por um tempo para poder recarregar as denuncias do banco 	         
-			setTimeout(function() {
-				//Retorna a lista do banco e adiciona os dados novos
-				if (resultJsonDenuncias != undefined) {
-					var parsed = JSON.parse(resultJsonDenuncias);
-					for (i = 0; i < parsed.result.length; i++) {
-						var location = parsed.result[i];
-						AdicionaMarcacao(location);
-					}
-				}
-			}, 7000);
-		} else {
-			$.bootstrapGrowl("Adicione um imagem, para comprovar!", {
-				type: 'danger',
-				align: 'center',
-				width: 'auto',
-				allow_dismiss: false
-			});
-		}
-	}
-
-	//Função que salva a marcação no banco de dados
-	function salvarMarkBD(objDenuncia) {
-		$.ajax({
-			url: 'salvar_marcacao?cam=' + objDenuncia.caminho + '&cat=' + objDenuncia.categoria + '&lat=' + objDenuncia.lat + '&lon=' + objDenuncia.lon + '&tit=' + objDenuncia.title + '&html=' + objDenuncia.html + '&id=' + objDenuncia.id,
-			//	             url: 'upload_imagem',
-			type: 'POST',
-			dataType: 'json',
-			data: objDenuncia,
-			//	             data: $('#form_upload_imagem').serialize(),
-			success: function(data) {
-				if (data.isValid) {
-					$.bootstrapGrowl("contribuição registrada com sucesso!", {
-						type: 'success',
-						align: 'center',
-						width: 'auto',
-						allow_dismiss: false
-					});
-
-					markerClick = new google.maps.Marker({
-						position: latLongSave,
-						icon: 'static/img/icones/vermelho.png',
-						map: map
-					});
-
-					//Simula o click do button upload
-					// $('#form_upload_imagem [type="submit"]').click();
-					buscaListaMarcacoesCadastradas();
-
-					//Segura por um tempo para fazer o reload da pagina
-					//window.setTimeout('location.reload()', 3000);
-
-					latLongSave = "";
-					$('textarea[id*="txtComentario"]').val("");
-					return true;
-				} else {
-					if (!data.usuarioLogado) {
-						$.bootstrapGrowl("Usuário não está logado! Faça login ou cadastre-se!", {
-							type: 'success',
-							align: 'center',
-							width: 'auto',
-							allow_dismiss: false
-						});
-
-					} else {
-						$.bootstrapGrowl("Erro ao salvar denúncio, entre em contato conosco!", {
-							type: 'danger',
-							align: 'center',
-							width: 'auto',
-							allow_dismiss: false
-						});
-					}
-
-					return false;
-				}
-			}
-		});
-
-	}
-
+//###########################################################################################
 
 
 	//############################# PARTE DO ALLAN #######################################
@@ -741,8 +694,8 @@ function initMap() {
 		$('#caminho_imagem_upload').change(verificaMostraBotao);
 
 	});
-	
-	
+
+		
 	//###################### PARTE DO VINICIUS
 	$('#caminho_imagem_uploadR').on("change", function() {
 		verificaMostraBotaoR();
@@ -776,18 +729,40 @@ function initMap() {
 	}
 	
 	
-	
 
 	//cadastrar marcacao com problema
 	$('button[id$="btnSalvar"]').click(function() {
-		submit_upload_com_ajax(1);
+		
+		 if (lg != undefined && lg.PF){
+			 //Chama a function q irá chamar a servlet candidatarse
+				submit_upload_com_ajax(1);
+		 }else{
+			 $.bootstrapGrowl("Somente pessoa física!", {
+                 type: 'danger',
+                 align: 'center',
+                 width: 'auto',
+                 allow_dismiss: false
+             });
+		 }
+		
 		return false;
 
 	});
 
 	//para usar o upload da foto do problema resolvido
 	$('button[id$="btnResolvido"]').click(function() {
-		submit_upload_com_ajax(4);
+
+		 if (lg != undefined && lg.PF){
+			 //Chama a function q irá chamar a servlet candidatarse
+				submit_upload_com_ajax(4);
+		 }else{
+			 $.bootstrapGrowl("Somente pessoa física!", {
+                type: 'danger',
+                align: 'center',
+                width: 'auto',
+                allow_dismiss: false
+            });
+		 }
 		return false;
 
 	});
@@ -861,7 +836,7 @@ function initMap() {
 		                                  allow_dismiss: false
 		                              });
 		            				  
-		               			}, 5000);
+		               				}, 5000);
 		                        
 		                        
 		                       	//################FALTA LIMPAR O CAMPOS APÓS O RETORNO 
@@ -944,8 +919,10 @@ function initMap() {
 
 	//Evento do click do botão salvar beneficio da  divDenuncia
 	 $('button[id$="btnSalvarBeneficio"]').click(function() {
-	 //Chama a function q irá chamar a servlet candidatarse
-	    SalvarBeneficio();
+
+			 //Chama a function q irá chamar a servlet candidatarse
+			    SalvarBeneficio();
+		event.stopImmediatePropagation();
 	    return false;
 	 });
 
@@ -980,7 +957,7 @@ function initMap() {
 			                                  allow_dismiss: false
 			                              });
 			            				  
-			               				}, 5000);
+			               				}, 4000);
 	 
 		    		                }
 			             		else{
@@ -1028,12 +1005,6 @@ function initMap() {
 		     }
 
 
-	
-	
-}
-
-//###########################################################################################
-
 
 function formatacaoJSON(ListaMarcacao) {
 	
@@ -1063,7 +1034,7 @@ function formatacaoJSON(ListaMarcacao) {
 			resultJsonDenuncias += '", "lon":"';
 		}
 		try {
-			resultJsonDenuncias += '", "icon":"' + RetornaIconeStatus(listaMarcacoes[i].status) + "";
+			resultJsonDenuncias += '", "icon":"' + RetornaIconeStatusD(listaMarcacoes[i].status) + "";
 		} catch (err) {
 			resultJsonDenuncias += '", "icon":"';
 		}
@@ -1081,66 +1052,7 @@ function formatacaoJSON(ListaMarcacao) {
 	resultJsonDenuncias += ' ]}';
 }
 
-
-function buscaListaMarcacoesCadastradas() {}
-$.ajax({
-	url: 'lista_marcacoes_cadastradas',
-	type: 'POST',
-	dataType: 'json',
-	contentType: 'application/json; charset=utf-8',
-	success: function(data) {
-		if (data.isValid) {
-			var listaMarcacoes = data.listaMarcacoesCadastradas;
-			resultJsonDenuncias = '{ "result" : [';
-			for (var i = 0; i < listaMarcacoes.length; i++) {
-
-				resultJsonDenuncias += '{';
-				try {
-					resultJsonDenuncias += '"title":"' + listaMarcacoes[i].tipoDepredacao + "";
-				} catch (err) {
-					resultJsonDenuncias += '", "title":"';
-				}
-				try {
-					resultJsonDenuncias += '", "categoria":"' + listaMarcacoes[i].descricao + "";
-				} catch (err) {
-					resultJsonDenuncias += '", "categoria":"';
-				}
-				try {
-					resultJsonDenuncias += '", "lat":"' + listaMarcacoes[i].posLat + "";
-				} catch (err) {
-					resultJsonDenuncias += '", "lat":"';
-				}
-				try {
-					resultJsonDenuncias += '", "lon":"' + listaMarcacoes[i].posLon + "";
-				} catch (err) {
-					resultJsonDenuncias += '", "lon":"';
-				}
-				try {
-					resultJsonDenuncias += '", "icon":"' + RetornaIconeStatus(listaMarcacoes[i].status) + "";
-				} catch (err) {
-					resultJsonDenuncias += '", "icon":"';
-				}
-				try {
-
-					resultJsonDenuncias += '", "html":"' + listaMarcacoes[i].html.toString().trim().replace(new RegExp("\'", "g"), "\"") + "";
-				} catch (err) {
-					resultJsonDenuncias += '", "html":"';
-				}
-
-				resultJsonDenuncias += '" }';
-				resultJsonDenuncias += i < listaMarcacoes.length - 1 ? ',' : '';
-
-			}
-			resultJsonDenuncias += ' ]}';
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-});
-
-function RetornaIconeStatus(status) {
+function RetornaIconeStatusD(status) {
 	switch (status) {
 		case "1":
 			return 'static/img/icones/vermelho.png';
