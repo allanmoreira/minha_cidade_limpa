@@ -961,7 +961,8 @@ function initMap() {
 			            				//LIMPAR OS CAMPOS		                        	
 			                        	initMap();		                        		                        	
 			                        	Loader(false);
-			                        	HabilitaDivCadastro(false);                    	
+			                        	HabilitaDivCadastro(false);   
+			                        	HabilitaDivVisuDenuncia(false);
 			            				
 			               				$.bootstrapGrowl("beneficio registrado com sucesso!", {
 			                                  type: 'success',
