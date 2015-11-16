@@ -50,7 +50,7 @@ function initMap() {
 	};
 	
 	
-
+/*
 	//Leitura do json DATAPOA
 	if (DadosPoa.DadosPoa.length > 0) {
 		for (i = 0; i < DadosPoa.DadosPoa.length; i++) {
@@ -58,7 +58,7 @@ function initMap() {
 			AdicionaMarcacao(location);
 		}
 	}
-
+*/
 	if(resultJsonDenuncias != undefined){
 		var parsed = JSON.parse(resultJsonDenuncias);
 		for (i = 0; i < parsed.result.length; i++) {
@@ -76,7 +76,7 @@ function initMap() {
 					AdicionaMarcacao(location);
 				}
 			}
-		}, 5000);
+		}, 4000);
 
 	}
 	
@@ -287,9 +287,11 @@ function initMap() {
 				$('#btnSalvarCandidato').css('display','none');
 				$('#btnSalvarCandidato').prop("disabled", true);
 			} else {
+				$('#btnSalvarCandidato').css('display','');
+				$('#btnSalvarCandidato').prop("disabled", false);				
 				$('#btnResolvido').css('display','none');
 				$('#caminho_imagem_uploadR').css('display','none');
-				$('#btnSalvarCandidato').prop("disabled", false);
+
 			}
 		}
 		
@@ -313,6 +315,9 @@ function initMap() {
 		}else if (!lg.PF){//eh pessoa juridica
 			//Esconde as divs likes e deslikes
 			$('div[id$="likesDeslikes"]').css('display', 'none');
+			$('#btnSalvarCandidato').css('display','none');
+			$('#btnResolvido').css('display','none');
+			$('#caminho_imagem_uploadR').css('display','none');
 			
 			if(idBeneficio.indexOf("NAOBENEF") > -1){//não tem beneficio	
 				//Habilita o botao do beneficio
@@ -335,6 +340,8 @@ function initMap() {
 			$('#btnSalvarCandidato').css('display','none');
 			$('#caminho_imagem_uploadR').css('display','none');
 			$('#btnResolvido').css('display','none');
+			$('#btnSalvarBeneficio').css('display','none');
+			$('#txtBeneficiotext').css('display','none');
 		}
 		  	         
 		//var imgAlterado = "\'<c:url value='"+ idImagemCaminho +"'/>\'";  
@@ -353,7 +360,7 @@ function initMap() {
 	function SalvarCandidato() {
 		var idMark = document.getElementById('ipDenuncia').value;
 		if (idMark != "" && idMark != undefined) {
-			Loader(false);
+			Loader(true);
 
 			//GIOVANNE AQUI VC FAZ I CONTATO POR AJAX COM PARA CADASTRAR A PESSOA NA DENUNCIA
 			// * Tem que ver como a pessoa irá fazer para se cadastrar.
@@ -373,16 +380,7 @@ function initMap() {
 	                      
 	                      setTimeout(function() {
 	                       	initMap();
-                        	
-            				/*//Retorna a lista do banco e adiciona os dados novos
-            				if (resultJsonDenuncias != undefined) {
-            					var parsed = JSON.parse(resultJsonDenuncias);
-            					for (i = 0; i < parsed.result.length; i++) {
-            						var location = parsed.result[i];
-            						AdicionaMarcacao(location);
-            					}*/
-	                       	
-	          				//Esconde a div
+            
 	          				Loader(false);
 	          				HabilitaDivVisuDenuncia(false);
 	          				
@@ -471,23 +469,8 @@ function initMap() {
 
 	}
 
-	$('img[id$="imglikes"]').click(function() {
-		var idMark = document.getElementById('ipDenuncia').value;
-		if (idMark != "" || idMark != undefined) {
-			Loader(true);
-			GravaLikesDeslikes(1, idMark);
-			return false;
-		}
-	});
 
-	$('img[id$="imgDeslikes"]').click(function() {
-		var idMark = document.getElementById('ipDenuncia').value;
-		if (idMark != "" || idMark != undefined) {
-			Loader(true);
-			GravaLikesDeslikes(2, idMark);
-			return false;
-		}
-	});
+
 
 	function GravaLikesDeslikes(Likes, idMark) {
 
@@ -543,6 +526,32 @@ function initMap() {
 
 	}
 
+	
+
+	$('img[id$="imgDeslikes"]').on("click",function(event) {
+		var idMark = document.getElementById('ipDenuncia').value;
+		if (idMark != "" || idMark != undefined) {
+			Loader(true);
+			GravaLikesDeslikes(2, idMark);
+	
+		}
+		event.stopImmediatePropagation();
+		return false;
+	});
+	
+	$('img[id$="imglikes"]').on("click", function(event) {
+		var idMark = document.getElementById('ipDenuncia').value;
+		if (idMark != "" || idMark != undefined) {
+			Loader(true);
+			GravaLikesDeslikes(1, idMark);
+		}
+		event.stopImmediatePropagation();
+		return false;
+
+	});
+	
+	
+	
 	//########################## FUNCOES E ACOES QUE IRÃO ACONTECER QUANDO HOUVER UMA DENUNCIA ######################	     
 	//Evento do click que ocorre quando salva a marcação
 	//		 $('button[id$="btnSalvar"]').click(function() {
