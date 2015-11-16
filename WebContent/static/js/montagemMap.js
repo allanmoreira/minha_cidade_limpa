@@ -266,7 +266,7 @@ function initMap() {
 			$('#btnSalvarBeneficio').css('display','none');	
 			
 		}else if (lg.PF){// eh pessoa fisica
-			$('div[id$="likesDeslikes"]').css('display', '');
+			//$('div[id$="likesDeslikes"]').css('display', '');
 			
 			$('#btnSalvarBeneficio').css('display','none');	
 			$('#txtBeneficiotext').css('display','none');
@@ -293,6 +293,12 @@ function initMap() {
 		
 		
 		
+		if(document.getElementById('btnSalvarCandidato').disabled == false){
+			$('div[id$="likesDeslikes"]').css('display', 'none');
+			}
+		
+	
+				
 		//Finalizaou o processo de denuncia 
 		if(idImagemCaminho.indexOf("_R") > -1){
 			$('#btnSalvarCandidato').css('display','none');
@@ -300,7 +306,6 @@ function initMap() {
 			$('#btnResolvido').css('display','none');
 			$('#btnSalvarBeneficio').css('display','none');
 			$('#txtBeneficiotext').css('display','none');
-			$('div[id$="likesDeslikes"]').css('display', 'none');
 		}
 		  	         
 		//var imgAlterado = "\'<c:url value='"+ idImagemCaminho +"'/>\'";  
