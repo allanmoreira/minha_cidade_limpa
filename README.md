@@ -1,5 +1,6 @@
 # Nossa Cidade Limpa
-## Projeto Trabalho da Cadeira de Gerência de Projetos de Software - PUCRS 2015/2
+## Projeto Trabalho da Cadeira de Gerência de Projetos de Software
+## PUCRS 2015/2
 
 ##### Integrantes:
 Allan Moreira, Giovanni Caprio, Renan Souza, Vinicius Azevedo, Willen Ávila
