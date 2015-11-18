@@ -153,15 +153,7 @@
 							<label type="text" id="txtBeneficioDenuncia" class="estiloPrin" style="display: none;"></label>
 							<textarea id="txtBeneficiotext" name="txtBeneficiotext"  maxlength="40" class="cad_comentario cad_borda" rows="5" cols="40" style="display:none; height: 45px"></textarea>
 							<br />
-							<div id="likesDeslikes" style="display: none; font-size: 10px;">
-								<label class="estiloPrin">Você confirma denúncia?<img
-									id="imglikes" style="cursor: pointer;"
-									src="static/img/icones/likes.png" alt=""> <img
-									id="imgDeslikes" style="cursor: pointer;"
-									src="static/img/icones/deslikes.png" alt="">
-								</label>
-
-							</div>
+							
 
 						</div>
 					
@@ -184,6 +176,15 @@
 					<input type="file" name="caminho_imagem_uploadR"
 					id="caminho_imagem_uploadR" class="btn btn-warning" src=""
 					style="width: 92%;"></input>
+					<div id="likesDeslikes" style="display: none; font-size: 10px;">
+								<label class="estiloPrin">Votação: <br/> Esta denúncia é veridica?<img
+									id="imglikes" style="cursor: pointer;"
+									src="static/img/icones/likes.png" alt=""> <img
+									id="imgDeslikes" style="cursor: pointer;"
+									src="static/img/icones/deslikes.png" alt="">
+								</label>
+
+					</div>
 				</div>
 				
 					</div>

@@ -737,7 +737,7 @@ function RetornaIconeStatus(status) {
 
 	//cadastrar marcacao com problema
 	$('button[id$="btnSalvar"]').click(function() {
-		
+		if(lg == undefined){
 		 if (lg != undefined && lg.PF){
 			 //Chama a function q irá chamar a servlet candidatarse
 				submit_upload_com_ajax(1);
@@ -749,7 +749,14 @@ function RetornaIconeStatus(status) {
                  allow_dismiss: false
              });
 		 }
-		
+		}else{
+			 $.bootstrapGrowl("Usuário não logado!", {
+                 type: 'danger',
+                 align: 'center',
+                 width: 'auto',
+                 allow_dismiss: false
+             });
+		}
 		return false;
 
 	});
