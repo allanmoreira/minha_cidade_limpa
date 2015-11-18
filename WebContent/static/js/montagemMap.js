@@ -70,8 +70,8 @@ function initMap() {
 
 	map.addListener('click', function(event) {
 		//$('img[id*="gifLoader"]').css('display', 'block');
-		latitude.lat = event.latLng.A;
-		latitude.lng = event.latLng.F;
+		latitude.lat = event.latLng.G;
+		latitude.lng = event.latLng.K;
 		geocodeLatLng(geocoder, map, infowindow, latitude);
 	});
 
@@ -215,6 +215,9 @@ function initMap() {
 		var idBeneficio =$('input[id*="ipBeneficioDenuncia"]').val(); 
 
 		
+		$('#divAnuncio').css('display','none');
+		$('#divImgDenuncAnuncio').removeClass('imgDen');
+		
 		if ($('#ipLiberaVotacao').val().indexOf("VOTOSIM") > -1) {
 			$('#btnSalvarCandidato').prop("disabled", true);
 			$('#btnSalvarCandidato').css('display','none');
@@ -231,6 +234,12 @@ function initMap() {
 			if ($('#ipJaSeCandidatou').val().indexOf("CANDSIM") > -1) {
 				$('#btnResolvido').css('display','');
 				$('#caminho_imagem_uploadR').css('display','');
+				
+				if(lg != undefined && lg.PF && idImagemCaminho.indexOf("_A") > -1){
+					 $('#divImgDenuncAnuncio').addClass('imgDen');
+					 $('#divAnuncio').css('display','');
+					}
+
 				//Esconde o botão e bloqueia
 				$('#btnSalvarCandidato').css('display','none');
 				$('#btnSalvarCandidato').prop("disabled", true);
@@ -306,7 +315,10 @@ function initMap() {
 			$('#btnResolvido').css('display','none');
 			$('#btnSalvarBeneficio').css('display','none');
 			$('#txtBeneficiotext').css('display','none');
+		
 		}
+		
+	
 		  	         
 		//var imgAlterado = "\'<c:url value='"+ idImagemCaminho +"'/>\'";  
 		$('label[id*="txtEndDenuncia"]').text(idEndereco);
@@ -737,7 +749,7 @@ function RetornaIconeStatus(status) {
 
 	//cadastrar marcacao com problema
 	$('button[id$="btnSalvar"]').click(function() {
-		if(lg == undefined){
+		if(lg != undefined){
 		 if (lg != undefined && lg.PF){
 			 //Chama a function q irá chamar a servlet candidatarse
 				submit_upload_com_ajax(1);

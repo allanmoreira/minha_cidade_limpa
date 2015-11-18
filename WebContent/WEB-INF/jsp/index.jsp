@@ -159,16 +159,18 @@
 					
 			<div style="float: left; padding: 0px 0px 10px; font-size: 10pt;">
 				<button class="btn btn-success" id="btnResolvido"style="    width: 85px;">Finalizar</button>
-				<button class="btn btn-danger" id="btnFecharInfoDenuncia" style=" width: 80px;">Fechar</button>
+				<button class="btn btn-danger" id="btnFecharInfoDenuncia" style=" width: 75px;">Fechar</button>
 				<button class="btn btn-success" id="btnSalvarCandidato" style="width: 110px;">Candidatar</button>
-				<button class="btn btn-success" id="btnSalvarBeneficio" style="width: 135px;" >Cad. Benefício</button>	
+				<button class="btn btn-success" id="btnSalvarBeneficio" style="width: 132px;" >Cad. Benefício</button>	
 			</div>
 			
 					</div>
 					<div style="float: right; width: 45%; margin: 5px;">
-						<div class="cad_borda" style="width: 100%; height: 183px;">
+						<div id="divImgDenuncAnuncio" class="cad_borda imgDen" style="width: 100%; height: 183px;">
 							<img id="txtImagemDenuncia" alt=""
 								style="width: 100%; height: 183px;" />
+								
+						<div id="divAnuncio" style="display:none"><p style="margin-top: 18%;">Faça upload da imagem após concerto da denúncia.<p/></div>
 						</div>
 						
 			
@@ -177,7 +179,7 @@
 					id="caminho_imagem_uploadR" class="btn btn-warning" src=""
 					style="width: 92%;"></input>
 					<div id="likesDeslikes" style="display: none; font-size: 10px;">
-								<label class="estiloPrin">Votação: <br/> Esta denúncia é veridica?<img
+								<label class="estiloPrin">Votação: <br/> Esta denúncia é verídica? &nbsp;<img
 									id="imglikes" style="cursor: pointer;"
 									src="static/img/icones/likes.png" alt=""> <img
 									id="imgDeslikes" style="cursor: pointer;"
@@ -922,8 +924,19 @@
 					<hr class="star-light">
 				</div>
 			</div>
+			
 			<div class="row">
+			
+				<div class=" text-center">
+		<p> <img id="setagif" src="static/img/icones/right_arrow.png" > &nbsp; Clique no mapa, abaixo, para registrar a denúncia de depredação.</p>
+	
+				</div>
+			
+		
+			
+	
 				<div class="col-lg-8 col-lg-offset-2">
+				
 					<div class="container">
 						<div class="map">
 
