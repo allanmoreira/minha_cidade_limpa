@@ -70,8 +70,8 @@ function initMap() {
 
 	map.addListener('click', function(event) {
 		//$('img[id*="gifLoader"]').css('display', 'block');
-		latitude.lat = event.latLng.G;
-		latitude.lng = event.latLng.K;
+		latitude.lat = event.latLng.lat();
+		latitude.lng = event.latLng.lng();
 		geocodeLatLng(geocoder, map, infowindow, latitude);
 	});
 

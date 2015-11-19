@@ -62,7 +62,7 @@ border: 2px solid #b8ed7c;
 .textoDivDenuncia{
 	    font-size: 8pt;
     line-height: 15px;
-    text-align: justify;
+    text-align: left;
 }
 
 .spanImagem{

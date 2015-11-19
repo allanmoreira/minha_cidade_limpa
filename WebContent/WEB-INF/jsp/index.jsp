@@ -140,9 +140,8 @@
 
 			<div class="col-sm-5 col-sm-offset-1">
 				<div class="form-group">
-					<div style="float: left; width: 45%; margin: 5px;"
-						class="textoDivDenuncia">
-						<div>
+					<div style="float: left; width: 45%; margin: 5px;">
+					<div class="textoDivDenuncia">
 							<label class="sublinhado"><u>Endereço:</u></label><br /> <label
 								type="text" id="txtEndDenuncia" class="estiloPrin"></label> <br />
 							<label class="sublinhado"><u>Motivo da Denúncia:</u></label> <br />
