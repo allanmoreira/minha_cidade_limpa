@@ -474,12 +474,11 @@ function RetornaIconeStatus(status) {
 		}
 	}
 	
-/*	$(document).delegate('#divDenuncia','click',function(e){
+	$(document).delegate('#divDenuncia','click',function(e){
 		$('div[id$="gmap"] [class="gm-style-iw"]').parent().children(':eq(2)').click();
-		e.stopImmediatePropagation();
-		return false;	
+	
 	});
-*/
+
 
 
 
