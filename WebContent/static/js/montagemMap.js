@@ -166,16 +166,20 @@ function initMap() {
 	//Função que mostra e esconde a div fundo e cadastro
 	function HabilitaDivVisuDenuncia(bMostraDiv) {
 		if (bMostraDiv) {
-			$('div[id$="divFundo"]').css('display', '');
-			$('div[id$="divDenuncia"]').css('display', '')
+//			$('div[id$="divFundo"]').css('display', '');
+//			$('div[id$="divDenuncia"]').css('display', '')
+			$('#divDenuncia').modal("show");
+					
 		} else {
 			$('label[id*="txtEndDenuncia"]').text("");
 			$('label[id*="txtMotivoDenuncia"]').text("");
 			$('input[id$="txtDescricaoMark"]').text("");
 			$('label[id*="txtImagemDenuncia"]').text("");
 
-			$('div[id$="divFundo"]').css('display', 'none');
-			$('div[id$="divDenuncia"]').css('display', 'none')
+//			$('div[id$="divFundo"]').css('display', 'none');
+//			$('div[id$="divDenuncia"]').css('display', 'none')
+			$('#divDenuncia').modal("hide");
+			
 			$('div[id$="gmap"] [class="gm-style-iw"]').parent().children(':eq(2)').click()
 		}
 	}
@@ -419,6 +423,7 @@ function RetornaIconeStatus(status) {
 	//Click para fechar a div de cadastro
 	$('button[id*="btnFechar"]').click(function() {
 		HabilitaDivCadastro(false);
+		return false;
 	});
 
 
@@ -426,6 +431,7 @@ function RetornaIconeStatus(status) {
 	//Click para fechar a div de cadastro
 	$('button[id*="btnFecharInfoDenuncia"]').click(function() {
 		HabilitaDivVisuDenuncia(false);
+		return false;
 	});
 
 
@@ -450,16 +456,19 @@ function RetornaIconeStatus(status) {
 	//Função que mostra e esconde a div fundo e cadastro
 	function HabilitaDivVisuDenuncia(bMostraDiv) {
 		if (bMostraDiv) {
-			$('div[id$="divFundo"]').css('display', '');
-			$('div[id$="divDenuncia"]').css('display', '')
+//			$('div[id$="divFundo"]').css('display', '');
+//			$('div[id$="divDenuncia"]').css('display', '')
+			$('#divDenuncia').modal("show");
 		} else {
 			$('label[id*="txtEndDenuncia"]').text("");
 			$('label[id*="txtMotivoDenuncia"]').text("");
 			$('input[id$="txtDescricaoMark"]').text("");
 			$('label[id*="txtImagemDenuncia"]').text("");
 
-			$('div[id$="divFundo"]').css('display', 'none');
-			$('div[id$="divDenuncia"]').css('display', 'none')
+//			$('div[id$="divFundo"]').css('display', 'none');
+//			$('div[id$="divDenuncia"]').css('display', 'none')
+			$('#divDenuncia').modal("hide");
+			
 			$('div[id$="gmap"] [class="gm-style-iw"]').parent().children(':eq(2)').click()
 		}
 	}

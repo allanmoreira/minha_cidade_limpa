@@ -127,71 +127,83 @@
 		style="min-width: 100%; height: 100%; position: fixed; background-color: black; opacity: 0.75; z-index: 9999; display: none;"
 		class="navbar navbar-fixed-top" role="navigation"></div>
 
-	<!-- modal denúncia depredação -->
-	<div id="divDenuncia"
-		class="abseed_conteudo_sub abseed_Div_Casastro navbar navbar-fixed-top"
-		style="max-width: 560px; width: 100%; min-height: auto; position: fixed; top: 25%; margin-left: 10px; margin-top: 0px; margin: 0px auto; z-index: 9999; padding: 0px; border-radius: 5px; display: none;"
-		role="navigation">
-		<div class="abseed_conteudo_borda"
-			style="text-align: center; line-height: 8px; font-size: 14px; color: #ffffff; padding: 10px;">
-			Dados da Denúncia</div>
-		<div style="padding: 2px;">
-			<!-- INCLUIR CAMPOS  -->
 
-			<div class="col-sm-5 col-sm-offset-1">
-				<div class="form-group">
-					<div style="float: left; width: 45%; margin: 5px;">
-						<div class="textoDivDenuncia">
-								<label class="sublinhado"><u>Endereço:</u></label><br /> <label
-									type="text" id="txtEndDenuncia" class="estiloPrin"></label> <br />
-								<label class="sublinhado"><u>Motivo da Denúncia:</u></label> <br />
-								<label type="text" id="txtMotivoDenuncia" class="estiloPrin"></label>
-								<br /> <label class="sublinhado"><u>Informativo:</u></label> <br />
-								<label type="text" id="txtDescricaoMark" class="estiloPrin"></label>
-								<br /> <label class="sublinhado"><u>Benefício:</u></label> <br />
-								<label type="text" id="txtBeneficioDenuncia" class="estiloPrin" style="display: none;"></label>
-								<textarea id="txtBeneficiotext" name="txtBeneficiotext"  maxlength="40" class="cad_comentario cad_borda" rows="5" cols="40" style="display:none; height: 45px"></textarea>
-								<br />
-								
-	
+	<div id="divDenuncia" class="modal fade" id="myModal" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Dados da Denúncia</h4>
+
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<div class="col-md-12">
+							<label><b>Endereço:</b></label><br /> <label type="text"
+								id="txtEndDenuncia" class="estiloPrin"></label>
 						</div>
-						
-						<div style="float: left; padding: 0px 0px 10px; font-size: 10pt;">
-							<button class="btn btn-success" id="btnResolvido"style="    width: 85px;">Finalizar</button>
-							<button class="btn btn-danger" id="btnFecharInfoDenuncia" style=" width: 75px;">Fechar</button>
-							<button class="btn btn-success" id="btnSalvarCandidato" style="width: 110px;">Candidatar</button>
-							<button class="btn btn-success" id="btnSalvarBeneficio" style="width: 132px;" >Cad. Benefício</button>	
-						</div>
-					</div>
-					<div style="float: right; width: 45%; margin: 5px;">
-						<div id="divImgDenuncAnuncio" class="cad_borda imgDen" style="width: 100%; height: 183px;">
-							<img id="txtImagemDenuncia" alt=""
-								style="width: 100%; height: 183px;" />
-								
-							<div id="divAnuncio" style="display:none"><p style="margin-top: 18%;">Faça upload da imagem após concerto da denúncia.<p/></div>
-						</div>
-			
-						<div style="float: left; padding: 7px 1px 1px 1px;">
-							<input type="file" name="caminho_imagem_uploadR"
-							id="caminho_imagem_uploadR" class="btn btn-warning" src=""
-							style="width: 92%;"></input>
-							<div id="likesDeslikes" style="display: none; font-size: 10px;">
-								<label class="estiloPrin">Votação: <br/> Esta denúncia é verídica? &nbsp;<img
-									id="imglikes" style="cursor: pointer;"
-									src="static/img/icones/likes.png" alt=""> <img
-									id="imgDeslikes" style="cursor: pointer;"
-									src="static/img/icones/deslikes.png" alt="">
-								</label>
+
+						<div class="col-md-12">
+							<label><b>Motivo da Denúncia:</b></label><br /> <label
+								type="text" id="txtMotivoDenuncia" class="estiloPrin"></label> <br />
+							<label><b>Informativo:</b></label>
+							<div class="form-group">
+								<label type="text" id="txtBeneficioDenuncia" class="estiloPrin"
+									style="display: none;"></label>
+								<textarea id="txtBeneficiotext" name="txtBeneficiotext"
+									maxlength="40" class="cad_comentario cad_borda" rows="5"
+									cols="40" style="display: none; height: 45px"></textarea>
+
 							</div>
 						</div>
-				
+						<div class="col-md-6">
+							<div id="container_img">
+								<img id="txtImagemDenuncia" alt="" style="width: 100%;" />
+								<div id="divAnuncio" style="display: none">
+									<p style="margin-top: 18%;">Faça upload da imagem após
+										concerto da denúncia.
+									<p />
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+
+
+
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" id="btnResolvido"
+						style="width: 85px;">Finalizar</button>
+					<button type="button" class="btn btn-danger"
+						id="btnFecharInfoDenuncia" style="width: 75px;">Fechar</button>
+					<button type="button" class="btn btn-success"
+						id="btnSalvarCandidato" style="width: 110px;">Candidatar</button>
+					<button type="button" class="btn btn-success"
+						id="btnSalvarBeneficio" style="width: 132px;">Cad.
+						Benefício</button>
+
+					<input type="file" name="caminho_imagem_uploadR"
+						id="caminho_imagem_uploadR" class="btn btn-warning" src=""
+						style="width: 50%; float: left;"></input>
+					<div id="likesDeslikes" style="display: none; font-size: 10px;">
+						<label class="estiloPrin">Votação: <br /> Esta denúncia é
+							verídica? &nbsp;<img id="imglikes" style="cursor: pointer;"
+							src="static/img/icones/likes.png" alt=""> <img
+							id="imgDeslikes" style="cursor: pointer;"
+							src="static/img/icones/deslikes.png" alt="">
+						</label>
 					</div>
 				</div>
-			</div>			
+			</div>
 		</div>
 	</div>
-	<!-- fim modal denúncia depredação -->
-
 
 	<!-- NOVA div cadastrar denúncia -->
 	<div class="modal fade" id="divCadastro" tabindex="-1" role="dialog"
@@ -206,69 +218,66 @@
 					<h4 class="modal-title" id="myModalLabel">Cadastro de Denúncia</h4>
 				</div>
 				<div class="modal-body">
-					
+
 					<form method="POST" id="form_upload_imagem"
 						enctype="multipart/form-data" action="upload_imagem">
-							
-						<input type="hidden" name="upload_imagem_name"></input>
-						<input type="hidden" id="EnderecoEsc" name="EnderecoEsc"></input> 
-						<input type="hidden" id="longitudeEsc" name="longitudeEsc"></input> 
-						<input type="hidden" id="latitudeEsc" name="latitudeEsc"></input>
-						
+
+						<input type="hidden" name="upload_imagem_name"></input> <input
+							type="hidden" id="EnderecoEsc" name="EnderecoEsc"></input> <input
+							type="hidden" id="longitudeEsc" name="longitudeEsc"></input> <input
+							type="hidden" id="latitudeEsc" name="latitudeEsc"></input>
+
 						<div class="form-group">
 							<div class="col-md-12">
 								<label><b>Endereço:</b></label><br /> <label id="txtEndereco"
 									name="txtEndereco"></label>
 							</div>
 						</div>
-						
-						<div class="col-md-6">					
-							<label><b>Motivo da Denúncia:</b></label>
-								<select id="dpMotivo" name="dpMotivo" class="form-control">
-									<option value="Estátua">Estátua</option>
-									<option value="Parede">Parede</option>
-									<option value="Lago">Lago</option>
-									<option value="Banco">Banco</option>
-								</select>
-		
-							<label><b>Informativo:</b></label>
-							<div class="form-group">
-								<textarea id="txtComentario" name="txtComentario"  rows="5" "></textarea>
-							</div>
-						</div>
-						
+
 						<div class="col-md-6">
-							<div id="container_img" style="width: 100%; height: 183px;">
-								<img id="div_imagem_upload" alt=""
-									style="width: 100%; height: 183px;" />
+							<label><b>Motivo da Denúncia:</b></label> <select id="dpMotivo"
+								name="dpMotivo" class="form-control">
+								<option value="Estátua">Estátua</option>
+								<option value="Parede">Parede</option>
+								<option value="Lago">Lago</option>
+								<option value="Banco">Banco</option>
+							</select> <label><b>Informativo:</b></label>
+							<div class="form-group">
+								<textarea id="txtComentario" name="txtComentario" rows="5""></textarea>
 							</div>
 						</div>
-						
+
+						<div class="col-md-6">
+							<div id="container_img">
+								<img id="div_imagem_upload" alt="" />
+							</div>
+						</div>
+
 						<div class="col-md-12"></div>
-						
+
 						<div class="col-md-12">
 							<input type="file" name="caminho_imagem_upload"
-								id="caminho_imagem_upload" class="btn btn-success" src="" ></input>
+								style="width: 50%; float: left;" id="caminho_imagem_upload"
+								class="btn btn-success" src=""></input> &nbsp;
+							<button class="btn btn-primary" id="btnFechar">Fechar</button>
+							<!-- <button class="btn btn-success" id="btnSalvar" >Salvar</button> -->
+							<button class="btn btn-success" id="btnSalvar">Salvar</button>
 						</div>
-						
-						
-						
+
+
+
 					</form>
-					
+
 				</div>
-				<div class="modal-footer">
-					<button class="btn btn-primary" id="btnFechar">Fechar</button>
-					<!-- <button class="btn btn-success" id="btnSalvar" >Salvar</button> -->
-					<button class="btn btn-success" id="btnSalvar">Salvar</button>
-				</div>
+				<div class="modal-footer"></div>
 			</div>
 		</div>
 	</div>
 	<!-- fim div cadastrar denúncia -->
 
 	<!-- NOVO modal editar PF -->
-	<div class="modal fade" id="modal_editar_cadastro_pessoa_fisica" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel">
+	<div class="modal fade" id="modal_editar_cadastro_pessoa_fisica"
+		tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -276,7 +285,8 @@
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">Editar Cadastro de Pessoa Física</h4>
+					<h4 class="modal-title" id="myModalLabel">Editar Cadastro de
+						Pessoa Física</h4>
 				</div>
 				<div class="modal-body">
 					<div class="row">
@@ -286,7 +296,7 @@
 									<div class="tab-pane active" id="modal_tab_editar_cadastro">
 										<div class="row">
 											<div class="col-lg-8 col-lg-offset-2">
-	
+
 												<form name="form_editar_cadastro_pessoa_fisica"
 													id="form_editar_cadastro_pessoa_fisica"
 													accept-charset="iso-8859-1,utf-8">
@@ -297,7 +307,7 @@
 																class="form-control" placeholder="Nome"
 																id="nome_editar_pf" name="nome_editar_pf"
 																value="${pessoaFisica.nome }">
-	
+
 														</div>
 													</div>
 													<div class="row control-group">
@@ -308,17 +318,18 @@
 																id="data_nascim_editar_pf" name="data_nascim_editar_pf"
 																OnKeyUp="formatar('##/##/####', this);" maxlength="10"
 																value="${pessoaFisica.dataNascimento }">
-	
+
 														</div>
 													</div>
 													<div class="row control-group">
 														<div
 															class="form-group col-xs-12 floating-label-form-group controls">
-															<label>CPF</label> <input type="text" class="form-control"
-																placeholder="CPF" id="cpf_editar_pf" name="cpf_editar_pf"
+															<label>CPF</label> <input type="text"
+																class="form-control" placeholder="CPF"
+																id="cpf_editar_pf" name="cpf_editar_pf"
 																OnKeyUp="formatar('###.###.###-##', this);"
 																maxlength="14" value="${pessoaFisica.cpf }">
-	
+
 														</div>
 													</div>
 													<div class="row control-group">
@@ -327,9 +338,9 @@
 															<label>Telefone</label> <input type="text"
 																class="form-control" placeholder="xx-xxxx-xxxx"
 																id="telefone_editar_pf" name="telefone_editar_pf"
-																OnKeyUp="formatar('##-####-#####', this);" maxlength="13"
-																value="${pessoaFisica.telefone }">
-	
+																OnKeyUp="formatar('##-####-#####', this);"
+																maxlength="13" value="${pessoaFisica.telefone }">
+
 														</div>
 													</div>
 													<div class="row control-group">
@@ -339,7 +350,7 @@
 																class="form-control" placeholder="Email"
 																id="email_editar_pf" name="email_editar_pf"
 																value="${pessoaFisica.email }">
-	
+
 														</div>
 													</div>
 													<div class="row control-group">
@@ -349,7 +360,7 @@
 																class="form-control" placeholder="Usuário"
 																id="username_editar_pf" name="username_editar_pf"
 																value="${pessoaFisica.username }">
-	
+
 														</div>
 													</div>
 													<div class="row control-group">
@@ -359,21 +370,21 @@
 																class="form-control" placeholder="Senha"
 																id="senha_editar_pf" name="senha_editar_pf"
 																value="${pessoaFisica.senha }">
-	
+
 														</div>
 													</div>
-	
+
 													<div class="row control-group">
 														<div
 															class="form-group col-xs-12 floating-label-form-group controls">
 															<label>Senha</label> <input type="password"
 																id="senha_editar_pf1" class="form-control"
 																name="senha_editar_pf1" value="${pessoaFisica.senha }">
-	
+
 														</div>
 													</div>
-	
-	
+
+
 													<br>
 													<div id="success"></div>
 													<div class="row">
@@ -384,7 +395,7 @@
 														</div>
 													</div>
 												</form>
-	
+
 											</div>
 										</div>
 									</div>
@@ -394,13 +405,14 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Fechar</button>
+					<button type="button" class="btn btn-primary btn-lg"
+						data-dismiss="modal">Fechar</button>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- fim modal editar PF -->
-	
+
 	<!-- modal editar PF -->
 	<div class="portfolio-modal modal fade"
 		id="modal_editar_cadastro_pessoa_fisica" tabindex="-1" role="dialog"
@@ -422,16 +434,14 @@
 				</div>
 			</div>
 
-			<div class="container">
-				
-			</div>
+			<div class="container"></div>
 		</div>
 	</div>
 	<!-- fim modal editar cadastro PF -->
 
 	<!-- NOVO modal editar cadastro PJ -->
-	<div class="modal fade" id="modal_editar_cadastro_pessoa_juridica" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel">
+	<div class="modal fade" id="modal_editar_cadastro_pessoa_juridica"
+		tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -439,7 +449,8 @@
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">Editar Cadastro de Pessoa Jurídica</h4>
+					<h4 class="modal-title" id="myModalLabel">Editar Cadastro de
+						Pessoa Jurídica</h4>
 				</div>
 				<div class="modal-body">
 					<div class="row">
@@ -450,7 +461,7 @@
 										<div class="row">
 											<div class="col-lg-8 col-lg-offset-2">
 												<!-- valida qual form mostrar, se PF ou PJ -->
-	
+
 												<form name="form_editar_cadastro_pessoa_juridica"
 													id="form_editar_cadastro_pessoa_juridica"
 													accept-charset="iso-8859-1,utf-8">
@@ -461,7 +472,7 @@
 																class="form-control" placeholder="Nome"
 																id="nome_editar_pj" name="nome_editar_pj"
 																value="${pessoaJuridica.nome }">
-	
+
 														</div>
 													</div>
 													<div class="row control-group">
@@ -472,7 +483,7 @@
 																id="cnpj_editar_pj" name="cnpj_editar_pj"
 																OnKeyUp="formatar('##.###.###/####-##', this);"
 																maxlength="18" value="${pessoaJuridica.cnpj }">
-	
+
 														</div>
 													</div>
 													<div class="row control-group">
@@ -481,9 +492,9 @@
 															<label>Telefone</label> <input type="text"
 																class="form-control" placeholder="Telefone"
 																id="telefone_editar_pj" name="telefone_editar_pj"
-																OnKeyUp="formatar('##-####-#####', this);" maxlength="13"
-																value="${pessoaJuridica.telefone }">
-	
+																OnKeyUp="formatar('##-####-#####', this);"
+																maxlength="13" value="${pessoaJuridica.telefone }">
+
 														</div>
 													</div>
 													<div class="row control-group">
@@ -493,7 +504,7 @@
 																class="form-control" placeholder="Email"
 																id="email_editar_pj" name="email_editar_pj"
 																value="${pessoaJuridica.email }">
-	
+
 														</div>
 													</div>
 													<div class="row control-group">
@@ -503,7 +514,7 @@
 																class="form-control" placeholder="Endereco"
 																id="endereco_editar_pj" name="endereco_editar_pj"
 																value="${pessoaJuridica.endereco }">
-	
+
 														</div>
 													</div>
 													<div class="row control-group">
@@ -513,7 +524,7 @@
 																class="form-control" placeholder="Usuário"
 																id="username_editar_pj" name="username_editar_pj"
 																value="${pessoaJuridica.username }">
-	
+
 														</div>
 													</div>
 													<div class="row control-group">
@@ -523,7 +534,7 @@
 																class="form-control" placeholder="Senha"
 																id="senha_editar_pj" name="senha_editar_pj"
 																value="${pessoaJuridica.senha }">
-	
+
 														</div>
 													</div>
 													<div class="row control-group">
@@ -533,11 +544,11 @@
 																class="form-control" placeholder="Senha"
 																id="senha_editar_pj1" name="senha_editar_pj1"
 																value="${pessoaJuridica.senha }">
-	
+
 														</div>
 													</div>
-	
-	
+
+
 													<br>
 													<div id="success"></div>
 													<div class="row">
@@ -557,266 +568,271 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Fechar</button>
+					<button type="button" class="btn btn-primary btn-lg"
+						data-dismiss="modal">Fechar</button>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- NOVO fim modal editar cadastro PJ -->
-	
+
 	<!-- modal login -->
-	<div class="modal fade" id="modal_login_cadastro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal fade" id="modal_login_cadastro" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">×</button>
-						<ul class="nav nav-tabs" data-toggle="tabs">
-							<li id="li_login" class="active"><a
-								href="javascript:abre_tab_login()"><i class="fa fa-check"></i>
-									Login</a></li>
-							<li id="li_PF"><a href="javascript:abre_tab_PF()" title=""
-								data-original-title="Cadastro de Pessoa Física"><i
-									class="fa fa-user"></i> Cadastro de Pessoa Física</a></li>
-							<li id="li_PJ"><a href="javascript:abre_tab_PJ()"
-								data-toggle="tooltip" title=""
-								data-original-title="Cadastro de Pessoa Jurídica"><i
-									class="fa fa-bank"></i> Cadastro de Pessoa Jurídica</a></li>
-						</ul>
+					<ul class="nav nav-tabs" data-toggle="tabs">
+						<li id="li_login" class="active"><a
+							href="javascript:abre_tab_login()"><i class="fa fa-check"></i>
+								Login</a></li>
+						<li id="li_PF"><a href="javascript:abre_tab_PF()" title=""
+							data-original-title="Cadastro de Pessoa Física"><i
+								class="fa fa-user"></i> Cadastro de Pessoa Física</a></li>
+						<li id="li_PJ"><a href="javascript:abre_tab_PJ()"
+							data-toggle="tooltip" title=""
+							data-original-title="Cadastro de Pessoa Jurídica"><i
+								class="fa fa-bank"></i> Cadastro de Pessoa Jurídica</a></li>
+					</ul>
 				</div>
-				
+
 				<div class="modal-body">
-				<div class="row">
-					<div class="col-lg-8 col-lg-offset-2">
-						<div class="modal-body">
-							<div class="tab-content">
-								<div class="tab-pane active" id="modal_tab_login">
-									<div class="row">
-										<div class="col-lg-8 col-lg-offset-2">
+					<div class="row">
+						<div class="col-lg-8 col-lg-offset-2">
+							<div class="modal-body">
+								<div class="tab-content">
+									<div class="tab-pane active" id="modal_tab_login">
+										<div class="row">
+											<div class="col-lg-8 col-lg-offset-2">
 
-											<form name="form_login" id="form_login"
-												accept-charset="iso-8859-1,utf-8">
+												<form name="form_login" id="form_login"
+													accept-charset="iso-8859-1,utf-8">
 
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Usuário</label> <input type="text"
-															class="form-control" placeholder="Usuário" id="username"
-															name="username">
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Usuário</label> <input type="text"
+																class="form-control" placeholder="Usuário" id="username"
+																name="username">
 
+														</div>
 													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Senha</label> <input type="password"
-															class="form-control" placeholder="Senha" id="senha"
-															name="senha">
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Senha</label> <input type="password"
+																class="form-control" placeholder="Senha" id="senha"
+																name="senha">
 
+														</div>
 													</div>
-												</div>
 
-												<br>
-												<div id="success"></div>
-												<div class="row">
-													<div class="form-group col-xs-12">
-														<button type="button" onclick="submeter_form_login()"
-															class="btn btn-success btn-lg">Enviar</button>
+													<br>
+													<div id="success"></div>
+													<div class="row">
+														<div class="form-group col-xs-12">
+															<button type="button" onclick="submeter_form_login()"
+																class="btn btn-success btn-lg">Enviar</button>
+														</div>
 													</div>
-												</div>
-											</form>
+												</form>
+											</div>
 										</div>
 									</div>
-								</div>
-								<div class="tab-pane" id="modal_tab_cadastro_pf">
-									<div class="row">
-										<div class="col-lg-8 col-lg-offset-2">
+									<div class="tab-pane" id="modal_tab_cadastro_pf">
+										<div class="row">
+											<div class="col-lg-8 col-lg-offset-2">
 
-											<form name="form_cadastrar_pessoa_fisica"
-												id="form_cadastrar_pessoa_fisica"
-												accept-charset="iso-8859-1,utf-8">
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Nome</label> <input type="text"
-															class="form-control" placeholder="Nome" id="nome"
-															name="nome">
+												<form name="form_cadastrar_pessoa_fisica"
+													id="form_cadastrar_pessoa_fisica"
+													accept-charset="iso-8859-1,utf-8">
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Nome</label> <input type="text"
+																class="form-control" placeholder="Nome" id="nome"
+																name="nome">
 
+														</div>
 													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Data de Nascimento</label> <input type="text"
-															class="form-control" placeholder="Data de Nascimento"
-															id="data_nascim" name="data_nascim"
-															OnKeyUp="formatar('##/##/####', this);" maxlength="10">
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Data de Nascimento</label> <input type="text"
+																class="form-control" placeholder="Data de Nascimento"
+																id="data_nascim" name="data_nascim"
+																OnKeyUp="formatar('##/##/####', this);" maxlength="10">
 
+														</div>
 													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>CPF</label> <input type="text" class="form-control"
-															placeholder="CPF" id="cpf" name="cpf"
-															OnKeyUp="formatar('###.###.###-##', this);"
-															maxlength="14">
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>CPF</label> <input type="text"
+																class="form-control" placeholder="CPF" id="cpf"
+																name="cpf" OnKeyUp="formatar('###.###.###-##', this);"
+																maxlength="14">
 
+														</div>
 													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Telefone</label> <input type="text"
-															class="form-control" placeholder="Telefone" id="telefone"
-															name="telefone"
-															OnKeyUp="formatar('##-####-#####', this);" maxlength="13">
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Telefone</label> <input type="text"
+																class="form-control" placeholder="Telefone"
+																id="telefone" name="telefone"
+																OnKeyUp="formatar('##-####-#####', this);"
+																maxlength="13">
 
+														</div>
 													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Email</label> <input type="text"
-															class="form-control" placeholder="Email" id="email"
-															name="email">
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Email</label> <input type="text"
+																class="form-control" placeholder="Email" id="email"
+																name="email">
 
+														</div>
 													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Usuário</label> <input type="text"
-															class="form-control" placeholder="Usuário" id="username"
-															name="username">
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Usuário</label> <input type="text"
+																class="form-control" placeholder="Usuário" id="username"
+																name="username">
 
+														</div>
 													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Senha</label> <input type="password"
-															class="form-control" placeholder="Senha" id="senha"
-															name="senha">
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Senha</label> <input type="password"
+																class="form-control" placeholder="Senha" id="senha"
+																name="senha">
 
+														</div>
 													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Senha</label> <input type="password"
-															class="form-control" placeholder="Senha" id="senha1"
-															name="senha1">
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Senha</label> <input type="password"
+																class="form-control" placeholder="Senha" id="senha1"
+																name="senha1">
 
+														</div>
 													</div>
-												</div>
 
-												<br>
-												<div id="success"></div>
-												<div class="row">
-													<div class="form-group col-xs-12">
-														<button type="button"
-															onclick="javascript:submeter_form_cadastro_pessoa_fisica()"
-															class="btn btn-success btn-lg">Enviar</button>
+													<br>
+													<div id="success"></div>
+													<div class="row">
+														<div class="form-group col-xs-12">
+															<button type="button"
+																onclick="javascript:submeter_form_cadastro_pessoa_fisica()"
+																class="btn btn-success btn-lg">Enviar</button>
+														</div>
 													</div>
-												</div>
-											</form>
+												</form>
+											</div>
 										</div>
 									</div>
-								</div>
 
-								<div class="tab-pane" id="modal_tab_cadastro_pj">
-									<div class="row">
-										<div class="col-lg-8 col-lg-offset-2">
+									<div class="tab-pane" id="modal_tab_cadastro_pj">
+										<div class="row">
+											<div class="col-lg-8 col-lg-offset-2">
 
-											<form name="form_cadastrar_pessoa_juridica"
-												id="form_cadastrar_pessoa_juridica"
-												accept-charset="iso-8859-1,utf-8">
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Nome</label> <input type="text"
-															class="form-control" placeholder="Nome" id="nome"
-															name="nome">
+												<form name="form_cadastrar_pessoa_juridica"
+													id="form_cadastrar_pessoa_juridica"
+													accept-charset="iso-8859-1,utf-8">
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Nome</label> <input type="text"
+																class="form-control" placeholder="Nome" id="nome"
+																name="nome">
 
+														</div>
 													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>CNPJ</label> <input type="text"
-															class="form-control" placeholder="CNPJ" id="cnpj"
-															name="cnpj"
-															OnKeyUp="formatar('##.###.###/####-##', this);"
-															maxlength="18">
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>CNPJ</label> <input type="text"
+																class="form-control" placeholder="CNPJ" id="cnpj"
+																name="cnpj"
+																OnKeyUp="formatar('##.###.###/####-##', this);"
+																maxlength="18">
 
+														</div>
 													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Telefone</label> <input type="text"
-															class="form-control" placeholder="Telefone" id="telefone"
-															name="telefone"
-															OnKeyUp="formatar('##-####-#####', this);" maxlength="13">
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Telefone</label> <input type="text"
+																class="form-control" placeholder="Telefone"
+																id="telefone" name="telefone"
+																OnKeyUp="formatar('##-####-#####', this);"
+																maxlength="13">
 
+														</div>
 													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Email</label> <input type="text"
-															class="form-control" placeholder="Email" id="email"
-															name="email">
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Email</label> <input type="text"
+																class="form-control" placeholder="Email" id="email"
+																name="email">
 
+														</div>
 													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Endereço</label> <input type="text"
-															class="form-control" placeholder="Endereco" id="endereco"
-															name="endereco">
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Endereço</label> <input type="text"
+																class="form-control" placeholder="Endereco"
+																id="endereco" name="endereco">
 
+														</div>
 													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Usuário</label> <input type="text"
-															class="form-control" placeholder="Usuário" id="username"
-															name="username">
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Usuário</label> <input type="text"
+																class="form-control" placeholder="Usuário" id="username"
+																name="username">
 
+														</div>
 													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Senha</label> <input type="password"
-															class="form-control" placeholder="Senha" id="senha"
-															name="senha">
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Senha</label> <input type="password"
+																class="form-control" placeholder="Senha" id="senha"
+																name="senha">
 
+														</div>
 													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Senha</label> <input type="password"
-															class="form-control" placeholder="Senha" id="senha1"
-															name="senha1">
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Senha</label> <input type="password"
+																class="form-control" placeholder="Senha" id="senha1"
+																name="senha1">
 
+														</div>
 													</div>
-												</div>
-												<br>
-												<div id="success"></div>
-												<div class="row">
-													<div class="form-group col-xs-12">
-														<button type="button"
-															onclick="submeter_form_cadastro_pessoa_juridica()"
-															class="btn btn-success btn-lg">Enviar</button>
+													<br>
+													<div id="success"></div>
+													<div class="row">
+														<div class="form-group col-xs-12">
+															<button type="button"
+																onclick="submeter_form_cadastro_pessoa_juridica()"
+																class="btn btn-success btn-lg">Enviar</button>
+														</div>
 													</div>
-												</div>
-											</form>
+												</form>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -824,16 +840,16 @@
 						</div>
 					</div>
 				</div>
-			</div>
-			
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Fechar</button>
-			</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary btn-lg"
+						data-dismiss="modal">Fechar</button>
+				</div>
 			</div>
 		</div>
 	</div>
 	<!-- fim modal login -->
-	
+
 	<!-- Header -->
 	<header>
 		<div class="container">
@@ -851,30 +867,32 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<!-- Button trigger modal -->
-		<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-		  Launch demo modal
+		<button type="button" class="btn btn-primary btn-lg"
+			data-toggle="modal" data-target="#myModal">Launch demo modal
 		</button>
 	</header>
-	
+
 	<!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-	      </div>
-	      <div class="modal-body">
-	        ...
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary">Save changes</button>
-	      </div>
-	    </div>
-	  </div>
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+				</div>
+				<div class="modal-body">...</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Save changes</button>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<!-- sobre nós -->
@@ -927,26 +945,30 @@
 					<hr class="star-light">
 				</div>
 			</div>
-			
+
 			<div class="row">
-			
+
 				<div class=" text-center">
-		<p> <img id="setagif" src="static/img/icones/right_arrow.png" > &nbsp; Clique no mapa, abaixo, para registrar a denúncia de depredação.</p>
-	
+					<p>
+						<img id="setagif" src="static/img/icones/right_arrow.png">
+						&nbsp; Clique no mapa, abaixo, para registrar a denúncia de
+						depredação.
+					</p>
+
 				</div>
-			
-		
-			
-	
+
+
+
+
 				<div class="col-lg-8 col-lg-offset-2">
-				
+
 					<div class="container">
 						<div class="map">
 
 							<div id="gmap"
 								style="max-width: 972px; height: 300px; border: 5px solid orange; margin: 0px auto;"></div>
-						
-						<!-- 	<div id="legend"
+
+							<!-- 	<div id="legend"
 								style="background-color: rgba(128, 128, 128, 0.89) !important;">
 								Status:
 								<div style="text-align: left;">
@@ -968,25 +990,30 @@
 									</div>
 								</div>
  -->
-							</div>
-							<!--	<iframe src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Kuningan,+Jakarta+Capital+Region,+Indonesia&amp;aq=3&amp;oq=kuningan+&amp;sll=37.0625,-95.677068&amp;sspn=37.410045,86.572266&amp;ie=UTF8&amp;hq=&amp;hnear=Kuningan&amp;t=m&amp;z=14&amp;ll=-6.238824,106.830177&amp;output=embed">
-										</iframe> -->
-										
-											<div style="width: 100%;max-width: 972px; background: darkgoldenrod; text-align: center;  margin: 0 auto;">
-	<img src="<c:url value="static/img/icones/vermelho.png"/>"	style="max-width: 20px" />:Problema &nbsp;
-	<img src="<c:url value="static/img/icones/verde.png"/>"	style="max-width: 20px" />:Pronto &nbsp;
-	<img src="<c:url value="static/img/icones/azul.png"/>"	style="max-width: 20px" />:Resolvendo &nbsp;
-		<img src="<c:url value="static/img/icones/cinza.png"/>" style="max-width: 20px" />:Candidatar &nbsp;
-
-</div>
 						</div>
-					
+						<!--	<iframe src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Kuningan,+Jakarta+Capital+Region,+Indonesia&amp;aq=3&amp;oq=kuningan+&amp;sll=37.0625,-95.677068&amp;sspn=37.410045,86.572266&amp;ie=UTF8&amp;hq=&amp;hnear=Kuningan&amp;t=m&amp;z=14&amp;ll=-6.238824,106.830177&amp;output=embed">
+										</iframe> -->
 
+						<div
+							style="width: 100%; max-width: 972px; background: darkgoldenrod; text-align: center; margin: 0 auto;">
+							<img src="<c:url value="static/img/icones/vermelho.png"/>"
+								style="max-width: 20px" />:Problema &nbsp; <img
+								src="<c:url value="static/img/icones/verde.png"/>"
+								style="max-width: 20px" />:Pronto &nbsp; <img
+								src="<c:url value="static/img/icones/azul.png"/>"
+								style="max-width: 20px" />:Resolvendo &nbsp; <img
+								src="<c:url value="static/img/icones/cinza.png"/>"
+								style="max-width: 20px" />:Candidatar &nbsp;
 
+						</div>
 					</div>
+
+
+
 				</div>
 			</div>
 		</div>
+	</div>
 	</section>
 
 	<!-- Portfolio Grid Section -->
