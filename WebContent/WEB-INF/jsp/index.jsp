@@ -128,83 +128,99 @@
 		class="navbar navbar-fixed-top" role="navigation"></div>
 
 
-	<div id="divDenuncia" class="modal fade" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel">
+	<div id="divDenuncia" class="modal fade" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
-				
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						<h4 class="modal-title" id="myModalLabel">Dados da Denúncia</h4>
-	
-					</div>
-					<div class="modal-body">
-						<div class="row">
-							<div class="col-md-12">
-								<label><b>Endereço:</b></label><br /> <label type="text"
-									id="txtEndDenuncia" class="estiloPrin"></label>
-							</div>
-		
-							<div class="col-md-12">
-								<label><b>Motivo da Denúncia:</b></label><br /> <label
-									type="text" id="txtMotivoDenuncia" class="estiloPrin"></label> <br />
-								<label><b>Informativo:</b></label>
-								<div class="form-group">
-									<label type="text" id="txtBeneficioDenuncia" class="estiloPrin"
-										style="display: none;"></label>
-									<textarea id="txtBeneficiotext" name="txtBeneficiotext"
-										maxlength="40" class="cad_comentario cad_borda" rows="5"
-										cols="40" style="display: none; height: 45px"></textarea>
-		
-								</div>
-							</div>
-		
-							<div class="col-md-6">
-								<div id="container_img">
-									<img id="txtImagemDenuncia" alt="" style="width: 100%;" />
-									<div id="divAnuncio" style="display: none">
-										<p style="margin-top: 18%;">Faça upload da imagem após
-											concerto da denúncia.
-										<p />
-									</div>
-								</div>
-							</div>
-		
-							<div class="col-md-12">
-								<input type="file" name="caminho_imagem_uploadR"
-									id="caminho_imagem_uploadR" class="btn btn-warning" src=""
-									style="width: 50%; float: left;"></input>
-								<div id="likesDeslikes" style="display: none; font-size: 10px;">
-									<label class="estiloPrin">Votação: <br /> Esta denúncia
-										é verídica? &nbsp;<img id="imglikes" style="cursor: pointer;"
-										src="static/img/icones/likes.png" alt=""> <img
-										id="imgDeslikes" style="cursor: pointer;"
-										src="static/img/icones/deslikes.png" alt="">
-									</label>
-								</div>
-							</div>
-		
-		
+
+			<div class="modal-content">
+				<div class="modal-header">
+					<!-- <button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					-->
+					<h4 class="modal-title" id="myModalLabel">Dados da Denúncia</h4>
+
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12">
+							<label><b><u>Endereço:</u></b></label><br /> <label type="text"
+								id="txtEndDenuncia" class="estiloPrin"></label>
 						</div>
-					</div>
+
+						<div class="col-md-12">
+							<label><b><u>Motivo da Denúncia:</u></b></label><br /> <label
+								type="text" id="txtMotivoDenuncia" class="estiloPrin"></label> <br />
+							<label><b><u>Informativo:</u></b></label><br /> <label
+								type="text" id="txtDescricaoMark" class="estiloPrin"></label><br />
+
+							<label><b><u>Beneficio:</u></b></label>
+							<div class="form-group">
+
+								<label type="text" id="txtBeneficioDenuncia" class="estiloPrin"
+									style="display: none;"></label>
+								<textarea id="txtBeneficiotext" name="txtBeneficiotext"
+									maxlength="40" class="cad_comentario cad_borda" rows="5"
+									cols="40" style="display: none; height: 45px"></textarea>
+
+							</div>
+						</div>
+
+						<div class="col-md-12">
+							<div style="text-align: center;">
+								<div id="container_img" >
+									<img id="txtImagemDenuncia" alt="" style="width: 70%;" />
+									<div id="divAnuncio" style="display: none">
+										<label><b><u>Faça upload da imagem após	concerto da denúncia. </u></b></label><br />
+									</div>
+
+								</div>
+								<div id="likesDeslikes" style="display: none;">
+									<label><b>Votação: Esta denúncia é verídica? &nbsp;<img
+											id="imglikes" style="cursor: pointer;"
+											src="static/img/icones/likes.png" alt=""> <img
+											id="imgDeslikes" style="cursor: pointer;"
+											src="static/img/icones/deslikes.png" alt="">
+									</b></label><br />
+
+								</div>
+								<input type="file" name="caminho_imagem_uploadR"
+								id="caminho_imagem_uploadR" class="btn btn-warning" src=""
+								style="width: 50%;     margin: 0 auto;"></input>
 								
-					
-					<div class="modal-footer">
-						<button type="button" class="btn btn-success pull-right" id="btnResolvido"
-							style="width: 85px;">Finalizar</button>
-						<button type="button" class="btn btn-primary pull-right"
-							id="btnFecharInfoDenuncia" style="width: 75px;">Fechar</button>
-						<button type="button" class="btn btn-success pull-right"
-							id="btnSalvarCandidato" style="width: 110px;">Candidatar</button>
-						<button type="button" class="btn btn-success pull-right"
-							id="btnSalvarBeneficio" style="width: 132px;">Cad. Benefício</button>
+							</div>
+						</div>
+
+
+						<div class="col-md-12">
+							
+						</div>
+
+
 					</div>
+				</div>
+
+
+				<div class="modal-footer">
+				&nbsp;
+					<button type="button" class="btn btn-success pull-right"
+						id="btnResolvido" style="width: 85px;">Finalizar</button>
+					&nbsp;
+					<button type="button" class="btn btn-primary pull-right"
+						id="btnFecharInfoDenuncia" style="width: 75px;">Fechar</button>
+					&nbsp;
+					<button type="button" class="btn btn-success pull-right"
+						id="btnSalvarCandidato" style="width: 110px;">Candidatar</button>
+					&nbsp;
+					<button type="button" class="btn btn-success pull-right"
+						id="btnSalvarBeneficio" style="width: 132px;">Cad.
+						Benefício</button>
+					&nbsp;
 				</div>
 			</div>
 		</div>
+	</div>
 
 	<!-- NOVA div cadastrar denúncia -->
 	<div class="modal fade" id="divCadastro" tabindex="-1" role="dialog"
@@ -220,22 +236,22 @@
 				</div>
 				<div class="modal-body">
 					<div class="row">
-						
+
 						<form method="POST" id="form_upload_imagem"
 							enctype="multipart/form-data" action="upload_imagem">
-	
+
 							<input type="hidden" name="upload_imagem_name"></input> <input
 								type="hidden" id="EnderecoEsc" name="EnderecoEsc"></input> <input
 								type="hidden" id="longitudeEsc" name="longitudeEsc"></input> <input
 								type="hidden" id="latitudeEsc" name="latitudeEsc"></input>
-	
+
 							<div class="form-group">
 								<div class="col-md-12">
 									<label><b>Endereço:</b></label><br /> <label id="txtEndereco"
 										name="txtEndereco"></label>
 								</div>
 							</div>
-	
+
 							<div class="col-md-6">
 								<label><b>Motivo da Denúncia:</b></label> <select id="dpMotivo"
 									name="dpMotivo" class="form-control">
@@ -248,30 +264,31 @@
 									<textarea id="txtComentario" name="txtComentario" rows="5""></textarea>
 								</div>
 							</div>
-	
+
 							<div class="col-md-6">
-								<div id="container_img" >
-									<img id="div_imagem_upload" alt="" />
+								<div id="container_img">
+									<img id="div_imagem_upload" alt=""
+										style="width: 100%; max-width: 280px;" />
 								</div>
 							</div>
-	
+
 							<div class="col-md-12"></div>
-	
+
 							<div class="col-md-12">
 								<input type="file" name="caminho_imagem_upload"
 									style="width: 100%; float: left;" id="caminho_imagem_upload"
 									class="btn btn-success" src=""></input> &nbsp;
-								
+
 							</div>
 						</form>
 
-							
+
 					</div>
 				</div>
 				<div class="modal-footer">
 					<button class="btn btn-primary" id="btnFechar">Fechar</button>
-							<!-- <button class="btn btn-success" id="btnSalvar" >Salvar</button> -->
-							<button class="btn btn-success" id="btnSalvar">Salvar</button>
+					<!-- <button class="btn btn-success" id="btnSalvar" >Salvar</button> -->
+					<button class="btn btn-success" id="btnSalvar">Salvar</button>
 				</div>
 			</div>
 		</div>
@@ -609,37 +626,37 @@
 									<div class="tab-pane active" id="modal_tab_login">
 										<div class="row">
 
-												<form name="form_login" id="form_login"
-													accept-charset="iso-8859-1,utf-8">
+											<form name="form_login" id="form_login"
+												accept-charset="iso-8859-1,utf-8">
 
-													<div class="row control-group">
-														<div
-															class="form-group col-xs-12 floating-label-form-group controls">
-															<label>Usuário</label> <input type="text"
-																class="form-control" placeholder="Usuário" id="username"
-																name="username">
+												<div class="row control-group">
+													<div
+														class="form-group col-xs-12 floating-label-form-group controls">
+														<label>Usuário</label> <input type="text"
+															class="form-control" placeholder="Usuário" id="username"
+															name="username">
 
-														</div>
 													</div>
-													<div class="row control-group">
-														<div
-															class="form-group col-xs-12 floating-label-form-group controls">
-															<label>Senha</label> <input type="password"
-																class="form-control" placeholder="Senha" id="senha"
-																name="senha">
+												</div>
+												<div class="row control-group">
+													<div
+														class="form-group col-xs-12 floating-label-form-group controls">
+														<label>Senha</label> <input type="password"
+															class="form-control" placeholder="Senha" id="senha"
+															name="senha">
 
-														</div>
 													</div>
+												</div>
 
-													<br>
-													<div id="success"></div>
-													<div class="row">
-														<div class="form-group col-xs-12">
-															<button type="button" onclick="submeter_form_login()"
-																class="btn btn-success btn-lg">Enviar</button>
-														</div>
+												<br>
+												<div id="success"></div>
+												<div class="row">
+													<div class="form-group col-xs-12">
+														<button type="button" onclick="submeter_form_login()"
+															class="btn btn-success btn-lg">Enviar</button>
 													</div>
-												</form>
+												</div>
+											</form>
 										</div>
 									</div>
 									<div class="tab-pane" id="modal_tab_cadastro_pf">
@@ -862,7 +879,8 @@
 					<div class="intro-text">
 						<span class="name">Nossa Cidade Limpa</span>
 						<hr class="star-light">
-						<span class="skills">Escolha e preserve um patrimônio público.</span>
+						<span class="skills">Escolha e preserve um patrimônio
+							público.</span>
 					</div>
 				</div>
 			</div>

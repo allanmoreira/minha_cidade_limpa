@@ -34,7 +34,7 @@ height:100%;
 }
 
 .cad_borda{
-border: 2px solid #b8ed7c;	
+border: 2px solid #2c3e50;	
     border-radius: 5px;
 }
 
@@ -76,18 +76,15 @@ border: 2px solid #b8ed7c;
 }
 
 
-.imgDen{position: relative; width: 480px; height: 300px}
-.imgDen > img{width:100%; height: 100%}
+.imgDen{position: relative; width: 100%;}
+.imgDen > img{width:70%; }
 .imgDen > div{
     position: absolute;
     left: 0%;
     top: 0%;
     background-color: rgba(216, 203, 203, 0.66);
-    width: 50%;
-    height: 50%;
+    width: 70%;
     color: #000;
-    width: 100%;
-    height: 102%;
     text-align: center;
 	}
 

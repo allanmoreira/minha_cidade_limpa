@@ -460,6 +460,7 @@ function RetornaIconeStatus(status) {
 //			$('div[id$="divDenuncia"]').css('display', '')
 			$('#divDenuncia').modal("show");
 		} else {
+			$('div[id$="gmap"] [class="gm-style-iw"]').parent().children(':eq(2)').click();
 			$('label[id*="txtEndDenuncia"]').text("");
 			$('label[id*="txtMotivoDenuncia"]').text("");
 			$('input[id$="txtDescricaoMark"]').text("");
@@ -469,10 +470,16 @@ function RetornaIconeStatus(status) {
 //			$('div[id$="divDenuncia"]').css('display', 'none')
 			$('#divDenuncia').modal("hide");
 			
-			$('div[id$="gmap"] [class="gm-style-iw"]').parent().children(':eq(2)').click()
+		
 		}
 	}
-
+	
+/*	$(document).delegate('#divDenuncia','click',function(e){
+		$('div[id$="gmap"] [class="gm-style-iw"]').parent().children(':eq(2)').click();
+		e.stopImmediatePropagation();
+		return false;	
+	});
+*/
 
 
 
