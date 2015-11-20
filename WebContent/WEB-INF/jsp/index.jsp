@@ -141,165 +141,266 @@
 			<div class="col-sm-5 col-sm-offset-1">
 				<div class="form-group">
 					<div style="float: left; width: 45%; margin: 5px;">
-					<div class="textoDivDenuncia">
-							<label class="sublinhado"><u>Endereço:</u></label><br /> <label
-								type="text" id="txtEndDenuncia" class="estiloPrin"></label> <br />
-							<label class="sublinhado"><u>Motivo da Denúncia:</u></label> <br />
-							<label type="text" id="txtMotivoDenuncia" class="estiloPrin"></label>
-							<br /> <label class="sublinhado"><u>Informativo:</u></label> <br />
-							<label type="text" id="txtDescricaoMark" class="estiloPrin"></label>
-							<br /> <label class="sublinhado"><u>Benefício:</u></label> <br />
-							<label type="text" id="txtBeneficioDenuncia" class="estiloPrin" style="display: none;"></label>
-							<textarea id="txtBeneficiotext" name="txtBeneficiotext"  maxlength="40" class="cad_comentario cad_borda" rows="5" cols="40" style="display:none; height: 45px"></textarea>
-							<br />
-							
-
+						<div class="textoDivDenuncia">
+								<label class="sublinhado"><u>Endereço:</u></label><br /> <label
+									type="text" id="txtEndDenuncia" class="estiloPrin"></label> <br />
+								<label class="sublinhado"><u>Motivo da Denúncia:</u></label> <br />
+								<label type="text" id="txtMotivoDenuncia" class="estiloPrin"></label>
+								<br /> <label class="sublinhado"><u>Informativo:</u></label> <br />
+								<label type="text" id="txtDescricaoMark" class="estiloPrin"></label>
+								<br /> <label class="sublinhado"><u>Benefício:</u></label> <br />
+								<label type="text" id="txtBeneficioDenuncia" class="estiloPrin" style="display: none;"></label>
+								<textarea id="txtBeneficiotext" name="txtBeneficiotext"  maxlength="40" class="cad_comentario cad_borda" rows="5" cols="40" style="display:none; height: 45px"></textarea>
+								<br />
+								
+	
 						</div>
-					
-			<div style="float: left; padding: 0px 0px 10px; font-size: 10pt;">
-				<button class="btn btn-success" id="btnResolvido"style="    width: 85px;">Finalizar</button>
-				<button class="btn btn-danger" id="btnFecharInfoDenuncia" style=" width: 75px;">Fechar</button>
-				<button class="btn btn-success" id="btnSalvarCandidato" style="width: 110px;">Candidatar</button>
-				<button class="btn btn-success" id="btnSalvarBeneficio" style="width: 132px;" >Cad. Benefício</button>	
-			</div>
-			
+						
+						<div style="float: left; padding: 0px 0px 10px; font-size: 10pt;">
+							<button class="btn btn-success" id="btnResolvido"style="    width: 85px;">Finalizar</button>
+							<button class="btn btn-danger" id="btnFecharInfoDenuncia" style=" width: 75px;">Fechar</button>
+							<button class="btn btn-success" id="btnSalvarCandidato" style="width: 110px;">Candidatar</button>
+							<button class="btn btn-success" id="btnSalvarBeneficio" style="width: 132px;" >Cad. Benefício</button>	
+						</div>
 					</div>
 					<div style="float: right; width: 45%; margin: 5px;">
 						<div id="divImgDenuncAnuncio" class="cad_borda imgDen" style="width: 100%; height: 183px;">
 							<img id="txtImagemDenuncia" alt=""
 								style="width: 100%; height: 183px;" />
 								
-						<div id="divAnuncio" style="display:none"><p style="margin-top: 18%;">Faça upload da imagem após concerto da denúncia.<p/></div>
+							<div id="divAnuncio" style="display:none"><p style="margin-top: 18%;">Faça upload da imagem após concerto da denúncia.<p/></div>
 						</div>
-						
 			
-				<div style="float: left; padding: 7px 1px 1px 1px;">
-					<input type="file" name="caminho_imagem_uploadR"
-					id="caminho_imagem_uploadR" class="btn btn-warning" src=""
-					style="width: 92%;"></input>
-					<div id="likesDeslikes" style="display: none; font-size: 10px;">
+						<div style="float: left; padding: 7px 1px 1px 1px;">
+							<input type="file" name="caminho_imagem_uploadR"
+							id="caminho_imagem_uploadR" class="btn btn-warning" src=""
+							style="width: 92%;"></input>
+							<div id="likesDeslikes" style="display: none; font-size: 10px;">
 								<label class="estiloPrin">Votação: <br/> Esta denúncia é verídica? &nbsp;<img
 									id="imglikes" style="cursor: pointer;"
 									src="static/img/icones/likes.png" alt=""> <img
 									id="imgDeslikes" style="cursor: pointer;"
 									src="static/img/icones/deslikes.png" alt="">
 								</label>
-
-					</div>
-				</div>
+							</div>
+						</div>
 				
 					</div>
 				</div>
-			</div>
-
-
-
-
-
-
-
-			
+			</div>			
 		</div>
-
 	</div>
 	<!-- fim modal denúncia depredação -->
 
-	<!-- div cadastrar denúncia -->
-	<div id="divCadastro"
-		class="abseed_conteudo_sub abseed_Div_Casastro navbar navbar-fixed-top"
-		style="max-width: 560px; width: 100%; min-height: 350px; position: fixed; top: 25%; margin-left: 10px; margin-top: 0px; margin: 0px auto; z-index: 9999; padding: 0px; border-radius: 5px; display: none;"
-		role="navigation">
 
-		<!-- <form method="POST" id="form_upload_imagem" enctype="multipart/form-data" action="index" > -->
-		<form method="POST" id="form_upload_imagem"
-			enctype="multipart/form-data" action="upload_imagem">
-
-			<div class="abseed_conteudo_borda"
-				style="text-align: center; line-height: 8px; font-size =14px; color: #ffffff; padding: 10px;">
-				Cadastro de Denúncia</div>
-			<div style="padding: 10px;">
-				<!-- INCLUIR CAMPOS  -->
-
-				<div class="col-sm-5 col-sm-offset-1">
-
-					<!-- <input type="file" id="input_escolher_arquivo" name="input_escolher_arquivo"> -->
-
-					<div class="form-group">
-						<label><b>Endereço:</b></label><br /> <label id="txtEndereco"
-							name="txtEndereco"></label>
-						<!-- 		<input type="text" id="txtEndereco" name="txtEndereco"></input>  -->
-					</div>
-					<div class="form-group">
-						<div style="float: left; width: 45%; margin: 5px;">
-							<div>
-								<label><b>Motivo da Denúncia:</b></label> <select
-									class="cad_drop cad_borda " id="dpMotivo" name="dpMotivo">
+	<!-- NOVA div cadastrar denúncia -->
+	<div class="modal fade" id="divCadastro" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Cadastro de Denúncia</h4>
+				</div>
+				<div class="modal-body">
+					
+					<form method="POST" id="form_upload_imagem"
+						enctype="multipart/form-data" action="upload_imagem">
+							
+						<input type="hidden" name="upload_imagem_name"></input>
+						<input type="hidden" id="EnderecoEsc" name="EnderecoEsc"></input> 
+						<input type="hidden" id="longitudeEsc" name="longitudeEsc"></input> 
+						<input type="hidden" id="latitudeEsc" name="latitudeEsc"></input>
+						
+						<div class="form-group">
+							<div class="col-md-12">
+								<label><b>Endereço:</b></label><br /> <label id="txtEndereco"
+									name="txtEndereco"></label>
+							</div>
+						</div>
+						
+						<div class="col-md-6">					
+							<label><b>Motivo da Denúncia:</b></label>
+								<select id="dpMotivo" name="dpMotivo" class="form-control">
 									<option value="Estátua">Estátua</option>
 									<option value="Parede">Parede</option>
 									<option value="Lago">Lago</option>
 									<option value="Banco">Banco</option>
 								</select>
-							</div>
-
+		
 							<label><b>Informativo:</b></label>
 							<div class="form-group">
-								<textarea id="txtComentario" name="txtComentario"
-									class="cad_comentario cad_borda" rows="5" cols="40"></textarea>
+								<textarea id="txtComentario" name="txtComentario"  rows="5" "></textarea>
 							</div>
-
 						</div>
-						<div style="float: right; width: 45%; margin: 5px;">
-							<div id="container_img" class="cad_borda"
-								style="width: 100%; height: 183px;">
+						
+						<div class="col-md-6">
+							<div id="container_img" style="width: 100%; height: 183px;">
 								<img id="div_imagem_upload" alt=""
 									style="width: 100%; height: 183px;" />
 							</div>
 						</div>
-					</div>
-
+						
+						<div class="col-md-12"></div>
+						
+						<div class="col-md-12">
+							<input type="file" name="caminho_imagem_upload"
+								id="caminho_imagem_upload" class="btn btn-success" src="" ></input>
+						</div>
+						
+						
+						
+					</form>
+					
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary" id="btnFechar">Fechar</button>
+					<!-- <button class="btn btn-success" id="btnSalvar" >Salvar</button> -->
+					<button class="btn btn-success" id="btnSalvar">Salvar</button>
 				</div>
 			</div>
-
-			<div style="width: 50%; float: right;">
-				<!-- form upload imagem -->
-
-
-				<div style="display: none">
-					<!-- campo name > COLAR O ID DA DENUNCIA AQUI PARA NOMEAR A FOTO EX: "1514" -->
-					<input type="text" name="upload_imagem_name"><br /> <br />
-					<input type="submit" class="btn btn-warning" value="Upload">
-
-					<input type="text" id="EnderecoEsc" name="EnderecoEsc"></input> <input
-						type="text" id="longitudeEsc" name="longitudeEsc"></input> <input
-						type="text" id="latitudeEsc" name="latitudeEsc"></input>
-
-
-				</div>
-				<div style="float: center; padding: 7px 10px 10px 20px;">
-					<input type="file" name="caminho_imagem_upload"
-						id="caminho_imagem_upload" class="btn btn-warning" src=""
-						style="width: 92%;"></input>
-				</div>
-
-				<!-- <button class="btn btn-warning" type="submit">SALVAR</button>  -->
-			</div>
-		</form>
-		<!-- fim form upload imagem -->
-
-
-
-		<div style="float: right; padding: 0px 10px 10px;">
-			<!-- INCLUIR BOTOES  -->
-
-			<button class="btn btn-danger" id="btnFechar">Fechar</button>
-			<!-- <button class="btn btn-success" id="btnSalvar" >Salvar</button> -->
-			<button class="btn btn-success" id="btnSalvar">Salvar</button>
 		</div>
-
 	</div>
-
 	<!-- fim div cadastrar denúncia -->
 
+	<!-- NOVO modal editar PF -->
+	<div class="modal fade" id="modal_editar_cadastro_pessoa_fisica" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Editar Cadastro de Pessoa Física</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-lg-8 col-lg-offset-2">
+							<div class="modal-body">
+								<div class="tab-content">
+									<div class="tab-pane active" id="modal_tab_editar_cadastro">
+										<div class="row">
+											<div class="col-lg-8 col-lg-offset-2">
+	
+												<form name="form_editar_cadastro_pessoa_fisica"
+													id="form_editar_cadastro_pessoa_fisica"
+													accept-charset="iso-8859-1,utf-8">
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Nome</label> <input type="text"
+																class="form-control" placeholder="Nome"
+																id="nome_editar_pf" name="nome_editar_pf"
+																value="${pessoaFisica.nome }">
+	
+														</div>
+													</div>
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Data de Nascimento</label> <input type="text"
+																class="form-control" placeholder="Data de Nascimento"
+																id="data_nascim_editar_pf" name="data_nascim_editar_pf"
+																OnKeyUp="formatar('##/##/####', this);" maxlength="10"
+																value="${pessoaFisica.dataNascimento }">
+	
+														</div>
+													</div>
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>CPF</label> <input type="text" class="form-control"
+																placeholder="CPF" id="cpf_editar_pf" name="cpf_editar_pf"
+																OnKeyUp="formatar('###.###.###-##', this);"
+																maxlength="14" value="${pessoaFisica.cpf }">
+	
+														</div>
+													</div>
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Telefone</label> <input type="text"
+																class="form-control" placeholder="xx-xxxx-xxxx"
+																id="telefone_editar_pf" name="telefone_editar_pf"
+																OnKeyUp="formatar('##-####-#####', this);" maxlength="13"
+																value="${pessoaFisica.telefone }">
+	
+														</div>
+													</div>
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Email</label> <input type="text"
+																class="form-control" placeholder="Email"
+																id="email_editar_pf" name="email_editar_pf"
+																value="${pessoaFisica.email }">
+	
+														</div>
+													</div>
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Usuário</label> <input type="text"
+																class="form-control" placeholder="Usuário"
+																id="username_editar_pf" name="username_editar_pf"
+																value="${pessoaFisica.username }">
+	
+														</div>
+													</div>
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Senha</label> <input type="password"
+																class="form-control" placeholder="Senha"
+																id="senha_editar_pf" name="senha_editar_pf"
+																value="${pessoaFisica.senha }">
+	
+														</div>
+													</div>
+	
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Senha</label> <input type="password"
+																id="senha_editar_pf1" class="form-control"
+																name="senha_editar_pf1" value="${pessoaFisica.senha }">
+	
+														</div>
+													</div>
+	
+	
+													<br>
+													<div id="success"></div>
+													<div class="row">
+														<div class="form-group col-xs-12">
+															<button type="button"
+																onclick="javascript:submeter_form_editar_cadastro_pessoa_fisica()"
+																class="btn btn-success btn-lg">Enviar</button>
+														</div>
+													</div>
+												</form>
+	
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Fechar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- fim modal editar PF -->
+	
 	<!-- modal editar PF -->
 	<div class="portfolio-modal modal fade"
 		id="modal_editar_cadastro_pessoa_fisica" tabindex="-1" role="dialog"
@@ -322,252 +423,132 @@
 			</div>
 
 			<div class="container">
-				<div class="row">
-					<div class="col-lg-8 col-lg-offset-2">
-						<div class="modal-body">
-							<div class="tab-content">
-								<div class="tab-pane active" id="modal_tab_editar_cadastro">
-									<div class="row">
-										<div class="col-lg-8 col-lg-offset-2">
-
-											<form name="form_editar_cadastro_pessoa_fisica"
-												id="form_editar_cadastro_pessoa_fisica"
-												accept-charset="iso-8859-1,utf-8">
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Nome</label> <input type="text"
-															class="form-control" placeholder="Nome"
-															id="nome_editar_pf" name="nome_editar_pf"
-															value="${pessoaFisica.nome }">
-
-													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Data de Nascimento</label> <input type="text"
-															class="form-control" placeholder="Data de Nascimento"
-															id="data_nascim_editar_pf" name="data_nascim_editar_pf"
-															OnKeyUp="formatar('##/##/####', this);" maxlength="10"
-															value="${pessoaFisica.dataNascimento }">
-
-													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>CPF</label> <input type="text" class="form-control"
-															placeholder="CPF" id="cpf_editar_pf" name="cpf_editar_pf"
-															OnKeyUp="formatar('###.###.###-##', this);"
-															maxlength="14" value="${pessoaFisica.cpf }">
-
-													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Telefone</label> <input type="text"
-															class="form-control" placeholder="xx-xxxx-xxxx"
-															id="telefone_editar_pf" name="telefone_editar_pf"
-															OnKeyUp="formatar('##-####-#####', this);" maxlength="13"
-															value="${pessoaFisica.telefone }">
-
-													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Email</label> <input type="text"
-															class="form-control" placeholder="Email"
-															id="email_editar_pf" name="email_editar_pf"
-															value="${pessoaFisica.email }">
-
-													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Usuário</label> <input type="text"
-															class="form-control" placeholder="Usuário"
-															id="username_editar_pf" name="username_editar_pf"
-															value="${pessoaFisica.username }">
-
-													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Senha</label> <input type="password"
-															class="form-control" placeholder="Senha"
-															id="senha_editar_pf" name="senha_editar_pf"
-															value="${pessoaFisica.senha }">
-
-													</div>
-												</div>
-
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Senha</label> <input type="password"
-															id="senha_editar_pf1" class="form-control"
-															name="senha_editar_pf1" value="${pessoaFisica.senha }">
-
-													</div>
-												</div>
-
-
-												<br>
-												<div id="success"></div>
-												<div class="row">
-													<div class="form-group col-xs-12">
-														<button type="button"
-															onclick="javascript:submeter_form_editar_cadastro_pessoa_fisica()"
-															class="btn btn-success btn-lg">Enviar</button>
-													</div>
-												</div>
-											</form>
-
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+				
 			</div>
 		</div>
 	</div>
 	<!-- fim modal editar cadastro PF -->
 
-	<!-- modal editar cadastro PJ -->
-	<div class="portfolio-modal modal fade"
-		id="modal_editar_cadastro_pessoa_juridica" tabindex="-1" role="dialog"
-		aria-hidden="true">
-		<div class="modal-content">
-			<div class="col-lg-8 col-lg-offset-2">
-				<div class="col-xs-12 ">
-					<ul class="nav nav-tabs" data-toggle="tabs">
-						<li id="li_editar_dados_"><a href="javascript:void(0);"
-							title="" data-original-title="Editar Cadastro"><i
-								class="fa fa-pencil"></i> Editar Cadastro de Pessoa Jurídica</a></li>
-					</ul>
+	<!-- NOVO modal editar cadastro PJ -->
+	<div class="modal fade" id="modal_editar_cadastro_pessoa_juridica" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Editar Cadastro de Pessoa Jurídica</h4>
 				</div>
-			</div>
-
-			<div class="close-modal" data-dismiss="modal">
-				<div class="lr">
-					<div class="rl"></div>
-				</div>
-			</div>
-
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-8 col-lg-offset-2">
-						<div class="modal-body">
-							<div class="tab-content">
-								<div class="tab-pane active">
-									<div class="row">
-										<div class="col-lg-8 col-lg-offset-2">
-											<!-- valida qual form mostrar, se PF ou PJ -->
-
-											<form name="form_editar_cadastro_pessoa_juridica"
-												id="form_editar_cadastro_pessoa_juridica"
-												accept-charset="iso-8859-1,utf-8">
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Nome</label> <input type="text"
-															class="form-control" placeholder="Nome"
-															id="nome_editar_pj" name="nome_editar_pj"
-															value="${pessoaJuridica.nome }">
-
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-lg-8 col-lg-offset-2">
+							<div class="modal-body">
+								<div class="tab-content">
+									<div class="tab-pane active">
+										<div class="row">
+											<div class="col-lg-8 col-lg-offset-2">
+												<!-- valida qual form mostrar, se PF ou PJ -->
+	
+												<form name="form_editar_cadastro_pessoa_juridica"
+													id="form_editar_cadastro_pessoa_juridica"
+													accept-charset="iso-8859-1,utf-8">
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Nome</label> <input type="text"
+																class="form-control" placeholder="Nome"
+																id="nome_editar_pj" name="nome_editar_pj"
+																value="${pessoaJuridica.nome }">
+	
+														</div>
 													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>CNPJ</label> <input type="text"
-															class="form-control" placeholder="CNPJ"
-															id="cnpj_editar_pj" name="cnpj_editar_pj"
-															OnKeyUp="formatar('##.###.###/####-##', this);"
-															maxlength="18" value="${pessoaJuridica.cnpj }">
-
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>CNPJ</label> <input type="text"
+																class="form-control" placeholder="CNPJ"
+																id="cnpj_editar_pj" name="cnpj_editar_pj"
+																OnKeyUp="formatar('##.###.###/####-##', this);"
+																maxlength="18" value="${pessoaJuridica.cnpj }">
+	
+														</div>
 													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Telefone</label> <input type="text"
-															class="form-control" placeholder="Telefone"
-															id="telefone_editar_pj" name="telefone_editar_pj"
-															OnKeyUp="formatar('##-####-#####', this);" maxlength="13"
-															value="${pessoaJuridica.telefone }">
-
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Telefone</label> <input type="text"
+																class="form-control" placeholder="Telefone"
+																id="telefone_editar_pj" name="telefone_editar_pj"
+																OnKeyUp="formatar('##-####-#####', this);" maxlength="13"
+																value="${pessoaJuridica.telefone }">
+	
+														</div>
 													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Email</label> <input type="text"
-															class="form-control" placeholder="Email"
-															id="email_editar_pj" name="email_editar_pj"
-															value="${pessoaJuridica.email }">
-
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Email</label> <input type="text"
+																class="form-control" placeholder="Email"
+																id="email_editar_pj" name="email_editar_pj"
+																value="${pessoaJuridica.email }">
+	
+														</div>
 													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Endereço</label> <input type="text"
-															class="form-control" placeholder="Endereco"
-															id="endereco_editar_pj" name="endereco_editar_pj"
-															value="${pessoaJuridica.endereco }">
-
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Endereço</label> <input type="text"
+																class="form-control" placeholder="Endereco"
+																id="endereco_editar_pj" name="endereco_editar_pj"
+																value="${pessoaJuridica.endereco }">
+	
+														</div>
 													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Usuário</label> <input type="text"
-															class="form-control" placeholder="Usuário"
-															id="username_editar_pj" name="username_editar_pj"
-															value="${pessoaJuridica.username }">
-
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Usuário</label> <input type="text"
+																class="form-control" placeholder="Usuário"
+																id="username_editar_pj" name="username_editar_pj"
+																value="${pessoaJuridica.username }">
+	
+														</div>
 													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Senha</label> <input type="password"
-															class="form-control" placeholder="Senha"
-															id="senha_editar_pj" name="senha_editar_pj"
-															value="${pessoaJuridica.senha }">
-
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Senha</label> <input type="password"
+																class="form-control" placeholder="Senha"
+																id="senha_editar_pj" name="senha_editar_pj"
+																value="${pessoaJuridica.senha }">
+	
+														</div>
 													</div>
-												</div>
-												<div class="row control-group">
-													<div
-														class="form-group col-xs-12 floating-label-form-group controls">
-														<label>Senha</label> <input type="password"
-															class="form-control" placeholder="Senha"
-															id="senha_editar_pj1" name="senha_editar_pj1"
-															value="${pessoaJuridica.senha }">
-
+													<div class="row control-group">
+														<div
+															class="form-group col-xs-12 floating-label-form-group controls">
+															<label>Senha</label> <input type="password"
+																class="form-control" placeholder="Senha"
+																id="senha_editar_pj1" name="senha_editar_pj1"
+																value="${pessoaJuridica.senha }">
+	
+														</div>
 													</div>
-												</div>
-
-
-												<br>
-												<div id="success"></div>
-												<div class="row">
-													<div class="form-group col-xs-12">
-														<button type="button"
-															onclick="submeter_form_editar_cadastro_pessoa_juridico()"
-															class="btn btn-success btn-lg">Enviar</button>
+	
+	
+													<br>
+													<div id="success"></div>
+													<div class="row">
+														<div class="form-group col-xs-12">
+															<button type="button"
+																onclick="submeter_form_editar_cadastro_pessoa_juridico()"
+																class="btn btn-success btn-lg">Enviar</button>
+														</div>
 													</div>
-												</div>
-											</form>
+												</form>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -575,42 +556,36 @@
 						</div>
 					</div>
 				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Fechar</button>
+				</div>
 			</div>
 		</div>
 	</div>
-	<!-- fim modal editar cadastro -->
-
-
-
-
+	<!-- NOVO fim modal editar cadastro PJ -->
+	
 	<!-- modal login -->
-	<div class="portfolio-modal modal fade" id="modal_login_cadastro"
-		tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-content">
-			<div class="col-lg-8 col-lg-offset-2">
-				<div class="col-xs-12 ">
-					<ul class="nav nav-tabs" data-toggle="tabs">
-						<li id="li_login" class="active"><a
-							href="javascript:abre_tab_login()"><i class="fa fa-check"></i>
-								Login</a></li>
-						<li id="li_PF"><a href="javascript:abre_tab_PF()" title=""
-							data-original-title="Cadastro de Pessoa Física"><i
-								class="fa fa-user"></i> Cadastro de Pessoa Física</a></li>
-						<li id="li_PJ"><a href="javascript:abre_tab_PJ()"
-							data-toggle="tooltip" title=""
-							data-original-title="Cadastro de Pessoa Jurídica"><i
-								class="fa fa-bank"></i> Cadastro de Pessoa Jurídica</a></li>
-					</ul>
+	<div class="modal fade" id="modal_login_cadastro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">×</button>
+						<ul class="nav nav-tabs" data-toggle="tabs">
+							<li id="li_login" class="active"><a
+								href="javascript:abre_tab_login()"><i class="fa fa-check"></i>
+									Login</a></li>
+							<li id="li_PF"><a href="javascript:abre_tab_PF()" title=""
+								data-original-title="Cadastro de Pessoa Física"><i
+									class="fa fa-user"></i> Cadastro de Pessoa Física</a></li>
+							<li id="li_PJ"><a href="javascript:abre_tab_PJ()"
+								data-toggle="tooltip" title=""
+								data-original-title="Cadastro de Pessoa Jurídica"><i
+									class="fa fa-bank"></i> Cadastro de Pessoa Jurídica</a></li>
+						</ul>
 				</div>
-			</div>
-
-			<div class="close-modal" data-dismiss="modal">
-				<div class="lr">
-					<div class="rl"></div>
-				</div>
-			</div>
-
-			<div class="container">
+				
+				<div class="modal-body">
 				<div class="row">
 					<div class="col-lg-8 col-lg-offset-2">
 						<div class="modal-body">
@@ -850,10 +825,15 @@
 					</div>
 				</div>
 			</div>
+			
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Fechar</button>
+			</div>
+			</div>
 		</div>
 	</div>
 	<!-- fim modal login -->
-
+	
 	<!-- Header -->
 	<header>
 		<div class="container">
@@ -871,7 +851,31 @@
 				</div>
 			</div>
 		</div>
+		
+		<!-- Button trigger modal -->
+		<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+		  Launch demo modal
+		</button>
 	</header>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+	      </div>
+	      <div class="modal-body">
+	        ...
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary">Save changes</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
 	<!-- sobre nós -->
 	<section id="about">

@@ -433,15 +433,17 @@ function RetornaIconeStatus(status) {
 	function HabilitaDivCadastro(bMostraDiv) {
 		if (bMostraDiv) {
 			$('img[id$="gifLoader"]').css('display', 'none');
-			$('div[id$="divFundo"]').css('display', '');
-			$('div[id$="divCadastro"]').css('display', '')
+//			$('div[id$="divFundo"]').css('display', '');
+//			$('div[id$="divCadastro"]').css('display', '')
+			$('#divCadastro').modal("show");
 		} else {
 			$('textarea[id*="txtComentario"]').val("");
 			$('#caminho_imagem_upload').val("");
 			var $image = $('#div_imagem_upload')
 			$image.removeAttr('src').replaceWith($image.clone());
-			$('div[id$="divFundo"]').css('display', 'none');
-			$('div[id$="divCadastro"]').css('display', 'none')
+//			$('div[id$="divFundo"]').css('display', 'none');
+//			$('div[id$="divCadastro"]').css('display', 'none')
+			$('#divCadastro').modal("hide");
 		}
 	}
 

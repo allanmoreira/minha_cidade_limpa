@@ -24,8 +24,7 @@ public class BancoDados {
 	public void conectarAoBco() throws ClassNotFoundException, SQLException {
 
 		Class.forName("com.mysql.jdbc.Driver");
-		// String url =
-		// "jdbc:mysql://localhost:3306/minha_cidade_limpa_bd?zeroDateTimeBehavior=convertToNull";
+//		String url = "jdbc:mysql://localhost:3306/minha_cidade_limpa_bd?zeroDateTimeBehavior=convertToNull";
 		String url = "jdbc:mysql://104.131.19.51:3306/minha_cidade_limpa_bd?zeroDateTimeBehavior=convertToNull";
 
 		String usuario = "trab_ger_proj";
@@ -405,7 +404,7 @@ public class BancoDados {
 	}
 
 
-	/* Aqui verifica se esse usuario é o candidato certo */
+	/* Aqui verifica se esse usuario ï¿½ o candidato certo */
 	public boolean verificaCandidatoCerto(int idPessoa, int idMarcacao)
 			throws SQLException {
 
