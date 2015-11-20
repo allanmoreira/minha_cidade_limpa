@@ -966,7 +966,7 @@
 						<div class="map">
 
 							<div id="gmap"
-								style="max-width: 972px; height: 300px; border: 5px solid orange; margin: 0px auto;"></div>
+								style="max-width: 972px; height: 300px; border: 5px solid #2c3e50; margin: 0px auto;"></div>
 
 							<!-- 	<div id="legend"
 								style="background-color: rgba(128, 128, 128, 0.89) !important;">
@@ -995,7 +995,7 @@
 										</iframe> -->
 
 						<div
-							style="width: 100%; max-width: 972px; background: darkgoldenrod; text-align: center; margin: 0 auto;">
+							style="width: 100%; max-width: 972px; background: #2c3e50; text-align: center; margin: 0 auto;">
 							<img src="<c:url value="static/img/icones/vermelho.png"/>"
 								style="max-width: 20px" />:Problema &nbsp; <img
 								src="<c:url value="static/img/icones/verde.png"/>"
