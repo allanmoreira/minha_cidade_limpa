@@ -230,6 +230,7 @@ public class ServletDeControle {
 		BancoDados bancoDados = new BancoDados();
 		Map<String, Object> map = new HashMap<String, Object>();
 		PessoaFisica pessoaFisica = new PessoaFisica();
+		Login login = new Login();
 		Data data = new Data();
 		boolean isValid = false;
 		boolean isPF = true;
@@ -276,7 +277,7 @@ public class ServletDeControle {
 
 					isValid = true;
 					// Pega os dados do usuario logado. Ta meio gambiarra, pode ser melhor.
-					Login login = new Login();
+		
 					login.setUsername(pessoaFisica.getUsername());
 					login.setSenha(pessoaFisica.getSenha());
 					login = bancoDados.dadosUsuarioLogado(login);
@@ -311,6 +312,7 @@ public class ServletDeControle {
 		map.put("pessoaFisica", pessoaFisica);
 		map.put("dadosInvalidos", dadosCadastroInvalidos);
 		map.put("usernameInvalido", usernameInvalido);
+		map.put("login", login);
 
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
@@ -326,7 +328,7 @@ public class ServletDeControle {
 		boolean usernameInvalido = false;
 		boolean isPF = false;
 		String nomeUsuarioLogado = null;
-
+		Login login = new Login();
 		PessoaJuridica pessoaJuridica = new PessoaJuridica();
 
 		String nome = request.getParameter("nome");
@@ -353,8 +355,7 @@ public class ServletDeControle {
 			}
 
 			bancoDados.conectarAoBco();
-			boolean usernameNaoCadastrado = bancoDados
-					.usernameNaoCadastrado(username);
+			boolean usernameNaoCadastrado = bancoDados.usernameNaoCadastrado(username);
 
 			if (usernameNaoCadastrado) {
 				pessoaJuridica.setUsername(username);
@@ -368,7 +369,7 @@ public class ServletDeControle {
 				isValid = true;
 				
 				// Pega os dados do usuario logado. Ta meio gambiarra, pode ser melhor.
-				Login login = new Login();
+				
 				login.setUsername(pessoaJuridica.getUsername());
 				login.setSenha(pessoaJuridica.getSenha());
 				login = bancoDados.dadosUsuarioLogado(login);
@@ -398,6 +399,7 @@ public class ServletDeControle {
 		map.put("pessoaJuridica", pessoaJuridica);
 		map.put("dadosInvalidos", dadosCadastroInvalidos);
 		map.put("usernameInvalido", usernameInvalido);
+		map.put("login", login);
 
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");

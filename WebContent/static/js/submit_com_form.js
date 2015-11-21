@@ -93,6 +93,7 @@ function submeter_form_cadastro_pessoa_fisica(){
 				if(data.isValid) {
 					
 					var pessoaFisica = data.pessoaFisica;
+					lg = data.login;
 										
 					$.bootstrapGrowl("Pessoa física " + pessoaFisica.nome + " cadastrada com sucesso!", {
 		                type:'success',
@@ -220,7 +221,7 @@ function submeter_form_cadastro_pessoa_juridica(){
 					if(data.isValid) {
 						
 						var pessoaJuridica = data.pessoaJuridica;
-						
+						lg = data.login;
 						
 						$.bootstrapGrowl("Pessoa física " + pessoaJuridica.nome + " cadastrada com sucesso!", {
 							type:'success',
