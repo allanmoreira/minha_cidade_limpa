@@ -307,8 +307,8 @@ function initMap() {
 		
 		
 		if(document.getElementById('btnSalvarCandidato').disabled == false){
-			$('div[id$="likesDeslikes"]').css('display', 'none');
-			}
+				$('div[id$="likesDeslikes"]').css('display', 'none');
+		}
 		
 	
 				
@@ -475,8 +475,11 @@ function RetornaIconeStatus(status) {
 	}
 	
 	$(document).delegate('#divDenuncia','click',function(e){
-		$('div[id$="gmap"] [class="gm-style-iw"]').parent().children(':eq(2)').click();
-	
+	  setTimeout(function() {
+		if(!$("#divDenuncia").is(":visible")){
+			$('div[id$="gmap"] [class="gm-style-iw"]').parent().children(':eq(2)').click();
+		}
+	  }, 500);
 	});
 
 

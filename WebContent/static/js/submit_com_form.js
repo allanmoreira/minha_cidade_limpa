@@ -279,8 +279,8 @@ function submeter_form_cadastro_pessoa_juridica(){
 
 function submeter_form_editar_cadastro_pessoa_fisica(){
 	var matchdata = new RegExp(/((0[1-9]|[12][0-9]|3[01])\/(0[13578]|1[02])\/[12][0-9]{3})|((0[1-9]|[12][0-9]|30)\/(0[469]|11)\/[12][0-9]{3})|((0[1-9]|1[0-9]|2[0-8])\/02\/[12][0-9]([02468][1235679]|[13579][01345789]))|((0[1-9]|[12][0-9])\/02\/[12][0-9]([02468][048]|[13579][26]))/gi);
-	var endereco = $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="endereco_editar_pf"]').val();
-	var cnpj =  $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="cpf_editar_pf"]').val();
+	//var endereco = $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="endereco_editar_pf"]').val();
+	var cpf =  $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="cpf_editar_pf"]').val();
 	var email = $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="email_editar_pf"]').val();
 	var usuario = $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="username_editar_pf"]').val();
 	var senha =  $('form[id*="form_editar_cadastro_pessoa_fisica"] [id$="senha_editar_pf"]').val();
@@ -300,10 +300,10 @@ function submeter_form_editar_cadastro_pessoa_fisica(){
 		if(dadosemBranco != "") dadosemBranco +=",";
 		dadosemBranco +="cpf";
 	}
-	if(endereco =="" || endereco == undefined){ 
-		if(dadosemBranco != "") dadosemBranco +=",";
-		dadosemBranco +="endereço";
-	}
+//	if(endereco =="" || endereco == undefined){ 
+//		if(dadosemBranco != "") dadosemBranco +=",";
+//		dadosemBranco +="endereço";
+//	}
 	if(email =="" || email == undefined){ 
 		if(dadosemBranco != "") dadosemBranco +=",";
 		dadosemBranco +="email";
@@ -654,6 +654,7 @@ function submeter_form_login(){
 						$('#email_editar_pf').val(pessoaFisica.email);
 						$('#username_editar_pf').val(pessoaFisica.username);
 						$('#senha_editar_pf').val(data.login.senha);
+						$('#senha_editar_pf1').val(data.login.senha);
 					}
 					// senão, é pessoa juridica
 					else {
@@ -683,6 +684,7 @@ function submeter_form_login(){
 						$('#endereco_editar_pj').val(pessoaJuridica.endereco);
 						$('#username_editar_pj').val(pessoaJuridica.username);
 						$('#senha_editar_pj').val(data.login.senha);
+						$('#senha_editar_pj1').val(data.login.senha);
 					}
 					
 				}

@@ -409,9 +409,7 @@
 													<div id="success"></div>
 													<div class="row">
 														<div class="form-group col-xs-12">
-															<button type="button"
-																onclick="javascript:submeter_form_editar_cadastro_pessoa_fisica()"
-																class="btn btn-success btn-lg">Enviar</button>
+															
 														</div>
 													</div>
 												</form>
@@ -425,6 +423,9 @@
 					</div>
 				</div>
 				<div class="modal-footer">
+				<button type="button"		onclick="javascript:submeter_form_editar_cadastro_pessoa_fisica()"
+																class="btn btn-success btn-lg">Enviar</button>
+																&nbsp;
 					<button type="button" class="btn btn-primary btn-lg"
 						data-dismiss="modal">Fechar</button>
 				</div>
@@ -573,9 +574,7 @@
 													<div id="success"></div>
 													<div class="row">
 														<div class="form-group col-xs-12">
-															<button type="button"
-																onclick="submeter_form_editar_cadastro_pessoa_juridico()"
-																class="btn btn-success btn-lg">Enviar</button>
+															
 														</div>
 													</div>
 												</form>
@@ -588,8 +587,13 @@
 					</div>
 				</div>
 				<div class="modal-footer">
+				<button type="button"
+																onclick="submeter_form_editar_cadastro_pessoa_juridico()"
+																class="btn btn-success btn-lg">Enviar</button>
+																&nbsp;
 					<button type="button" class="btn btn-primary btn-lg"
 						data-dismiss="modal">Fechar</button>
+								&nbsp;
 				</div>
 			</div>
 		</div>

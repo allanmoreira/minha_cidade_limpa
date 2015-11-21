@@ -58,8 +58,10 @@ return !isNaN(parseFloat(v)) && isFinite(v)
 
 
 function ValidaCPF(strCPF){
-	strCPF = strCPF.replace(".","").replace("-","").replace(".","");
-	 var Soma; 
+	if(strCPF.indexOf(".") > -1){
+		strCPF = strCPF.replace(".","").replace("-","").replace(".","");
+	}	 	
+	var Soma; 
 	 var Resto; 
 	 Soma = 0; 
 	 if (strCPF == "00000000000") return false;

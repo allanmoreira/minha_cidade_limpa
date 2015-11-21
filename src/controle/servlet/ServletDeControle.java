@@ -448,19 +448,24 @@ public class ServletDeControle {
 
 			bancoDados.conectarAoBco();
 			boolean usernameNaoCadastrado = bancoDados.usernameNaoCadastrado(username);
-
-			if (usernameNaoCadastrado) {
+			Login usuarioSessao = (Login) session.getAttribute("usuarioLogado");
+			
+			if (usernameNaoCadastrado || username.equals(usuarioSessao.getUsername())) {
 				
-				Login usuarioSessao = (Login) session.getAttribute("usuarioLogado");
+			
 				pessoaJuridica.setIdLogin(usuarioSessao.getIdLogin());	
-				
-				bancoDados.editarDadosLogin(pessoaJuridica.getIdLogin(), pessoaJuridica.getUsername(), pessoaJuridica.getSenha());
+				if(!username.equals(usuarioSessao.getUsername()) || !senha.equals(usuarioSessao.getSenha())){
+					bancoDados.editarDadosLogin(pessoaJuridica.getIdLogin(), pessoaJuridica.getUsername(), pessoaJuridica.getSenha());
+				}
 				bancoDados.editarCadastroPessoaJuridica(pessoaJuridica);
 				
 				pessoaJuridica.setUsername(username);
 				
+				
 				int idLogin = bancoDados.geraLoginUsuario(pessoaJuridica.getUsername(), pessoaJuridica.getSenha(), pessoaJuridica.isPF());
 				pessoaJuridica.setIdLogin(idLogin);
+				
+				
 				bancoDados.cadastrarPessoaJuridica(pessoaJuridica);
 				isValid = true;
 				
@@ -542,13 +547,19 @@ public class ServletDeControle {
 
 			try {
 				bancoDados.conectarAoBco();
+				Login usuarioSessao = (Login) session.getAttribute("usuarioLogado");
+				
 
 				boolean usernameNaoCadastrado = bancoDados.usernameNaoCadastrado(username);
 
-				if (usernameNaoCadastrado) {
-					Login usuarioSessao = (Login) session.getAttribute("usuarioLogado");
-					pessoaFisica.setIdLogin(usuarioSessao.getIdLogin());					
-					bancoDados.editarDadosLogin(pessoaFisica.getIdLogin(), pessoaFisica.getUsername(), pessoaFisica.getSenha());
+				if (usernameNaoCadastrado || username.equals(usuarioSessao.getUsername())) {
+					
+					pessoaFisica.setIdLogin(usuarioSessao.getIdLogin());	
+				
+					if(!username.equals(usuarioSessao.getUsername()) || !senha.equals(usuarioSessao.getSenha())){
+						bancoDados.editarDadosLogin(pessoaFisica.getIdLogin(), pessoaFisica.getUsername(), pessoaFisica.getSenha());
+					}
+					
 					bancoDados.editarCadastroPessoaFisica(pessoaFisica);
 
 					isValid = true;
@@ -567,7 +578,7 @@ public class ServletDeControle {
 					session.setAttribute("usuarioLogado", login);
 					// utilizado para peencher o campo caso a pagina seja atualizada
 					session.setAttribute("nomeUsuarioLogado", nomeUsuarioLogado);
-				} else {
+				}else {
 					usernameInvalido = true;
 				}
 				bancoDados.encerrarConexao();
