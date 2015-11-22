@@ -114,6 +114,16 @@ function submeter_form_cadastro_pessoa_fisica(){
 					$('#modal_login_cadastro').modal('hide');
 					//Limpar as variaveis do cadastro de PF
 					$('#form_cadastrar_pessoa_fisica')[0].reset();
+					
+					$('#nome_editar_pf').val(nome);
+					$('#cpf_editar_pf').val(pessoaFisica.cpf);
+					$('#data_nascim_editar_pf').val(data_nascim);
+					$('#telefone_editar_pf').val(pessoaFisica.telefone);
+					$('#email_editar_pf').val(pessoaFisica.email);
+					$('#username_editar_pf').val(usuario);
+					$('#senha_editar_pf').val(senha);
+					$('#senha_editar_pf').val(senha);
+
 				}
 				else {
 					if(data.usernameInvalido){
@@ -240,7 +250,19 @@ function submeter_form_cadastro_pessoa_juridica(){
 						$('#modal_login_cadastro').modal('hide');
 						//Limpar as variaveis do cadastro de PF
 						$('#form_cadastrar_pessoa_juridica')[0].reset();
+						
+						
+						
+						
 
+						$('#nome_editar_pj').val(nome);
+						$('#cnpj_editar_pj').val(pessoaJuridica.cnpj);
+						$('#endereco_editar_pj').val(pessoaJuridica.endereco);
+						$('#telefone_editar_pj').val(pessoaJuridica.telefone);
+						$('#email_editar_pj').val(pessoaJuridica.email);
+						$('#username_editar_pj').val(usuario);
+						$('#senha_editar_pj').val(senha);
+						$('#senha_editar_pj1').val(senha);
 					}
 					else {
 						if(data.usernameInvalido){
