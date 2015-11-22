@@ -177,9 +177,9 @@
 
 								</div>
 								<div id="likesDeslikes" style="display: none;">
-									<label><b>Votação: Esta denúncia é verídica? &nbsp;<img
+									<label><b>Votação: Esta denúncia é verídica? &nbsp;&nbsp;<img
 											id="imglikes" style="cursor: pointer;"
-											src="static/img/icones/likes.png" alt=""> <img
+											src="static/img/icones/likes.png" alt="">&nbsp; <img
 											id="imgDeslikes" style="cursor: pointer;"
 											src="static/img/icones/deslikes.png" alt="">
 									</b></label><br />
@@ -203,20 +203,20 @@
 
 
 				<div class="modal-footer">
-				&nbsp;
+				&nbsp; 	&nbsp;
 					<button type="button" class="btn btn-success pull-right"
 						id="btnResolvido" style="width: 85px;">Finalizar</button>
-					&nbsp;
+					&nbsp; 	&nbsp;
 					<button type="button" class="btn btn-primary pull-right"
-						id="btnFecharInfoDenuncia" style="width: 75px;">Fechar</button>
-					&nbsp;
+						id="btnFecharInfoDenuncia" style="width: 75px;     margin-right: 5px;">Fechar</button>
+					&nbsp; 	&nbsp;
 					<button type="button" class="btn btn-success pull-right"
 						id="btnSalvarCandidato" style="width: 110px;">Candidatar</button>
-					&nbsp;
+					&nbsp; 	&nbsp;
 					<button type="button" class="btn btn-success pull-right"
 						id="btnSalvarBeneficio" style="width: 132px;">Cad.
 						Benefício</button>
-					&nbsp;
+					&nbsp; 	&nbsp;
 				</div>
 			</div>
 		</div>

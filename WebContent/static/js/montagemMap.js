@@ -171,6 +171,10 @@ function initMap() {
 			$('#divDenuncia').modal("show");
 					
 		} else {
+			fecharBalaoMap();
+			
+			//$('div[id$="gmap"] [class="gm-style-iw"]').parent().children(':eq(2)').click()
+			
 			$('label[id*="txtEndDenuncia"]').text("");
 			$('label[id*="txtMotivoDenuncia"]').text("");
 			$('input[id$="txtDescricaoMark"]').text("");
@@ -180,7 +184,7 @@ function initMap() {
 //			$('div[id$="divDenuncia"]').css('display', 'none')
 			$('#divDenuncia').modal("hide");
 			
-			$('div[id$="gmap"] [class="gm-style-iw"]').parent().children(':eq(2)').click()
+
 		}
 	}
 	
@@ -443,6 +447,7 @@ function RetornaIconeStatus(status) {
 //			$('div[id$="divCadastro"]').css('display', '')
 			$('#divCadastro').modal("show");
 		} else {
+			fecharBalaoMap();
 			$('textarea[id*="txtComentario"]').val("");
 			$('#caminho_imagem_upload').val("");
 			var $image = $('#div_imagem_upload')
@@ -475,13 +480,18 @@ function RetornaIconeStatus(status) {
 	}
 	
 	$(document).delegate('#divDenuncia','click',function(e){
-	  setTimeout(function() {
-		if(!$("#divDenuncia").is(":visible")){
-			$('div[id$="gmap"] [class="gm-style-iw"]').parent().children(':eq(2)').click();
-		}
-	  }, 500);
+		fecharBalaoMap();
 	});
 
+	
+	function fecharBalaoMap(){
+		  setTimeout(function() {
+				if(!$("#divDenuncia").is(":visible")){
+					$('div[id$="gmap"] [class="gm-style-iw"]').parent().children(':eq(2)').click();
+				}
+			  }, 500);
+				
+	}
 
 
 
@@ -624,7 +634,7 @@ function RetornaIconeStatus(status) {
 
 									
 					  formatacaoJSON(data.listaMarcacoesCadastradas)
-                      
+                      fecharBalaoMap();
                       setTimeout(function() {
                        	initMap();
                                         	
